@@ -11,29 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // 2. Настройка профиля, аватарки и ПОЛУЧЕНИЕ TELEGRAM ID
+    // 2. Настройка профиля, аватарки и получение Telegram ID
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
         const idElement = document.getElementById('user-id');
         const avatarImg = document.getElementById('user-avatar-img');
 
-        // Вывод юзернейма
         if (usernameElement) {
             usernameElement.textContent = user.username ? `@${user.username}` : `${user.first_name} ${user.last_name || ''}`.trim();
         }
-        
-        // ВЫВОД TELEGRAM ID ПОЛЬЗОВАТЕЛЯ
         if (idElement && user.id) {
             idElement.textContent = `ID: ${user.id}`;
-            console.log(`[GHOST ENGINE] Идентификатор сессии подтвержден: ${user.id}`);
         }
-        
-        // Вывод аватарки
         if (avatarImg && user.photo_url) {
             avatarImg.src = user.photo_url;
             avatarImg.classList.add('visible');
-            console.log("[GHOST ENGINE] Аватарка успешно инициализирована.");
         }
     }
 
@@ -68,10 +61,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
+    // ИСПРАВЛЕНО: Навигационные узлы модального окна пополнения баланса
+    const depositModal = document.getElementById('deposit-modal');
+    const openDepositBtn = document.getElementById('open-deposit-btn');
+    const depositCloseBtn = document.getElementById('deposit-close-btn');
+    const createInvoiceBtn = document.getElementById('create-invoice-btn');
+    const depositAmountInput = document.getElementById('deposit-amount');
+
     let currentSelectedType = "";
     let currentSelectedName = "";
 
-    // Переключение лобби / подменю
+    // Открытие окна пополнения баланса при клике на "+"
+    if (openDepositBtn && depositModal) {
+        openDepositBtn.addEventListener('click', () => {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            if (depositAmountInput) depositAmountInput.value = ""; // Очищаем старый ввод
+            depositModal.classList.add('open');
+        });
+    }
+
+    // Закрытие окна пополнения
+    if (depositCloseBtn && depositModal) {
+        depositCloseBtn.addEventListener('click', () => depositModal.classList.remove('open'));
+    }
+
+    // Клик по кнопке "ОПЛАТИТЬ" внутри окна пополнения
+    if (createInvoiceBtn) {
+        createInvoiceBtn.addEventListener('click', () => {
+            const amount = parseFloat(depositAmountInput?.value);
+            
+            if (!amount || amount < 1) {
+                if (tg) tg.showAlert("Пожалуйста, введите корректную сумму (минимум 1 USDT).");
+                return;
+            }
+
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            depositModal.classList.remove('open');
+
+            // Отправляем JSON-инструкцию в Python-бот для генерации счета в @send
+            tg?.sendData(JSON.stringify({ 
+                action: 'deposit_request', 
+                amount: amount 
+            }));
+        });
+    }
+
+    // Переключение лобби / подменю товаров
     function toggleAccountsMenu() {
         if (!mainLobby || !accountsLobby) return;
         if (mainLobby.classList.contains('active')) {
@@ -101,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Обработка кликов остальных кнопок главного меню
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn)');
+    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn):not(#create-invoice-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.getAttribute('data-action');
@@ -135,14 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Закрытие модального окна
+    // Закрытие окон при тапе на свободную область вокруг карточки
+    window.addEventListener('click', (e) => {
+        if (e.target === productModal) productModal.classList.remove('open');
+        if (e.target === depositModal) depositModal.classList.remove('open');
+    });
+
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', () => productModal.classList.remove('open'));
-    }
-    if (productModal) {
-        productModal.addEventListener('click', (e) => {
-            if (e.target === productModal) productModal.classList.remove('open');
-        });
     }
 
     // Подтверждение покупки внутри карточки описания
@@ -151,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             productModal.classList.remove('open');
 
-            // Возвращаем JSON в твой python-скрипт бота
             tg?.sendData(JSON.stringify({ 
                 action: 'buy_tg_account', 
                 type: currentSelectedType,

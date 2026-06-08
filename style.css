@@ -109,17 +109,9 @@ body {
 .user-meta { display: flex; flex-direction: column; gap: 1px; }
 .user-meta .meta-label { font-size: 10px; font-family: monospace; color: var(--text-muted-ghost); letter-spacing: 1px; }
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-pure); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
+.user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* СТИЛИ ДЛЯ СТРОКИ TELEGRAM ID */
-.user-id-label {
-    font-size: 11px;
-    font-family: monospace;
-    color: var(--text-muted-ghost);
-    opacity: 0.85;
-    letter-spacing: 0.5px;
-}
-
-/* SYSTEM STATS */
+/* SYSTEM STATS & BALANCE */
 .system-status {
     display: block;
     margin-bottom: 24px;
@@ -128,8 +120,83 @@ body {
     background: var(--bg-surface); border: 1px solid var(--border-premium); border-radius: 14px; padding: 16px;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4); width: 100%;
 }
+.balance-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.balance-info {
+    display: flex;
+    flex-direction: column;
+}
 .card-label { font-size: 9px; font-family: monospace; color: var(--text-muted-ghost); letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
 .card-value { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
+
+/* ИСПРАВЛЕНО: Стили кнопки "+" для пополнения счета */
+.btn-deposit-plus {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 0, 0, 0.08);
+    border: 1px solid var(--border-premium);
+    color: var(--text-pure);
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 10px rgba(255,0,0,0.05);
+}
+.btn-deposit-plus:hover {
+    border-color: var(--border-active);
+    background: #ff3333;
+    color: #ffffff;
+    box-shadow: 0 0 15px var(--red-glow-intense);
+}
+.btn-deposit-plus:active {
+    transform: scale(0.92);
+}
+
+/* INPUT COMPONENT FOR DEPOSIT MODAL */
+.deposit-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-premium);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s ease;
+}
+.deposit-input-wrapper:focus-within {
+    border-color: var(--border-active);
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.15);
+}
+.currency-tag {
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted-ghost);
+    margin-right: 12px;
+}
+#deposit-amount {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: monospace;
+    width: 100%;
+}
+.deposit-tip {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
 
 /* SLIDER ENGINE */
 .menu-slider-wrapper {
