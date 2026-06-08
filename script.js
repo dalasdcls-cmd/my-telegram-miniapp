@@ -11,21 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // СИНХРОНИЗАЦИЯ БАЛАНСА: Парсим параметры из URL, переданные ботом
+    // ДВУХРЕЖИМНАЯ СИНХРОНИЗАЦИЯ БАЛАНСА
     const urlParams = new URLSearchParams(window.location.search);
     const databaseBalance = urlParams.get('balance');
     const balanceValueElement = document.getElementById('balance-value');
     
     if (balanceValueElement) {
         if (databaseBalance !== null) {
+            // Режим А: Зашли через инлайн-ссылку (Баланс мгновенно передан)
             balanceValueElement.textContent = `${parseFloat(databaseBalance).toFixed(2)} USDT`;
-            console.log(`[GHOST ENGINE] Баланс успешно синхронизирован с БД: ${databaseBalance} USDT`);
+            console.log(`[GHOST ENGINE] Баланс передан из URL инлайна: ${databaseBalance} USDT`);
         } else {
-            balanceValueElement.textContent = "0.00 USDT";
+            // Режим Б: Зашли через Reply-кнопку меню [ VPN ]
+            balanceValueElement.textContent = "Синхронизация...";
+            
+            // Отправляем бэкенду скрытый запрос. Бот продублирует текущие цифры сообщением в чат!
+            setTimeout(() => {
+                tg?.sendData(JSON.stringify({ 
+                    action: 'request_balance_sync' 
+                }));
+                balanceValueElement.textContent = "Обновлено в чате";
+            }, 800);
         }
     }
 
-    // 2. Настройка профиля и подгрузка РЕАЛЬНОЙ аватарки
+    // 2. Настройка профиля
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
@@ -68,86 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const btnAccounts = document.querySelector('[data-action="accounts"]');
 
-    // Узлы модального окна карточки товара
     const productModal = document.getElementById('product-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
-    // Навигационные узлы модального окна пополнения баланса
-    const depositModal = document.getElementById('deposit-modal');
-    const openDepositBtn = document.getElementById('open-deposit-btn');
-    const depositCloseBtn = document.getElementById('deposit-close-btn');
-    const createInvoiceBtn = document.getElementById('create-invoice-btn');
-    const depositAmountInput = document.getElementById('deposit-amount');
-
     let currentSelectedType = "";
     let currentSelectedName = "";
-
-    // Открытие модалки пополнения счета
-    if (openDepositBtn && depositModal) {
-        openDepositBtn.addEventListener('click', () => {
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            
-            const modalTitleElement = depositModal.querySelector('.modal-title');
-            const depositTipElement = depositModal.querySelector('.deposit-tip');
-            if (modalTitleElement) modalTitleElement.textContent = "Crypto Bot (@send)";
-            if (depositTipElement) depositTipElement.textContent = "Укажите сумму пополнения в USDT (мин. 1 USDT). После генерации счета нажмите кнопку для перехода к оплате.";
-            if (depositAmountInput) {
-                depositAmountInput.value = "";
-                depositAmountInput.parentElement.style.display = 'flex';
-            }
-            if (createInvoiceBtn) {
-                createInvoiceBtn.querySelector('.btn-text').textContent = "ОПЛАТИТЬ";
-                createInvoiceBtn.onclick = null;
-            }
-            
-            depositModal.classList.add('open');
-        });
-    }
-
-    if (depositCloseBtn && depositModal) {
-        depositCloseBtn.addEventListener('click', () => depositModal.classList.remove('open'));
-    }
-
-    // СИНХРОНИЗАЦИЯ: Логика создания и проверки платежей
-    if (createInvoiceBtn) {
-        createInvoiceBtn.addEventListener('click', function handleInitialPay() {
-            const amount = parseFloat(depositAmountInput?.value);
-            if (!amount || amount < 1) {
-                if (tg) tg.showAlert("Пожалуйста, введите корректную сумму (минимум 1 USDT).");
-                return;
-            }
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-
-            const modalTitleElement = depositModal.querySelector('.modal-title');
-            const depositTipElement = depositModal.querySelector('.deposit-tip');
-            
-            if (modalTitleElement) modalTitleElement.textContent = "Ожидание оплаты...";
-            if (depositTipElement) depositTipElement.innerHTML = `Счет на <b>${amount} USDT</b> передан в обработку.<br>Оплатите пришедший инвойс в чате с ботом и нажмите кнопку ниже для проверки статуса.`;
-            if (depositAmountInput) depositAmountInput.parentElement.style.display = 'none';
-            
-            createInvoiceBtn.querySelector('.btn-text').textContent = "ПРОВЕРИТЬ ПЛАТЕЖ";
-
-            // Отправляем сигнал боту
-            tg?.sendData(JSON.stringify({ 
-                action: 'deposit_request', 
-                amount: amount 
-            }));
-
-            // Повторный клик — принудительный чек статуса
-            createInvoiceBtn.onclick = () => {
-                if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-                
-                tg?.sendData(JSON.stringify({ 
-                    action: 'check_deposit'
-                }));
-                
-                depositModal.classList.remove('open');
-            };
-        });
-    }
 
     function toggleAccountsMenu() {
         if (!mainLobby || !accountsLobby) return;
@@ -173,11 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             accountsLobby.classList.remove('active');
-            mainLobby.add('active');
+            mainLobby.classList.add('active');
         });
     }
 
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn):not(#create-invoice-btn)');
+    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.getAttribute('data-action');
@@ -211,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('click', (e) => {
         if (e.target === productModal) productModal.classList.remove('open');
-        if (e.target === depositModal) depositModal.classList.remove('open');
     });
 
     if (modalCloseBtn) {
