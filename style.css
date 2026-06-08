@@ -1,16 +1,12 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    
-    /* Матовое стекло: 25% видимости карточек и кнопок */
-    --bg-surface: rgba(15, 6, 6, 0.25); 
-    
-    --border-premium: rgba(255, 40, 40, 0.15); /* Красные неоновые рамки */
-    --border-active: rgba(255, 30, 30, 0.6); /* Рамка при наведении */
-    --text-pure: #ff3333; /* Основной ярко-красный цвет */
-    --text-dim: #ff3333; /* Цвет шрифта на кнопках */
-    --text-muted-ghost: #b32d2d; /* Контрастный темно-красный для подписей */
-    --text-dark: #660e0e; /* Трафаретные индексы 01 // */
+    --bg-surface: rgba(15, 6, 6, 0.25); /* Матовое стекло 25% */
+    --border-premium: rgba(255, 40, 40, 0.15); 
+    --border-active: rgba(255, 30, 30, 0.6); 
+    --text-pure: #ff3333; 
+    --text-dim: #ff3333; 
+    --text-muted-ghost: #b32d2d; 
     --red-glow: rgba(255, 0, 0, 0.1); 
     --red-glow-intense: rgba(255, 0, 0, 0.3); 
 }
@@ -34,9 +30,7 @@ body {
     letter-spacing: -0.01em;
 }
 
-/* =====================================================================
-   BACKGROUND ENGINE (Слой с картинкой привидения)
-   ===================================================================== */
+/* BACKGROUND ENGINE */
 .premium-bg-wrapper {
     position: absolute;
     top: 0; left: 0;
@@ -53,11 +47,10 @@ body {
     background-image: url('изображение_8.jpg');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: contain; /* Картинка строго по центру, не растягивается уродливо */
-    opacity: 0.35; /* Привидение аккуратно проступает сзади */
+    background-size: contain; 
+    opacity: 0.35; 
 }
 
-/* Мягкое затемнение (Оверлей 25%) для читаемости текста поверх белых зон картинки */
 .dark-overlay {
     position: absolute;
     top: 0; left: 0;
@@ -65,12 +58,12 @@ body {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-/* CINEMATIC AMBIENT PARTICLES (RED EDITION) */
+/* CINEMATIC AMBIENT PARTICLES */
 .ghost-ambient {
     position: absolute;
     width: 100%; height: 100%;
     top: 0; left: 0;
-    z-index: 2; /* Поверх картинки, но под кнопками */
+    z-index: 2; 
     pointer-events: none;
     overflow: hidden;
 }
@@ -83,28 +76,18 @@ body {
     animation: floatingGhost 14s infinite alternate ease-in-out;
 }
 
-.p-1 {
-    width: 380px; height: 380px;
-    top: -120px; left: -60px;
-}
-
-.p-2 {
-    width: 320px; height: 320px;
-    bottom: -60px; right: -60px;
-    animation-delay: -7s;
-}
+.p-1 { width: 380px; height: 380px; top: -120px; left: -60px; }
+.p-2 { width: 320px; height: 320px; bottom: -60px; right: -60px; animation-delay: -7s; }
 
 @keyframes floatingGhost {
     0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
     100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
 }
 
-/* =====================================================================
-   INTERFACE CONTAINERS (z-index: 3)
-   ===================================================================== */
+/* INTERFACE CONTAINERS */
 .app-container {
     position: relative;
-    z-index: 3; /* Принудительно выводим интерфейс на передний план, чтобы экран не был пустым */
+    z-index: 3; 
     width: 100%; height: 100%;
     display: flex;
     flex-direction: column;
@@ -196,11 +179,9 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-/* MINIMAL SYSTEM STATS (GLASSMORPHISM) */
+/* SYSTEM STATS */
 .system-status {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    display: block;
     margin-bottom: 36px;
 }
 
@@ -209,9 +190,10 @@ body {
     border: 1px solid var(--border-premium);
     border-radius: 14px;
     padding: 16px;
-    backdrop-filter: blur(20px); /* Матовый блюр */
+    backdrop-filter: blur(20px); 
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    width: 100%;
 }
 
 .card-label {
@@ -230,36 +212,31 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.status-verified {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: monospace;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-}
-
-.pulse-indicator {
-    width: 5px; height: 5px;
-    background-color: #ff3333;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #ff3333;
-    animation: ghostPulse 2s infinite ease-in-out;
-}
-
-@keyframes ghostPulse {
-    0%, 100% { opacity: 0.4; transform: scale(0.9); }
-    50% { opacity: 1; transform: scale(1.1); filter: blur(0.5px); }
-}
-
-/* CYBER LOBBY VERTICAL MENU (GLASSMORPHISM) */
-.ghost-menu {
+/* SYSTEM ENGINE MENUS & ANIMATIONS */
+.ghost-menu, .accounts-menu {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.ghost-btn {
+.submenu-title {
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--text-muted-ghost);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+/* ИСПРАВЛЕНО: Сетка 2х7 для удобного выбора аккаунтов на смартфоне */
+.accounts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* БАЗОВЫЕ КНОПКИ СТЕКЛОМОРФИЗМА */
+.ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
     border: 1px solid var(--border-premium);
@@ -267,71 +244,55 @@ body {
     padding: 20px;
     display: flex;
     align-items: center;
+    justify-content: center; 
     cursor: pointer;
-    backdrop-filter: blur(16px); /* Матовый блюр для кнопок */
+    backdrop-filter: blur(16px); 
     -webkit-backdrop-filter: blur(16px);
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
     width: 100%;
     overflow: hidden;
     box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* BUTTON INTERNALS */
-.btn-num {
-    font-family: monospace;
-    font-size: 11px;
-    color: var(--text-dark);
-    margin-right: 12px;
-    transition: color 0.3s ease;
+/* Кнопки внутри сетки делаем чуть компактнее по высоте */
+.grid-btn {
+    padding: 16px 12px;
 }
 
-.btn-icon {
-    font-size: 20px;
-    margin-right: 16px;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
+/* BUTTON TEXT */
 .btn-text {
     font-size: 15px;
-    font-weight: 600;
-    color: var(--text-pure); /* Названия стали ярко-красными */
-    letter-spacing: 0.2px;
-    flex-grow: 1;
-    transition: all 0.3s ease;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Тень для супер-читаемости на фоне белого привидения */
+    font-weight: 700;
+    color: var(--text-pure); 
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); 
 }
 
-/* PREMIUM INTERACTION EFFECTS */
-.ghost-btn:hover {
+.grid-btn .btn-text {
+    font-size: 13px; /* Текст внутри сетки делаем чуть плотнее */
+}
+
+/* INTERACTION EFFECTS */
+.ghost-btn:hover, .grid-btn:hover {
     border-color: var(--border-active);
     box-shadow: 0 0 25px var(--red-glow), inset 0 0 10px rgba(255,0,0,0.02);
     transform: translateY(-1px);
 }
 
-.ghost-btn:hover .btn-text {
-    color: #ffffff; /* Белая подсветка букв при наведении */
-    transform: translateX(4px);
+.ghost-btn:hover .btn-text, .grid-btn:hover .btn-text {
+    color: #ffffff; 
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
-.ghost-btn:hover .btn-num {
-    color: var(--text-muted-ghost);
-}
-
-.ghost-btn:hover .btn-icon {
-    opacity: 1;
-}
-
 /* ACTIVE TACTILE PRESS FEELING */
-.ghost-btn:active {
-    transform: scale(0.98) translateY(0);
+.ghost-btn:active, .grid-btn:active {
+    transform: scale(0.97) translateY(0);
     border-color: rgba(255, 50, 50, 0.8);
     box-shadow: 0 0 15px var(--red-glow-intense);
-    transition: transform 0.04s ease;
 }
 
-/* ВСПLYВАЮЩАЯ КНОПКА НАЗАД (ПОЛУПРОЗРАЧНОЕ СТЕКЛО) */
+/* BACK BUTTON */
 .btn-abort {
     background: rgba(255, 0, 0, 0.03);
     border-color: rgba(255, 0, 0, 0.2); 
@@ -343,10 +304,9 @@ body {
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
 }
 
-.btn-abort .btn-text {
-    color: var(--text-pure);
-}
-
-.btn-abort:hover .btn-text {
-    color: #ffffff;
+/* СЛУЖЕБНЫЙ КЛАСС ДЛЯ ПЛАВНОГО СКРЫТИЯ/ОТКРЫТИЯ ЭКРАНОВ */
+.hidden {
+    display: none !important;
+    opacity: 0;
+    transform: translateY(10px);
 }
