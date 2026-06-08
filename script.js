@@ -28,6 +28,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // НОВАЯ ПРАВКА: Автоматический Realtime-виджет времени под локальную таймзону браузера
+    function initCyberClock() {
+        const timezoneLabel = document.getElementById('cyber-timezone');
+        const dateDisplay = document.getElementById('clock-date');
+        const timeDisplay = document.getElementById('clock-time');
+
+        // Автоопределение локальной временной зоны устройства
+        try {
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            if (timezoneLabel) {
+                timezoneLabel.textContent = `ВРЕМЯ // ${userTimezone.toUpperCase()}`;
+            }
+        } catch (e) {
+            if (timezoneLabel) timezoneLabel.textContent = 'ВРЕМЯ // LOCAL';
+        }
+
+        function updateTime() {
+            const now = new Date();
+
+            // Форматируем день, месяц и год (двузначные с ведущими нулями)
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+
+            // Форматируем часы, минуты и секунды
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // Бесшовно обновляем DOM (без мерцаний благодаря текстовому присвоению)
+            if (dateDisplay) dateDisplay.textContent = `${day}.${month}.${year}`;
+            if (timeDisplay) timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        updateTime(); // Стартовый мгновенный запуск
+        setInterval(updateTime, 1000); // Ежесекундный цикл тика часов
+    }
+    
+    initCyberClock();
+
     // 3. База данных описаний товаров
     const productDescriptions = {
         "novoregi": "Свежезарегистрированный аккаунт с minimal-историей активности. Отлично подойдет для новых проектов и личного использования.",
@@ -42,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "9_years": "Очень старый аккаунт с длительной историю существования. Выделяется среди большинства современных регистраций.",
         "10_years": "Десятилетний аккаунт с редким возрастом. Подходит тем, кто ищет максимально старую регистрацию.",
         "11_years": "Один из наиболее возрастных аккаунтов Telegram. Отличается редкостью и длительным сроком существования.",
-        "12_years": "Редкий аккаунт с историей практически с момента появления платформы. Максимальная выдержка и высокий возраст.",
+        "12_years": "Редкий аккаунт с история практически с момента появления платформы. Максимальная выдержка и высокий возраст.",
         "13_years": "Эксклюзивный аккаунт с максимально возможной выдержкой. Наиболее редкая категория среди возрастных аккаунтов."
     };
 
