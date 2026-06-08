@@ -11,18 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // СИНХРОНИЗАЦИЯ БАЛАНСА: Парсим параметры из URL, переданные ботом при генерации инлайна
+    // ДВУХРЕЖИМНАЯ СИНХРОНИЗАЦИЯ БАЛАНСА БЕЗ ЗАГЛУШЕК
     const urlParams = new URLSearchParams(window.location.search);
     const databaseBalance = urlParams.get('balance');
     const balanceValueElement = document.getElementById('balance-value');
     
     if (balanceValueElement) {
         if (databaseBalance !== null) {
+            // Режим А: Зашли через инлайн-ссылку (Баланс передан мгновенно)
             balanceValueElement.textContent = `${parseFloat(databaseBalance).toFixed(2)} USDT`;
-            console.log(`[GHOST ENGINE] Баланс успешно синхронизирован с БД: ${databaseBalance} USDT`);
+            console.log(`[GHOST ENGINE] Баланс передан из URL инлайна: ${databaseBalance} USDT`);
         } else {
-            // Если Mini App запущен кнопкой меню [ VPN ], берем дефолтный ноль
-            balanceValueElement.textContent = "0.00 USDT";
+            // Режим Б: Зашли через Reply-кнопку меню [ VPN ].
+            balanceValueElement.textContent = "Синхронизация...";
+            
+            // Кидаем хук боту. Бот пришлет текущий баланс текстом прямо в чат!
+            setTimeout(() => {
+                tg?.sendData(JSON.stringify({ 
+                    action: 'request_balance_sync' 
+                }));
+                balanceValueElement.textContent = "Запрос отправлен";
+            }, 800);
         }
     }
 

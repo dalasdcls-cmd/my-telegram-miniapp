@@ -1,7 +1,7 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    --bg-surface: rgba(15, 6, 6, 0.25);
+    --bg-surface: rgba(15, 6, 6, 0.25); /* Матовое стекло 25% */
     --border-premium: rgba(255, 40, 40, 0.15); 
     --border-active: rgba(255, 30, 30, 0.6); 
     --text-pure: #ff3333; 
