@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
-    // ИСПРАВЛЕНО: Навигационные узлы модального окна пополнения баланса
+    // Навигационные узлы модального окна пополнения баланса
     const depositModal = document.getElementById('deposit-modal');
     const openDepositBtn = document.getElementById('open-deposit-btn');
     const depositCloseBtn = document.getElementById('deposit-close-btn');
@@ -71,42 +71,71 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSelectedType = "";
     let currentSelectedName = "";
 
-    // Открытие окна пополнения баланса при клике на "+"
+    // Открытие модалки пополнения счета
     if (openDepositBtn && depositModal) {
         openDepositBtn.addEventListener('click', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            if (depositAmountInput) depositAmountInput.value = ""; // Очищаем старый ввод
+            
+            // Восстанавливаем дефолтный вид модалки при открытии
+            const modalTitleElement = depositModal.querySelector('.modal-title');
+            const depositTipElement = depositModal.querySelector('.deposit-tip');
+            if (modalTitleElement) modalTitleElement.textContent = "Crypto Bot (@send)";
+            if (depositTipElement) depositTipElement.textContent = "Укажите сумму пополнения в USDT (мин. 1 USDT). После генерации счета нажмите кнопку для перехода к оплате.";
+            if (depositAmountInput) {
+                depositAmountInput.value = "";
+                depositAmountInput.parentElement.style.display = 'flex';
+            }
+            if (createInvoiceBtn) {
+                createInvoiceBtn.querySelector('.btn-text').textContent = "ОПЛАТИТЬ";
+                createInvoiceBtn.onclick = null; // Стираем обработчик проверки, если он завис
+            }
+            
             depositModal.classList.add('open');
         });
     }
 
-    // Закрытие окна пополнения
     if (depositCloseBtn && depositModal) {
         depositCloseBtn.addEventListener('click', () => depositModal.classList.remove('open'));
     }
 
-    // Клик по кнопке "ОПЛАТИТЬ" внутри окна пополнения
+    // Логика кнопки оплаты с триггером переключения в "Проверить платеж"
     if (createInvoiceBtn) {
-        createInvoiceBtn.addEventListener('click', () => {
+        createInvoiceBtn.addEventListener('click', function handleInitialPay() {
             const amount = parseFloat(depositAmountInput?.value);
-            
             if (!amount || amount < 1) {
                 if (tg) tg.showAlert("Пожалуйста, введите корректную сумму (минимум 1 USDT).");
                 return;
             }
-
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            depositModal.classList.remove('open');
 
-            // Отправляем JSON-инструкцию в Python-бот для генерации счета в @send
+            const modalTitleElement = depositModal.querySelector('.modal-title');
+            const depositTipElement = depositModal.querySelector('.deposit-tip');
+            
+            if (modalTitleElement) modalTitleElement.textContent = "Ожидание оплаты...";
+            if (depositTipElement) depositTipElement.innerHTML = `Счет на <b>${amount} USDT</b> передан в обработку.<br>Оплатите его в Crypto Bot и нажмите кнопку ниже для проверки статуса.`;
+            if (depositAmountInput) depositAmountInput.parentElement.style.display = 'none';
+            
+            createInvoiceBtn.querySelector('.btn-text').textContent = "ПРОВЕРИТЬ ПЛАТЕЖ";
+
+            // Отправляем первый хук-запрос боту на генерацию инвойса
             tg?.sendData(JSON.stringify({ 
                 action: 'deposit_request', 
                 amount: amount 
             }));
+
+            // Переназначаем логику клика на принудительную проверку статуса
+            createInvoiceBtn.onclick = () => {
+                if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+                
+                tg?.sendData(JSON.stringify({ 
+                    action: 'check_deposit'
+                }));
+                
+                depositModal.classList.remove('open');
+            };
         });
     }
 
-    // Переключение лобби / подменю товаров
     function toggleAccountsMenu() {
         if (!mainLobby || !accountsLobby) return;
         if (mainLobby.classList.contains('active')) {
@@ -135,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Обработка кликов остальных кнопок главного меню
     const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn):not(#create-invoice-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -150,13 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Открытие карточки описания товара из сетки
     const gridButtons = document.querySelectorAll('.grid-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const accType = btn.getAttribute('data-acc');
             const accName = btn.querySelector('.btn-text')?.textContent || "Unknown Asset";
-            
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
             currentSelectedType = accType;
@@ -170,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Закрытие окон при тапе на свободную область вокруг карточки
     window.addEventListener('click', (e) => {
         if (e.target === productModal) productModal.classList.remove('open');
         if (e.target === depositModal) depositModal.classList.remove('open');
@@ -180,12 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
         modalCloseBtn.addEventListener('click', () => productModal.classList.remove('open'));
     }
 
-    // Подтверждение покупки внутри карточки описания
     if (modalConfirmBtn) {
         modalConfirmBtn.addEventListener('click', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             productModal.classList.remove('open');
-
             tg?.sendData(JSON.stringify({ 
                 action: 'buy_tg_account', 
                 type: currentSelectedType,
