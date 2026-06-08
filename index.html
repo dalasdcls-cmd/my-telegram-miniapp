@@ -1,17 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>GHOST // Private Access</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
 <body>
-    <!-- НАЧАЛО НОВОГО СЛОЯ: Задний фон с изображением и оверлеем -->
-    <div class="premium-bg-wrapper">
-        <div class="ghost-bg-image"></div>
-        <div class="dark-overlay"></div>
-    </div>
-    <!-- КОНЕЦ НОВОГО СЛОЯ -->
-
-    <!-- Кинематографические частицы плавают поверх картинки под текстом -->
     <div class="ghost-ambient">
         <div class="particle p-1"></div>
         <div class="particle p-2"></div>
     </div>
 
-    <!-- Твой существующий контейнер с кнопками (не меняй его внутренности) -->
     <div class="app-container">
-        ...
+        <header class="ghost-header">
+            <div class="brand-section">
+                <div class="logo-container">
+                    <span class="logo-text">GHOST</span>
+                    <span class="logo-badge">ELITE ACCESS</span>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <div class="avatar-wrapper">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar-core" id="user-avatar">G</div>
+                </div>
+                <div class="user-meta">
+                    <span class="meta-label">OPERATOR //</span>
+                    <h1 class="username" id="username">@username</h1>
+                </div>
+            </div>
+            
+            <div class="system-status">
+                <div class="status-card">
+                    <span class="card-label">ALLOCATED BALANCE</span>
+                    <span class="card-value" id="balance-value">0.00 USDT</span>
+                </div>
+                <div class="status-card">
+                    <span class="card-label">NETWORK STATUS</span>
+                    <span class="card-value status-verified">
+                        <span class="pulse-indicator"></span>SECURED
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <main class="ghost-menu">
+            <button class="ghost-btn" data-action="verifications">
+                <span class="btn-num">01 //</span>
+                <span class="btn-icon">👥</span>
+                <span class="btn-text">Верификации</span>
+                <span class="btn-scanlines"></span>
+            </button>
+            
+            <button class="ghost-btn" data-action="manuals">
+                <span class="btn-num">02 //</span>
+                <span class="btn-icon">📘</span>
+                <span class="btn-text">Мануалы</span>
+                <span class="btn-scanlines"></span>
+            </button>
+            
+            <button class="ghost-btn" data-action="accounts">
+                <span class="btn-num">03 //</span>
+                <span class="btn-icon">🌐</span>
+                <span class="btn-text">Тг аккаунты</span>
+                <span class="btn-scanlines"></span>
+            </button>
+            
+            <button class="ghost-btn" data-action="proxy">
+                <span class="btn-num">04 //</span>
+                <span class="btn-icon">🔒</span>
+                <span class="btn-text">Прокси</span>
+                <span class="btn-scanlines"></span>
+            </button>
+
+            <button class="ghost-btn btn-abort" data-action="back">
+                <span class="btn-num">00 //</span>
+                <span class="btn-icon">↩️</span>
+                <span class="btn-text">Назад</span>
+            </button>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
