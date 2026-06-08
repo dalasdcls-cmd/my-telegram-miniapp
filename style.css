@@ -1,0 +1,359 @@
+/* GHOST RED PREMIUM VARIABLES */
+:root {
+    --bg-main: #000000;
+    
+    /* ИСПРАВЛЕНО: Сделали карточки и кнопки прозрачным стеклом (20-30% видимости) */
+    --bg-surface: rgba(15, 5, 5, 0.25); 
+    
+    --border-premium: rgba(255, 40, 40, 0.15); /* Чуть более выраженная рамка для читаемости границ */
+    --border-active: rgba(255, 30, 30, 0.6); /* Яркая рамка при наведении */
+    --text-pure: #ff3333; /* Ярко-красный основной шрифт */
+    --text-dim: #ff3333; /* Текст кнопок */
+    --text-muted-ghost: #b32d2d; /* Приподняли контраст темно-красного для читаемости на фоне */
+    --text-dark: #660e0e; /* Трафаретные индексы 01 // */
+    --red-glow: rgba(255, 0, 0, 0.1); /* Мягкое красное свечение */
+    --red-glow-intense: rgba(255, 0, 0, 0.3); /* Интенсивное свечение при клике */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-pure);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    letter-spacing: -0.01em;
+}
+
+/* =====================================================================
+   BACKGROUND ENGINE (Слой с картинкой изображение_8.jpg)
+   ===================================================================== */
+.premium-bg-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    background-color: var(--bg-main);
+}
+
+.ghost-bg-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('изображение_8.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain; /* Картинка строго по центру, без деструктивного растягивания */
+    opacity: 0.35; /* Оптимальный баланс видимости привидения */
+}
+
+/* Мягкое затемнение поверх картинки (Dark Overlay 25%) для контраста текста */
+.dark-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* CINEMATIC AMBIENT PARTICLES (RED EDITION) */
+.ghost-ambient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    z-index: 2; /* Поверх картинки, но под кнопками */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,0,0.05) 0%, transparent 80%);
+    filter: blur(50px);
+    animation: floatingGhost 14s infinite alternate ease-in-out;
+}
+
+.p-1 {
+    width: 380px;
+    height: 380px;
+    top: -120px;
+    left: -60px;
+}
+
+.p-2 {
+    width: 320px;
+    height: 320px;
+    bottom: -60px;
+    right: -60px;
+    animation-delay: -7s;
+}
+
+@keyframes floatingGhost {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+    100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
+}
+
+/* CONTAINER ARCHITECTURE */
+.app-container {
+    position: relative;
+    z-index: 3; /* Весь контент находится на самом верхнем слое */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 20px;
+    overflow-y: auto;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+}
+
+/* BRAND & LOGO HEADER */
+.brand-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.15);
+    padding-bottom: 14px;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 0 14px rgba(255, 0, 0, 0.5), 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.logo-badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-muted-ghost);
+    border: 1px solid var(--text-dark);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 10px;
+    vertical-align: middle;
+    background: rgba(0,0,0,0.4);
+}
+
+/* PROFILE DESIGN */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 48px;
+    height: 48px;
+}
+
+.avatar-glow {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    background: #ff0000;
+    filter: blur(8px);
+    opacity: 0.2;
+}
+
+.avatar-core {
+    position: relative;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: #000000;
+    border: 1px solid rgba(255, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-pure);
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+}
+
+.user-meta .meta-label {
+    font-size: 10px;
+    font-family: monospace;
+    color: var(--text-muted-ghost);
+    letter-spacing: 1px;
+}
+
+.username {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--text-pure);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* MINIMAL SYSTEM STATS (GLASSMORPHISM) */
+.system-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+}
+
+.status-card {
+    background: var(--bg-surface); /* Полупрозрачность 25% */
+    border: 1px solid var(--border-premium);
+    border-radius: 14px;
+    padding: 16px;
+    /* ИСПРАВЛЕНО: Добавлен матовый эффект размытия заднего плана */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.card-label {
+    font-size: 9px;
+    font-family: monospace;
+    color: var(--text-muted-ghost);
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.card-value {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.status-verified {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: monospace;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.pulse-indicator {
+    width: 5px; height: 5px;
+    background-color: #ff3333;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ff3333;
+    animation: ghostPulse 2s infinite ease-in-out;
+}
+
+@keyframes ghostPulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); filter: blur(0.5px); }
+}
+
+/* CYBER LOBBY VERTICAL MENU (GLASSMORPHISM) */
+.ghost-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ghost-btn {
+    position: relative;
+    background: var(--bg-surface); /* Полупрозрачность 25% */
+    border: 1px solid var(--border-premium);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    /* ИСПРАВЛЕНО: Добавлен матовый эффект размытия для кнопок */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* BUTTON INTERNALS */
+.btn-num {
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--text-dark);
+    margin-right: 12px;
+    transition: color 0.3s ease;
+}
+
+.btn-icon {
+    font-size: 20px;
+    margin-right: 16px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.btn-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-pure); 
+    letter-spacing: 0.2px;
+    flex-grow: 1;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Тень для идеальной читаемости поверх белого привидения */
+}
+
+/* PREMIUM INTERACTION EFFECTS */
+.ghost-btn:hover {
+    border-color: var(--border-active);
+    box-shadow: 0 0 25px var(--red-glow), inset 0 0 10px rgba(255,0,0,0.02);
+    transform: translateY(-1px);
+}
+
+.ghost-btn:hover .btn-text {
+    color: #ffffff; /* При наведении текст станет белым для красивого контраста */
+    transform: translateX(4px);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.ghost-btn:hover .btn-num {
+    color: var(--text-muted-ghost);
+}
+
+.ghost-btn:hover .btn-icon {
+    opacity: 1;
+}
+
+/* ACTIVE TACTILE PRESS FEELING */
+.ghost-btn:active {
+    transform: scale(0.98) translateY(0);
+    border-color: rgba(255, 50, 50, 0.8);
+    box-shadow: 0 0 15px var(--red-glow-intense);
+    transition: transform 0.04s ease;
+}
+
+/* ABORT / BACK BUTTON SPECIAL TRANSLUCENT DESIGN (Нижняя кнопка НАЗАД) */
+.btn-abort {
+    background: rgba(255, 0, 0, 0.03);
+    border-color: rgba(255, 0, 0, 0.2); /* Слегка увеличили контраст рамки */
+    margin-top: 12px;
+}
+
+.btn-abort:hover {
+    border-color: rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+}
+
+.btn-abort .btn-text {
+    color: var(--text-pure);
+}
+
+.btn-abort:hover .btn-text {
+    color: #ffffff;
+}
