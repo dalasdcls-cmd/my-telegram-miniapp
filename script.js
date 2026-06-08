@@ -11,31 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // ДВУХРЕЖИМНАЯ СИНХРОНИЗАЦИЯ БАЛАНСА
+    // СИНХРОНИЗАЦИЯ БАЛАНСА: Парсим параметры из URL, переданные ботом при генерации инлайна
     const urlParams = new URLSearchParams(window.location.search);
     const databaseBalance = urlParams.get('balance');
     const balanceValueElement = document.getElementById('balance-value');
     
     if (balanceValueElement) {
         if (databaseBalance !== null) {
-            // Режим А: Зашли через инлайн-ссылку (Баланс мгновенно передан)
             balanceValueElement.textContent = `${parseFloat(databaseBalance).toFixed(2)} USDT`;
-            console.log(`[GHOST ENGINE] Баланс передан из URL инлайна: ${databaseBalance} USDT`);
+            console.log(`[GHOST ENGINE] Баланс успешно синхронизирован с БД: ${databaseBalance} USDT`);
         } else {
-            // Режим Б: Зашли через Reply-кнопку меню [ VPN ]
-            balanceValueElement.textContent = "Синхронизация...";
-            
-            // Отправляем бэкенду скрытый запрос. Бот продублирует текущие цифры сообщением в чат!
-            setTimeout(() => {
-                tg?.sendData(JSON.stringify({ 
-                    action: 'request_balance_sync' 
-                }));
-                balanceValueElement.textContent = "Обновлено в чате";
-            }, 800);
+            // Если Mini App запущен кнопкой меню [ VPN ], берем дефолтный ноль
+            balanceValueElement.textContent = "0.00 USDT";
         }
     }
 
-    // 2. Настройка профиля
+    // 2. Настройка профиля и подгрузка РЕАЛЬНОЙ аватарки
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
@@ -78,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const btnAccounts = document.querySelector('[data-action="accounts"]');
 
+    // Узлы модального окна карточки товара
     const productModal = document.getElementById('product-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');

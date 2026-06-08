@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>GHOST // Private Access</title>
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=15">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -44,12 +44,9 @@
             </div>
             
             <div class="system-status">
-                <div class="status-card balance-card">
-                    <div class="balance-info">
-                        <span class="card-label">БАЛАНС</span>
-                        <span class="card-value" id="balance-value">0.00 USDT</span>
-                    </div>
-                    <button class="btn-deposit-plus" id="open-deposit-btn">+</button>
+                <div class="status-card">
+                    <span class="card-label">БАЛАНС</span>
+                    <span class="card-value" id="balance-value">0.00 USDT</span>
                 </div>
             </div>
         </header>
@@ -117,27 +114,8 @@
             </div>
         </div>
 
-        <div class="product-modal-overlay" id="deposit-modal">
-            <div class="product-modal-card">
-                <div class="modal-close" id="deposit-close-btn">×</div>
-                <div class="modal-tag">// ПОПОЛНЕНИЕ БАЛАНСА</div>
-                <h2 class="modal-title">Crypto Bot (@send)</h2>
-                
-                <div class="deposit-input-wrapper">
-                    <span class="currency-tag">USDT</span>
-                    <input type="number" id="deposit-amount" placeholder="0.00" min="1" step="0.1">
-                </div>
-                
-                <p class="deposit-tip">Укажите сумму пополнения в USDT (мин. 1 USDT). После генерации счета нажмите кнопку для перехода к оплате.</p>
-                
-                <button class="ghost-btn btn-confirm-buy" id="create-invoice-btn">
-                    <span class="btn-text">ОПЛАТИТЬ</span>
-                </button>
-            </div>
-        </div>
-
     </div>
 
-    <script src="script.js?v=12"></script>
+    <script src="script.js?v=15"></script>
 </body>
 </html>
