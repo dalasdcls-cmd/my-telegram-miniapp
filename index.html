@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>GHOST // Private Access</title>
-    <link rel="stylesheet" href="style.css?v=4">
+    <!-- Версионность ?v=5 защищает от жесткого кэширования Telegram -->
+    <link rel="stylesheet" href="style.css?v=5">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
+    <!-- ФОНОВЫЙ ДВИЖОК: Слой с картинкой привидения -->
     <div class="premium-bg-wrapper">
         <div class="ghost-bg-image"></div>
         <div class="dark-overlay"></div>
     </div>
 
+    <!-- Анимированные частицы -->
     <div class="ghost-ambient">
         <div class="particle p-1"></div>
         <div class="particle p-2"></div>
     </div>
 
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР ПРИЛОЖЕНИЯ -->
     <div class="app-container">
         
+        <!-- HEADER -->
         <header class="ghost-header">
             <div class="brand-section">
                 <div class="logo-container">
@@ -48,8 +53,10 @@
             </div>
         </header>
 
+        <!-- ИНТЕРФЕЙС МЕНЮ С АНИМАЦИЕЙ ПЕРЕКЛЮЧЕНИЯ -->
         <div class="menu-slider-wrapper">
             
+            <!-- ГЛАВНОЕ МЕНЮ -->
             <main class="ghost-menu active" id="main-lobby">
                 <button class="ghost-btn" data-action="verifications">
                     <span class="btn-text">Верификации</span>
@@ -72,6 +79,7 @@
                 </button>
             </main>
 
+            <!-- ПОДМЕНЮ ТГ АККАУНТОВ -->
             <section class="accounts-menu" id="accounts-lobby">
                 <div class="submenu-title">// ВЫБОР КАТЕГОРИИ АКТИВОВ</div>
                 
@@ -96,10 +104,24 @@
                     <span class="btn-text">Назад</span>
                 </button>
             </section>
-
         </div>
+
+        <!-- НОВЫЙ БЛОК: Премиальное модальное окно описания товара -->
+        <div class="product-modal-overlay" id="product-modal">
+            <div class="product-modal-card">
+                <div class="modal-close" id="modal-close-btn">×</div>
+                <div class="modal-tag">// КАРТОЧКА АКТИВА</div>
+                <h2 class="modal-title" id="modal-title">Название товара</h2>
+                <p class="modal-description" id="modal-description">Описание товара...</p>
+                
+                <button class="ghost-btn btn-confirm-buy" id="modal-confirm-btn">
+                    <span class="btn-text">ПОДТВЕРДИТЬ ПОКУПКУ</span>
+                </button>
+            </div>
+        </div>
+
     </div>
 
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>

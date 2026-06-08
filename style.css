@@ -1,7 +1,7 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    --bg-surface: rgba(15, 6, 6, 0.25); 
+    --bg-surface: rgba(15, 6, 6, 0.25); /* Матовое стекло 25% */
     --border-premium: rgba(255, 40, 40, 0.15); 
     --border-active: rgba(255, 30, 30, 0.6); 
     --text-pure: #ff3333; 
@@ -112,39 +112,25 @@ body {
 .card-label { font-size: 9px; font-family: monospace; color: var(--text-muted-ghost); letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
 .card-value { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
 
-/* =====================================================================
-   MODERN PREMIUM SLIDER (Мягкое смещение интерфейса вместо display:none)
-   ===================================================================== */
+/* SLIDER ENGINE */
 .menu-slider-wrapper {
     position: relative;
     width: 100%;
     display: grid;
     grid-template-columns: 100%;
 }
-
 .ghost-menu, .accounts-menu {
-    grid-area: 1 / 1 / 2 / 2; /* Накладываем меню друг на друга */
+    grid-area: 1 / 1 / 2 / 2;
     display: flex;
     flex-direction: column;
     gap: 12px;
     opacity: 0;
     pointer-events: none;
     transform: translateX(15px);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-/* Левое меню уходит влево при деактивации */
-.ghost-menu:not(.active) {
-    transform: translateX(-15px);
-}
-
-/* Активное состояние (Плавный въезд и появление) */
-.ghost-menu.active, .accounts-menu.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(0);
-}
+.ghost-menu:not(.active) { transform: translateX(-15px); }
+.ghost-menu.active, .accounts-menu.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
 
 .submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -166,13 +152,85 @@ body {
 .btn-text { font-size: 15px; font-weight: 700; color: var(--text-pure); letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); }
 .grid-btn .btn-text { font-size: 13px; }
 
-/* HOVERS & ACTIONS */
-.ghost-btn:hover, .grid-btn:hover {
-    border-color: var(--border-active);
-    box-shadow: 0 0 25px var(--red-glow), inset 0 0 10px rgba(255,0,0,0.02);
-}
+.ghost-btn:hover, .grid-btn:hover { border-color: var(--border-active); box-shadow: 0 0 25px var(--red-glow), inset 0 0 10px rgba(255,0,0,0.02); }
 .ghost-btn:hover .btn-text, .grid-btn:hover .btn-text { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
 .ghost-btn:active, .grid-btn:active { transform: scale(0.98); }
 
 .btn-abort { background: rgba(255, 0, 0, 0.03); border-color: rgba(255, 0, 0, 0.2); margin-top: 12px; }
 .btn-abort:hover { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); }
+
+/* =====================================================================
+   PRODUCT MODAL COMPONENT (Стильное всплывающее стекло описания)
+   ===================================================================== */
+.product-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.product-modal-card {
+    background: rgba(20, 8, 8, 0.85);
+    border: 1px solid rgba(255, 40, 40, 0.3);
+    box-shadow: 0 16px 64px rgba(255, 0, 0, 0.15);
+    border-radius: 20px;
+    width: 100%; max-width: 360px;
+    padding: 28px 24px;
+    position: relative;
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+}
+
+.product-modal-overlay.open .product-modal-card {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-size: 24px; color: var(--text-muted-ghost);
+    cursor: pointer; transition: color 0.2s ease;
+}
+.modal-close:hover { color: #fff; }
+
+.modal-tag {
+    font-family: monospace; font-size: 10px;
+    color: var(--text-muted-ghost); letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.modal-title {
+    font-size: 20px; font-weight: 800;
+    color: #ffffff; letter-spacing: -0.3px;
+    margin-bottom: 14px;
+    text-shadow: 0 0 10px rgba(255, 50, 50, 0.3);
+}
+
+.modal-description {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: #e2e8f0; margin-bottom: 24px;
+    letter-spacing: 0.1px;
+}
+
+.btn-confirm-buy {
+    background: rgba(255, 0, 0, 0.12);
+    border-color: rgba(255, 50, 50, 0.5);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.15);
+}
+.btn-confirm-buy:hover {
+    background: #ff3333;
+    border-color: #ffffff;
+    box-shadow: 0 0 30px rgba(255, 50, 50, 0.5);
+}

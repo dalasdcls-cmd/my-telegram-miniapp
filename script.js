@@ -23,30 +23,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Поиск узлов навигации
+    // База данных описаний товаров
+    const productDescriptions = {
+        "novoregi": "Свежезарегистрированный аккаунт с минимальной историей активности. Отлично подойдет для новых проектов и личного использования.",
+        "1_year": "Аккаунт с выдержкой более одного года. Имеет естественный возраст и выглядит значительно надежнее нового аккаунта.",
+        "2_years": "Аккаунт с хорошей выдержкой и подтвержденным возрастом. Популярный выбор благодаря оптимальному соотношению цены и возраста.",
+        "3_years": "Проверенный временем аккаунт с солидным сроком существования. Вызывает больше доверия за счет длительной истории регистрации.",
+        "4_years": "Возрастной аккаунт с многолетней выдержкой. Подходит для пользователей, которым важен естественный возраст аккаунта.",
+        "5_years": "Старый аккаунт с длительной историей существования. Отличается хорошей выдержкой и высоким уровнем доверия по возрасту.",
+        "6_years": "Аккаунт с внушительным сроком регистрации. Ценится за естественность и длительное присутствие в Telegram.",
+        "7_years": "Редкий возрастной аккаунт с многолетней историей. Отличный выбор для ценителей старых регистраций.",
+        "8_years": "Аккаунт ранних лет Telegram с серьезной выдержкой. Высоко ценится благодаря своему возрасту.",
+        "9_years": "Очень старый аккаунт с длительной историей существования. Выделяется среди большинства современных регистраций.",
+        "10_years": "Десятилетний аккаунт с редким возрастом. Подходит тем, кто ищет максимально старую регистрацию.",
+        "11_years": "Один из наиболее возрастных аккаунтов Telegram. Отличается редкостью и длительным сроком существования.",
+        "12_years": "Редкий аккаунт с историей практически с момента появления платформы. Максимальная выдержка и высокий возраст.",
+        "13_years": "Эксклюзивный аккаунт с максимально возможной выдержкой. Наиболее редкая категория среди возрастных аккаунтов."
+    };
+
+    // Навигационные узлы
     const mainLobby = document.getElementById('main-lobby');
     const accountsLobby = document.getElementById('accounts-lobby');
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const btnAccounts = document.querySelector('[data-action="accounts"]');
 
-    // Функция переключения между Лобби и Аккаунтами
+    // Узлы модального окна
+    const productModal = document.getElementById('product-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+
+    // Переменные для хранения текущего выбранного товара
+    let currentSelectedType = "";
+    let currentSelectedName = "";
+
+    // Функция переключения главного меню
     function toggleAccountsMenu() {
         if (!mainLobby || !accountsLobby) return;
-        
         if (mainLobby.classList.contains('active')) {
-            // Открываем аккаунты
             mainLobby.classList.remove('active');
             accountsLobby.classList.add('active');
-            console.log("[GHOST ENGINE] Раздел Тг Аккаунты развернут.");
         } else {
-            // Закрываем аккаунты (Повторный клик)
             accountsLobby.classList.remove('active');
             mainLobby.classList.add('active');
-            console.log("[GHOST ENGINE] Возврат в основное лобби.");
         }
     }
 
-    // 1. Обработка клика по кнопке ТГ Аккаунты (С поддержкой повторного закрытия)
     if (btnAccounts) {
         btnAccounts.addEventListener('click', (e) => {
             e.preventDefault();
@@ -55,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Кнопка "Назад" внутри подменю аккаунтов
     if (backToLobbyBtn) {
         backToLobbyBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -65,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Обработка остальных стандартных кнопок главного лобби
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby)');
+    // Обработка остальных кнопок главного лобби
+    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.getAttribute('data-action');
@@ -75,27 +97,65 @@ document.addEventListener('DOMContentLoaded', () => {
             if (action === 'back') {
                 if (tg) tg.close();
             } else if (action) {
-                console.log(`[GHOST ENGINE] Сигнал на событие: open_${action}`);
                 tg?.sendData(JSON.stringify({ action: `open_${action}` }));
             }
         });
     });
 
-    // 4. Логика покупки аккаунта из сетки активов
+    // 4. Открытие карточки описания при выборе аккаунта
     const gridButtons = document.querySelectorAll('.grid-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const accType = btn.getAttribute('data-acc');
             const accName = btn.querySelector('.btn-text')?.textContent || "Unknown Asset";
             
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            console.log(`[GHOST ENGINE] Оформление покупки: ${accName}`);
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
-            tg?.sendData(JSON.stringify({ 
-                action: 'buy_tg_account', 
-                type: accType,
-                name: accName 
-            }));
+            // Запоминаем выбор
+            currentSelectedType = accType;
+            currentSelectedName = accName;
+
+            // Подставляем данные в модалку
+            if (modalTitle && modalDescription && productModal) {
+                modalTitle.textContent = accName;
+                modalDescription.textContent = productDescriptions[accType] || "Описание временно отсутствует.";
+                
+                // Плавно открываем окно
+                productModal.classList.add('open');
+            }
         });
     });
+
+    // Закрытие модального окна на крестик
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', () => {
+            productModal.classList.remove('open');
+        });
+    }
+
+    // Закрытие модального окна по клику на серую область вокруг карточки
+    if (productModal) {
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                productModal.classList.remove('open');
+            }
+        });
+    }
+
+    // Клик по кнопке "ПОДТВЕРДИТЬ ПОКУПКУ" внутри карточки описания
+    if (modalConfirmBtn) {
+        modalConfirmBtn.addEventListener('click', () => {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            
+            console.log(`[GHOST ENGINE] Покупка подтверждена: ${currentSelectedName}`);
+            productModal.classList.remove('open');
+
+            // Отправляем JSON-строку в твой bot.py
+            tg?.sendData(JSON.stringify({ 
+                action: 'buy_tg_account', 
+                type: currentSelectedType,
+                name: currentSelectedName 
+            }));
+        });
+    }
 });
