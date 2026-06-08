@@ -11,7 +11,21 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // 2. Настройка профиля, аватарки и получение Telegram ID
+    // СИНХРОНИЗАЦИЯ БАЛАНСА: Парсим параметры из URL, переданные ботом
+    const urlParams = new URLSearchParams(window.location.search);
+    const databaseBalance = urlParams.get('balance');
+    const balanceValueElement = document.getElementById('balance-value');
+    
+    if (balanceValueElement) {
+        if (databaseBalance !== null) {
+            balanceValueElement.textContent = `${parseFloat(databaseBalance).toFixed(2)} USDT`;
+            console.log(`[GHOST ENGINE] Баланс успешно синхронизирован с БД: ${databaseBalance} USDT`);
+        } else {
+            balanceValueElement.textContent = "0.00 USDT";
+        }
+    }
+
+    // 2. Настройка профиля и подгрузка РЕАЛЬНОЙ аватарки
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
@@ -76,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         openDepositBtn.addEventListener('click', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             
-            // Восстанавливаем дефолтный вид модалки при открытии
             const modalTitleElement = depositModal.querySelector('.modal-title');
             const depositTipElement = depositModal.querySelector('.deposit-tip');
             if (modalTitleElement) modalTitleElement.textContent = "Crypto Bot (@send)";
@@ -87,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (createInvoiceBtn) {
                 createInvoiceBtn.querySelector('.btn-text').textContent = "ОПЛАТИТЬ";
-                createInvoiceBtn.onclick = null; // Стираем обработчик проверки, если он завис
+                createInvoiceBtn.onclick = null;
             }
             
             depositModal.classList.add('open');
@@ -98,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         depositCloseBtn.addEventListener('click', () => depositModal.classList.remove('open'));
     }
 
-    // Логика кнопки оплаты с триггером переключения в "Проверить платеж"
+    // СИНХРОНИЗАЦИЯ: Логика создания и проверки платежей
     if (createInvoiceBtn) {
         createInvoiceBtn.addEventListener('click', function handleInitialPay() {
             const amount = parseFloat(depositAmountInput?.value);
@@ -112,18 +125,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const depositTipElement = depositModal.querySelector('.deposit-tip');
             
             if (modalTitleElement) modalTitleElement.textContent = "Ожидание оплаты...";
-            if (depositTipElement) depositTipElement.innerHTML = `Счет на <b>${amount} USDT</b> передан в обработку.<br>Оплатите его в Crypto Bot и нажмите кнопку ниже для проверки статуса.`;
+            if (depositTipElement) depositTipElement.innerHTML = `Счет на <b>${amount} USDT</b> передан в обработку.<br>Оплатите пришедший инвойс в чате с ботом и нажмите кнопку ниже для проверки статуса.`;
             if (depositAmountInput) depositAmountInput.parentElement.style.display = 'none';
             
             createInvoiceBtn.querySelector('.btn-text').textContent = "ПРОВЕРИТЬ ПЛАТЕЖ";
 
-            // Отправляем первый хук-запрос боту на генерацию инвойса
+            // Отправляем сигнал боту
             tg?.sendData(JSON.stringify({ 
                 action: 'deposit_request', 
                 amount: amount 
             }));
 
-            // Переназначаем логику клика на принудительную проверку статуса
+            // Повторный клик — принудительный чек статуса
             createInvoiceBtn.onclick = () => {
                 if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
                 
@@ -160,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             accountsLobby.classList.remove('active');
-            mainLobby.classList.add('active');
+            mainLobby.add('active');
         });
     }
 
