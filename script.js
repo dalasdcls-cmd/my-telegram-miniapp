@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("[GHOST ENGINE] Системный запуск лобби...");
 
+    // 1. Инициализация Telegram WebApp API
     const tg = window.Telegram?.WebApp;
     if (tg) {
         tg.ready();
@@ -10,20 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // Инициализация профиля
+    // 2. Настройка профиля и подгрузка РЕАЛЬНОЙ аватарки
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
-        const avatarElement = document.getElementById('user-avatar');
+        const avatarImg = document.getElementById('user-avatar-img');
+
         if (usernameElement) {
             usernameElement.textContent = user.username ? `@${user.username}` : `${user.first_name} ${user.last_name || ''}`.trim();
         }
-        if (avatarElement && user.first_name) {
-            avatarElement.textContent = user.first_name.charAt(0).toUpperCase();
+        
+        // Если у пользователя есть аватарка в Telegram — подставляем её в пустой неоновый круг
+        if (avatarImg && user.photo_url) {
+            avatarImg.src = user.photo_url;
+            avatarImg.classList.add('visible');
+            console.log("[GHOST ENGINE] Аватарка успешно инициализирована.");
         }
     }
 
-    // База данных описаний товаров
+    // 3. База данных описаний товаров
     const productDescriptions = {
         "novoregi": "Свежезарегистрированный аккаунт с минимальной историей активности. Отлично подойдет для новых проектов и личного использования.",
         "1_year": "Аккаунт с выдержкой более одного года. Имеет естественный возраст и выглядит значительно надежнее нового аккаунта.",
@@ -47,18 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const btnAccounts = document.querySelector('[data-action="accounts"]');
 
-    // Узлы модального окна
+    // Узлы модального окна карточки товара
     const productModal = document.getElementById('product-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
-    // Переменные для хранения текущего выбранного товара
     let currentSelectedType = "";
     let currentSelectedName = "";
 
-    // Функция переключения главного меню
+    // Переключение лобби / подменю
     function toggleAccountsMenu() {
         if (!mainLobby || !accountsLobby) return;
         if (mainLobby.classList.contains('active')) {
@@ -87,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Обработка остальных кнопок главного лобби
+    // Обработка кликов остальных кнопок главного меню
     const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -102,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Открытие карточки описания при выборе аккаунта
+    // Открытие карточки описания товара из сетки
     const gridButtons = document.querySelectorAll('.grid-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -111,46 +116,34 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
-            // Запоминаем выбор
             currentSelectedType = accType;
             currentSelectedName = accName;
 
-            // Подставляем данные в модалку
             if (modalTitle && modalDescription && productModal) {
                 modalTitle.textContent = accName;
                 modalDescription.textContent = productDescriptions[accType] || "Описание временно отсутствует.";
-                
-                // Плавно открываем окно
-                productModal.classList.add('open');
+                productModal.classList.add('open'); // Показываем модалку
             }
         });
     });
 
-    // Закрытие модального окна на крестик
+    // Закрытие модального окна
     if (modalCloseBtn) {
-        modalCloseBtn.addEventListener('click', () => {
-            productModal.classList.remove('open');
-        });
+        modalCloseBtn.addEventListener('click', () => productModal.classList.remove('open'));
     }
-
-    // Закрытие модального окна по клику на серую область вокруг карточки
     if (productModal) {
         productModal.addEventListener('click', (e) => {
-            if (e.target === productModal) {
-                productModal.classList.remove('open');
-            }
+            if (e.target === productModal) productModal.classList.remove('open');
         });
     }
 
-    // Клик по кнопке "ПОДТВЕРДИТЬ ПОКУПКУ" внутри карточки описания
+    // Подтверждение покупки внутри карточки описания
     if (modalConfirmBtn) {
         modalConfirmBtn.addEventListener('click', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            
-            console.log(`[GHOST ENGINE] Покупка подтверждена: ${currentSelectedName}`);
             productModal.classList.remove('open');
 
-            // Отправляем JSON-строку в твой bot.py
+            // Возвращаем JSON в твой python-скрипт бота
             tg?.sendData(JSON.stringify({ 
                 action: 'buy_tg_account', 
                 type: currentSelectedType,

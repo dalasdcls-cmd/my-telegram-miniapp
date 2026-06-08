@@ -100,8 +100,18 @@ body {
 .avatar-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: #ff0000; filter: blur(8px); opacity: 0.2; }
 .avatar-core {
     position: relative; width: 100%; height: 100%; border-radius: 50%; background: #000000; border: 1px solid rgba(255, 0, 0, 0.4);
-    display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: var(--text-pure); text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
+
+/* ДИНАМИЧЕСКАЯ АВАТАРКА ПОЛЬЗОВАТЕЛЯ */
+#user-avatar-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: none; /* Включается через JS, если фото существует */
+}
+#user-avatar-img.visible { display: block; }
+
 .user-meta .meta-label { font-size: 10px; font-family: monospace; color: var(--text-muted-ghost); letter-spacing: 1px; }
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-pure); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
 .system-status { display: block; margin-bottom: 24px; }
@@ -159,78 +169,35 @@ body {
 .btn-abort { background: rgba(255, 0, 0, 0.03); border-color: rgba(255, 0, 0, 0.2); margin-top: 12px; }
 .btn-abort:hover { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); }
 
-/* =====================================================================
-   PRODUCT MODAL COMPONENT (Стильное всплывающее стекло описания)
-   ===================================================================== */
+/* PRODUCT MODAL COMPONENT */
 .product-modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
     background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     z-index: 100;
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
     opacity: 0; pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.product-modal-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-}
-
+.product-modal-overlay.open { opacity: 1; pointer-events: auto; }
 .product-modal-card {
     background: rgba(20, 8, 8, 0.85);
     border: 1px solid rgba(255, 40, 40, 0.3);
     box-shadow: 0 16px 64px rgba(255, 0, 0, 0.15);
     border-radius: 20px;
     width: 100%; max-width: 360px;
-    padding: 28px 24px;
-    position: relative;
+    padding: 28px 24px; position: relative;
     transform: scale(0.92);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     text-align: left;
 }
-
-.product-modal-overlay.open .product-modal-card {
-    transform: scale(1);
-}
-
-.modal-close {
-    position: absolute;
-    top: 16px; right: 20px;
-    font-size: 24px; color: var(--text-muted-ghost);
-    cursor: pointer; transition: color 0.2s ease;
-}
+.product-modal-overlay.open .product-modal-card { transform: scale(1); }
+.modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: var(--text-muted-ghost); cursor: pointer; transition: color 0.2s ease; }
 .modal-close:hover { color: #fff; }
-
-.modal-tag {
-    font-family: monospace; font-size: 10px;
-    color: var(--text-muted-ghost); letter-spacing: 1.5px;
-    margin-bottom: 8px;
-}
-
-.modal-title {
-    font-size: 20px; font-weight: 800;
-    color: #ffffff; letter-spacing: -0.3px;
-    margin-bottom: 14px;
-    text-shadow: 0 0 10px rgba(255, 50, 50, 0.3);
-}
-
-.modal-description {
-    font-size: 14px; font-weight: 400; line-height: 1.5;
-    color: #e2e8f0; margin-bottom: 24px;
-    letter-spacing: 0.1px;
-}
-
-.btn-confirm-buy {
-    background: rgba(255, 0, 0, 0.12);
-    border-color: rgba(255, 50, 50, 0.5);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.15);
-}
-.btn-confirm-buy:hover {
-    background: #ff3333;
-    border-color: #ffffff;
-    box-shadow: 0 0 30px rgba(255, 50, 50, 0.5);
-}
+.modal-tag { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1.5px; margin-bottom: 8px; }
+.modal-title { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255, 50, 50, 0.3); }
+.modal-description { font-size: 14px; font-weight: 400; line-height: 1.5; color: #e2e8f0; margin-bottom: 24px; letter-spacing: 0.1px; }
+.btn-confirm-buy { background: rgba(255, 0, 0, 0.12); border-color: rgba(255, 50, 50, 0.5); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); }
+.btn-confirm-buy:hover { background: #ff3333; border-color: #ffffff; box-shadow: 0 0 30px rgba(255, 50, 50, 0.5); }
