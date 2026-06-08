@@ -1,18 +1,18 @@
-/* GHOST RED PREMIUM VARIABLES */
+/* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
     
-    /* ИСПРАВЛЕНО: Сделали карточки и кнопки прозрачным стеклом (20-30% видимости) */
-    --bg-surface: rgba(15, 5, 5, 0.25); 
+    /* Матовое стекло: 25% видимости карточек и кнопок */
+    --bg-surface: rgba(15, 6, 6, 0.25); 
     
-    --border-premium: rgba(255, 40, 40, 0.15); /* Чуть более выраженная рамка для читаемости границ */
-    --border-active: rgba(255, 30, 30, 0.6); /* Яркая рамка при наведении */
-    --text-pure: #ff3333; /* Ярко-красный основной шрифт */
-    --text-dim: #ff3333; /* Текст кнопок */
-    --text-muted-ghost: #b32d2d; /* Приподняли контраст темно-красного для читаемости на фоне */
+    --border-premium: rgba(255, 40, 40, 0.15); /* Красные неоновые рамки */
+    --border-active: rgba(255, 30, 30, 0.6); /* Рамка при наведении */
+    --text-pure: #ff3333; /* Основной ярко-красный цвет */
+    --text-dim: #ff3333; /* Цвет шрифта на кнопках */
+    --text-muted-ghost: #b32d2d; /* Контрастный темно-красный для подписей */
     --text-dark: #660e0e; /* Трафаретные индексы 01 // */
-    --red-glow: rgba(255, 0, 0, 0.1); /* Мягкое красное свечение */
-    --red-glow-intense: rgba(255, 0, 0, 0.3); /* Интенсивное свечение при клике */
+    --red-glow: rgba(255, 0, 0, 0.1); 
+    --red-glow-intense: rgba(255, 0, 0, 0.3); 
 }
 
 * {
@@ -35,7 +35,7 @@ body {
 }
 
 /* =====================================================================
-   BACKGROUND ENGINE (Слой с картинкой изображение_8.jpg)
+   BACKGROUND ENGINE (Слой с картинкой привидения)
    ===================================================================== */
 .premium-bg-wrapper {
     position: absolute;
@@ -53,11 +53,11 @@ body {
     background-image: url('изображение_8.jpg');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: contain; /* Картинка строго по центру, без деструктивного растягивания */
-    opacity: 0.35; /* Оптимальный баланс видимости привидения */
+    background-size: contain; /* Картинка строго по центру, не растягивается уродливо */
+    opacity: 0.35; /* Привидение аккуратно проступает сзади */
 }
 
-/* Мягкое затемнение поверх картинки (Dark Overlay 25%) для контраста текста */
+/* Мягкое затемнение (Оверлей 25%) для читаемости текста поверх белых зон картинки */
 .dark-overlay {
     position: absolute;
     top: 0; left: 0;
@@ -68,8 +68,7 @@ body {
 /* CINEMATIC AMBIENT PARTICLES (RED EDITION) */
 .ghost-ambient {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     top: 0; left: 0;
     z-index: 2; /* Поверх картинки, но под кнопками */
     pointer-events: none;
@@ -85,17 +84,13 @@ body {
 }
 
 .p-1 {
-    width: 380px;
-    height: 380px;
-    top: -120px;
-    left: -60px;
+    width: 380px; height: 380px;
+    top: -120px; left: -60px;
 }
 
 .p-2 {
-    width: 320px;
-    height: 320px;
-    bottom: -60px;
-    right: -60px;
+    width: 320px; height: 320px;
+    bottom: -60px; right: -60px;
     animation-delay: -7s;
 }
 
@@ -104,12 +99,13 @@ body {
     100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
 }
 
-/* CONTAINER ARCHITECTURE */
+/* =====================================================================
+   INTERFACE CONTAINERS (z-index: 3)
+   ===================================================================== */
 .app-container {
     position: relative;
-    z-index: 3; /* Весь контент находится на самом верхнем слое */
-    width: 100%;
-    height: 100%;
+    z-index: 3; /* Принудительно выводим интерфейс на передний план, чтобы экран не был пустым */
+    width: 100%; height: 100%;
     display: flex;
     flex-direction: column;
     padding: 28px 20px;
@@ -158,8 +154,7 @@ body {
 
 .avatar-wrapper {
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
 }
 
 .avatar-glow {
@@ -210,12 +205,11 @@ body {
 }
 
 .status-card {
-    background: var(--bg-surface); /* Полупрозрачность 25% */
+    background: var(--bg-surface);
     border: 1px solid var(--border-premium);
     border-radius: 14px;
     padding: 16px;
-    /* ИСПРАВЛЕНО: Добавлен матовый эффект размытия заднего плана */
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); /* Матовый блюр */
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
 }
@@ -267,15 +261,14 @@ body {
 
 .ghost-btn {
     position: relative;
-    background: var(--bg-surface); /* Полупрозрачность 25% */
+    background: var(--bg-surface);
     border: 1px solid var(--border-premium);
     border-radius: 14px;
     padding: 20px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    /* ИСПРАВЛЕНО: Добавлен матовый эффект размытия для кнопок */
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px); /* Матовый блюр для кнопок */
     -webkit-backdrop-filter: blur(16px);
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     width: 100%;
@@ -302,11 +295,11 @@ body {
 .btn-text {
     font-size: 15px;
     font-weight: 600;
-    color: var(--text-pure); 
+    color: var(--text-pure); /* Названия стали ярко-красными */
     letter-spacing: 0.2px;
     flex-grow: 1;
     transition: all 0.3s ease;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Тень для идеальной читаемости поверх белого привидения */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Тень для супер-читаемости на фоне белого привидения */
 }
 
 /* PREMIUM INTERACTION EFFECTS */
@@ -317,7 +310,7 @@ body {
 }
 
 .ghost-btn:hover .btn-text {
-    color: #ffffff; /* При наведении текст станет белым для красивого контраста */
+    color: #ffffff; /* Белая подсветка букв при наведении */
     transform: translateX(4px);
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
@@ -338,10 +331,10 @@ body {
     transition: transform 0.04s ease;
 }
 
-/* ABORT / BACK BUTTON SPECIAL TRANSLUCENT DESIGN (Нижняя кнопка НАЗАД) */
+/* ВСПLYВАЮЩАЯ КНОПКА НАЗАД (ПОЛУПРОЗРАЧНОЕ СТЕКЛО) */
 .btn-abort {
     background: rgba(255, 0, 0, 0.03);
-    border-color: rgba(255, 0, 0, 0.2); /* Слегка увеличили контраст рамки */
+    border-color: rgba(255, 0, 0, 0.2); 
     margin-top: 12px;
 }
 
