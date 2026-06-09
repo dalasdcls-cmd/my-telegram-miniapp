@@ -1,14 +1,16 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    --bg-surface: #050101; 
+    --bg-surface: #050101; /* Глубокий черный фон внутри кнопок */
     
+    /* Сочные неоновые оттенки */
     --border-premium: #ff1a1a; 
     --border-active: #ff3333; 
     --text-pure: #ff1a1a; 
     --text-dim: #ff3333; 
     --text-muted-ghost: #b32d2d; 
     
+    /* Слои неонового газа */
     --neon-glow: rgba(255, 0, 0, 0.45);
     --neon-glow-intense: rgba(255, 0, 0, 0.75);
 }
@@ -30,16 +32,12 @@ body {
     letter-spacing: -0.01em;
 }
 
-/* =====================================================================
-   ФОНОВЫЙ ДВИЖОК (Дым, Сеть, Передача импульсов данных)
-   ===================================================================== */
+/* BACKGROUND LAYERS */
 .premium-bg-wrapper {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1; overflow: hidden;
-    background: #020000;
 }
-
 .ghost-bg-image {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -47,73 +45,15 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain; 
-    opacity: 0.28; 
-    filter: contrast(1.1) brightness(0.9);
+    opacity: 0.35; 
 }
-
-.cyber-smoke-layer, .cyber-smoke-layer-2 {
+.dark-overlay {
     position: absolute;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(circle trimester 70% 60%, rgba(180, 0, 0, 0.06) 0%, transparent 60%);
-    filter: blur(80px);
-    animation: slowSmokeMovement 32s infinite linear;
-    pointer-events: none;
-}
-.cyber-smoke-layer-2 {
-    animation: slowSmokeMovement 45s infinite linear reverse;
-    opacity: 0.7;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-@keyframes slowSmokeMovement {
-    0% { transform: rotate(0deg) translate(0, 0) scale(1); }
-    50% { transform: rotate(180deg) translate(30px, -40px) scale(1.12); }
-    100% { transform: rotate(360deg) translate(0, 0) scale(1); }
-}
-
-.vpn-network-matrix {
-    position: absolute;
-    width: 100%; height: 100%;
-    top: 0; left: 0;
-    opacity: 0.15;
-    pointer-events: none;
-}
-
-.matrix-grid {
-    position: absolute;
-    width: 100%; height: 100%;
-    background-image: 
-        radial-gradient(rgba(255, 0, 0, 0.4) 1.5px, transparent 1.5px),
-        linear-gradient(to right, rgba(255, 0, 0, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 0, 0, 0.04) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px, 40px 40px;
-    background-position: center;
-}
-
-.data-pulse {
-    position: absolute;
-    width: 2px; height: 40px;
-    background: linear-gradient(to bottom, transparent, #ff0000, transparent);
-    box-shadow: 0 0 8px #ff0000;
-    opacity: 0;
-}
-.data-pulse.p-1 { left: 25%; top: -10%; animation: networkPulseY 12s infinite linear; animation-delay: 2s; }
-.data-pulse.p-2 { left: 65%; top: -10%; animation: networkPulseY 15s infinite linear; animation-delay: 5s; }
-.data-pulse.p-3 { top: 45%; left: -10%; width: 40px; height: 2px; background: linear-gradient(to right, transparent, #ff0000, transparent); animation: networkPulseX 18s infinite linear; animation-delay: 1s; }
-
-@keyframes networkPulseY {
-    0% { top: -10%; opacity: 0; }
-    5% { opacity: 0.8; }
-    30% { top: 110%; opacity: 0; }
-    100% { top: 110%; opacity: 0; }
-}
-@keyframes networkPulseX {
-    0% { left: -10%; opacity: 0; }
-    5% { opacity: 0.6; }
-    35% { left: 110%; opacity: 0; }
-    100% { left: 110%; opacity: 0; }
-}
-
+/* PARTICLES */
 .ghost-ambient {
     position: absolute;
     width: 100%; height: 100%;
@@ -122,16 +62,16 @@ body {
 }
 .particle {
     position: absolute; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,0,0,0.03) 0%, transparent 80%);
-    filter: blur(40px);
-    animation: floatingAmbient 20s infinite alternate ease-in-out;
+    background: radial-gradient(circle, rgba(255,0,0,0.05) 0%, transparent 80%);
+    filter: blur(50px);
+    animation: floatingGhost 14s infinite alternate ease-in-out;
 }
-.p-1 { width: 300px; height: 300px; top: -100px; left: -50px; }
-.p-2 { width: 250px; height: 250px; bottom: -50px; right: -50px; animation-delay: -10s; }
+.p-1 { width: 380px; height: 380px; top: -120px; left: -60px; }
+.p-2 { width: 320px; height: 320px; bottom: -60px; right: -60px; animation-delay: -7s; }
 
-@keyframes floatingAmbient {
-    0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-    100% { transform: translate(15px, -20px) scale(1.1); opacity: 0.6; }
+@keyframes floatingGhost {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+    100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
 }
 
 /* INTERFACE STRUCTURE */
@@ -141,57 +81,25 @@ body {
     width: 100%; height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 24px 20px;
+    padding: 28px 20px;
     overflow-y: auto;
-    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
 }
 
 /* HEADER ELEMENTS */
 .brand-section {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 24px; border-bottom: 1px solid rgba(255, 0, 0, 0.15); padding-bottom: 12px;
+    margin-bottom: 28px; border-bottom: 1px solid rgba(255, 0, 0, 0.15); padding-bottom: 14px;
 }
-.cyber-logo-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.ghost-mascot {
-    width: 18px; height: 18px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 10h.01M15 10h.01M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 0 4px rgba(255,0,0,0.5));
-    animation: eliteGhostFloat 4.5s infinite ease-in-out;
-}
-
-@keyframes eliteGhostFloat {
-    0% { transform: translateY(0); opacity: 0.85; }
-    50% { transform: translateY(-4px); opacity: 1; filter: drop-shadow(0 0 6px rgba(255,0,0,0.7)); }
-    100% { transform: translateY(0); opacity: 0.85; }
-}
-
 .logo-text {
     font-size: 22px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
-    color: #ff0000;
-    animation: neonSignFlicker 7s infinite linear;
+    text-shadow: 0 0 14px rgba(255, 0, 0, 0.5), 0 2px 4px rgba(0,0,0,0.8);
 }
-
-@keyframes neonSignFlicker {
-    0%, 92%, 94%, 96%, 100% {
-        text-shadow: 0 0 10px var(--neon-glow), 0 0 2px var(--neon-glow-intense), 0 2px 4px rgba(0,0,0,0.8);
-    }
-    93%, 95% {
-        text-shadow: 0 0 4px rgba(255, 0, 0, 0.2), 0 2px 4px rgba(0,0,0,0.8);
-        opacity: 0.85;
-    }
-}
-
 .logo-badge {
     font-size: 9px; font-weight: 600; letter-spacing: 2px; color: var(--text-muted-ghost);
-    border: 1px solid rgba(255,0,0,0.25); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.5);
+    border: 1px solid var(--text-dark); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.4);
 }
-.profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
 .avatar-wrapper { position: relative; width: 48px; height: 48px; }
 .avatar-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: #ff0000; filter: blur(8px); opacity: 0.2; }
 .avatar-core {
@@ -207,49 +115,31 @@ body {
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-pure); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
 .user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* =====================================================================
-   ИСПРАВЛЕННЫЙ ДВИЖОК ДИНАМИЧЕСКИХ МЕНЮ (МЕНЮ БОЛЬШЕ НЕ НАКЛАДЫВАЮТСЯ)
-   ===================================================================== */
+/* SLIDER ENGINE (Исправлено: меню больше не перекрываются) */
 .menu-slider-wrapper {
     position: relative;
     width: 100%;
 }
-
 .ghost-menu, .accounts-menu {
-    display: none; /* Полностью убираем из потока неактивное меню */
+    display: none;
     flex-direction: column;
     gap: 14px;
     width: 100%;
     opacity: 0;
 }
-
-/* Показываем и анимируем только класс .active */
 .ghost-menu.active, .accounts-menu.active {
     display: flex;
     animation: menuFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
 @keyframes menuFadeIn {
     0% { transform: translateY(8px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
 }
 
-.submenu-title { 
-    font-family: monospace; 
-    font-size: 11px; 
-    color: var(--text-muted-ghost); 
-    letter-spacing: 1px; 
-    margin-bottom: 2px; 
-}
-.accounts-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 12px; 
-}
+.submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
+.accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* =====================================================================
-   VIP NEON GLOW КНОПКИ
-   ===================================================================== */
+/* VIP NEON GLOW КНОПКИ */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -258,8 +148,7 @@ body {
     padding: 18px 24px;
     display: flex; 
     align-items: center; 
-    justify-content: flex-start;
-    gap: 20px;
+    justify-content: center;
     cursor: pointer;
     width: 100%; 
     overflow: hidden;
@@ -274,14 +163,6 @@ body {
 
 .grid-btn { 
     padding: 16px 12px; 
-    justify-content: center;
-}
-
-.btn-icon {
-    width: 22px; height: 22px;
-    color: var(--text-dim);
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 4px rgba(255, 30, 30, 0.65));
 }
 
 .btn-text { 
@@ -290,12 +171,6 @@ body {
     color: var(--text-dim); 
     letter-spacing: 0.5px;
     text-shadow: 0 0 8px rgba(255, 30, 30, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8); 
-}
-
-.ghost-menu .btn-text {
-    flex-grow: 1;
-    text-align: center;
-    margin-left: -42px; 
 }
 
 .grid-btn .btn-text { 
@@ -309,11 +184,6 @@ body {
         0 0 18px var(--neon-glow-intense),
         0 0 5px rgba(255, 0, 0, 0.4),
         0 6px 20px rgba(0, 0, 0, 0.7);
-}
-
-.ghost-btn:hover .btn-icon {
-    color: #ffffff;
-    filter: drop-shadow(0 0 8px #ff1a1a);
 }
 
 .ghost-btn:hover .btn-text, .grid-btn:hover .btn-text { 
