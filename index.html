@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>GHOST // Private Access</title>
-    <link rel="stylesheet" href="style.css?v=24">
+    <link rel="stylesheet" href="style.css?v=29">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -96,38 +96,40 @@
             <section class="verifications-menu" id="verifications-lobby">
                 <div class="submenu-title">// ВЫБОР КАТЕГОРИИ ТОВАРА</div>
                 
-                <div class="accounts-grid">
-                    <button class="grid-btn vertical-grid-btn" data-verif="bybit">
-                        <svg class="grid-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M6 3h12l4 6-10 12L2 9l4-6zM2 9h20M12 3v18M6 3l6 6 6-6M6 21l6-12 6 12"/>
-                        </svg>
-                        <span class="btn-text">Bybit</span>
+                <div class="verifications-list">
+                    <button class="ghost-btn list-verif-btn" data-verif="bybit">
+                        <div class="verif-avatar-circle">
+                            <img src="https://cryptologos.cc/logos/bybit-bit-logo.png" class="verif-brand-img" alt="Bybit Logo">
+                        </div>
+                        <span class="btn-text list-text">Bybit</span>
                     </button>
                     
-                    <button class="grid-btn vertical-grid-btn" data-verif="cryptobot">
-                        <svg class="grid-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="3" y="11" width="18" height="10" rx="2"/>
-                            <circle cx="8" cy="16" r="1"/>
-                            <circle cx="16" cy="16" r="1"/>
-                            <path d="M12 6v5M8 2h8M12 2v4"/>
-                        </svg>
-                        <span class="btn-text">CryptoBot</span>
+                    <button class="ghost-btn list-verif-btn" data-verif="cryptobot">
+                        <div class="verif-avatar-circle">
+                            <img src="https://telegram.org/img/t_logo.png" class="verif-brand-img token-bot-avatar" alt="CryptoBot Logo">
+                        </div>
+                        <span class="btn-text list-text">CryptoBot</span>
                     </button>
                     
-                    <button class="grid-btn vertical-grid-btn" data-verif="fragment">
-                        <svg class="grid-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
-                        <span class="btn-text">Fragment</span>
+                    <button class="ghost-btn list-verif-btn" data-verif="fragment">
+                        <div class="verif-avatar-circle">
+                            <svg class="fragment-crystal-svg" viewBox="0 0 100 100" fill="none">
+                                <path d="M50 15L15 45L50 85V15Z" fill="#ff1a1a" fill-opacity="0.6" stroke="#ff0000" stroke-width="3" stroke-linejoin="round"/>
+                                <path d="M50 15L85 45L50 85V15Z" fill="#ff3333" fill-opacity="0.3" stroke="#ff0000" stroke-width="3" stroke-linejoin="round"/>
+                                <path d="M15 45H85" stroke="#ff0000" stroke-width="3" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="btn-text list-text">Fragment</span>
                     </button>
                     
-                    <button class="grid-btn vertical-grid-btn" data-verif="wallet">
-                        <svg class="grid-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v2"/>
-                            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
-                            <path d="M16 12h6v4h-6z"/>
-                        </svg>
-                        <span class="btn-text">Wallet</span>
+                    <button class="ghost-btn list-verif-btn" data-verif="wallet">
+                        <div class="verif-avatar-circle">
+                            <svg class="wallet-shield-svg" viewBox="0 0 100 100" fill="none">
+                                <path d="M20 25C20 22.2386 22.2386 20 25 20H75C77.7614 20 80 22.2386 80 25V65C80 76.0457 71.0457 85 60 85H40C28.9543 85 20 76.0457 20 65V25Z" fill="#ff1a1a" fill-opacity="0.2" stroke="#ff0000" stroke-width="4.5"/>
+                                <path d="M32 38L44 68L50 53L56 68L68 38" stroke="#ff0000" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="btn-text list-text">Wallet</span>
                     </button>
                 </div>
 
@@ -183,6 +185,6 @@
 
     </div>
 
-    <script src="script.js?v=24"></script>
+    <script src="script.js?v=29"></script>
 </body>
 </html>

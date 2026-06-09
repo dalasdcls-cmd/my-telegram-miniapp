@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. Расширенная база данных описаний товаров
+    // 3. База данных описаний товаров
     const productDescriptions = {
         // ТГ Аккаунты
         "novoregi": "Свежезарегистрированный аккаунт с minimal-историей активности. Отлично подойдет для новых проектов и личного использования.",
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "12_years": "Редкий аккаунт с история практически с момента появления платформы. Максимальная выдержка и высокий возраст.",
         "13_years": "Эксклюзивный аккаунт с максимально возможной выдержкой. Наиболее редкая категория среди возрастных аккаунтов.",
         
-        // Верификации (Новые сущности)
+        // Верификации
         "bybit": "Официальный верифицированный аккаунт криптовалютной биржи Bybit (уровень KYC-1). Готов к работе с P2P, депозитами и торговлей.",
         "cryptobot": "Активированный аккаунт кошелька Crypto Bot с полным доступом к маркету. Без ограничений на торговлю и вывод активов.",
         "fragment": "Проверенный аккаунт для работы с платформой Fragment. Позволяет безопасно покупать анонимные номера и Telegram Usernames.",
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentSelectedType = "";
     let currentSelectedName = "";
-    let currentSelectedCategory = ""; // Для разделения 'buy_tg_account' и 'buy_verification'
+    let currentSelectedCategory = ""; 
 
     // Переключение ТГ Аккаунтов
     if (btnAccounts) {
@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Открытие карточки описания товара из сеток
-    const gridButtons = document.querySelectorAll('.grid-btn');
+    // Открытие карточки описания товара из сеток и списков
+    const gridButtons = document.querySelectorAll('.grid-btn, .list-verif-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const accType = btn.getAttribute('data-acc');
@@ -171,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             productModal.classList.remove('open');
             
-            // Динамический экспорт действия в зависимости от нажатой категории
             const actionName = currentSelectedCategory === "verification" ? "buy_verification" : "buy_tg_account";
 
             tg?.sendData(JSON.stringify({ 
