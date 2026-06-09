@@ -1,16 +1,14 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    --bg-surface: #050101; /* Глубокий черный фон внутри кнопок */
+    --bg-surface: #050101; 
     
-    /* Сочные неоновые оттенки */
     --border-premium: #ff1a1a; 
     --border-active: #ff3333; 
     --text-pure: #ff1a1a; 
     --text-dim: #ff3333; 
     --text-muted-ghost: #b32d2d; 
     
-    /* Слои неонового газа */
     --neon-glow: rgba(255, 0, 0, 0.45);
     --neon-glow-intense: rgba(255, 0, 0, 0.75);
 }
@@ -32,26 +30,93 @@ body {
     letter-spacing: -0.01em;
 }
 
-/* BACKGROUND LAYERS */
+/* =====================================================================
+   Продвинутый фоновый движок (Дым, Сеть, Передача импульсов данных)
+   ===================================================================== */
 .premium-bg-wrapper {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1; overflow: hidden;
+    background: #020000;
 }
+
 .ghost-bg-image {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* ВНИМАНИЕ: Измени имя файла ниже, если твоя картинка называется по-другому */
+    /* Если имя картинки на GitHub другое (например bg.png) — измени строку ниже */
     background-image: url('изображение_8.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain; 
-    opacity: 0.35; 
+    opacity: 0.28; 
+    filter: contrast(1.1) brightness(0.9);
 }
-.dark-overlay {
+
+/* Красный медленный туман/дым (Прозрачность строго 5-10%) */
+.cyber-smoke-layer, .cyber-smoke-layer-2 {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(180, 0, 0, 0.06) 0%, transparent 60%);
+    filter: blur(80px);
+    animation: slowSmokeMovement 32s infinite linear;
+    pointer-events: none;
+}
+.cyber-smoke-layer-2 {
+    animation: slowSmokeMovement 45s infinite linear reverse;
+    opacity: 0.7;
+}
+
+@keyframes slowSmokeMovement {
+    0% { transform: rotate(0deg) translate(0, 0) scale(1); }
+    50% { transform: rotate(180deg) translate(30px, -40px) scale(1.12); }
+    100% { transform: rotate(360deg) translate(0, 0) scale(1); }
+}
+
+/* Сетевая VPN/Proxy матрица узлов */
+.vpn-network-matrix {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+/* Тонкая сетка из светящихся точек и линий */
+.matrix-grid {
+    position: absolute;
+    width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(rgba(255, 0, 0, 0.4) 1.5px, transparent 1.5px),
+        linear-gradient(to right, rgba(255, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, 40px 40px;
+    background-position: center;
+}
+
+/* Эффект редкой и ненавязчивой передачи данных по линиям */
+.data-pulse {
+    position: absolute;
+    width: 2px; height: 40px;
+    background: linear-gradient(to bottom, transparent, #ff0000, transparent);
+    box-shadow: 0 0 8px #ff0000;
+    opacity: 0;
+}
+.data-pulse.p-1 { left: 25%; top: -10%; animation: networkPulseY 12s infinite linear; animation-delay: 2s; }
+.data-pulse.p-2 { left: 65%; top: -10%; animation: networkPulseY 15s infinite linear; animation-delay: 5s; }
+.data-pulse.p-3 { top: 45%; left: -10%; width: 40px; height: 2px; background: linear-gradient(to right, transparent, #ff0000, transparent); animation: networkPulseX 18s infinite linear; animation-delay: 1s; }
+
+@keyframes networkPulseY {
+    0% { top: -10%; opacity: 0; }
+    5% { opacity: 0.8; }
+    30% { top: 110%; opacity: 0; }
+    100% { top: 110%; opacity: 0; }
+}
+@keyframes networkPulseX {
+    0% { left: -10%; opacity: 0; }
+    5% { opacity: 0.6; }
+    35% { left: 110%; opacity: 0; }
+    100% { left: 110%; opacity: 0; }
 }
 
 /* PARTICLES */
@@ -63,16 +128,16 @@ body {
 }
 .particle {
     position: absolute; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,0,0,0.05) 0%, transparent 80%);
-    filter: blur(50px);
-    animation: floatingGhost 14s infinite alternate ease-in-out;
+    background: radial-gradient(circle, rgba(255,0,0,0.03) 0%, transparent 80%);
+    filter: blur(40px);
+    animation: floatingAmbient 20s infinite alternate ease-in-out;
 }
-.p-1 { width: 380px; height: 380px; top: -120px; left: -60px; }
-.p-2 { width: 320px; height: 320px; bottom: -60px; right: -60px; animation-delay: -7s; }
+.p-1 { width: 300px; height: 300px; top: -100px; left: -50px; }
+.p-2 { width: 250px; height: 250px; bottom: -50px; right: -50px; animation-delay: -10s; }
 
-@keyframes floatingGhost {
-    0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
-    100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
+@keyframes floatingAmbient {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+    100% { transform: translate(15px, -20px) scale(1.1); opacity: 0.6; }
 }
 
 /* INTERFACE STRUCTURE */
@@ -87,18 +152,55 @@ body {
     padding-bottom: max(28px, env(safe-area-inset-bottom));
 }
 
-/* HEADER ELEMENTS */
+/* =====================================================================
+   Анимация Шапки (Мерцание логотипа, Едва заметное парение привидения)
+   ===================================================================== */
 .brand-section {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 28px; border-bottom: 1px solid rgba(255, 0, 0, 0.15); padding-bottom: 14px;
 }
+.cyber-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Маленькое привидение возле слова GHOST: парение на 3-5px + альфа */
+.ghost-mascot {
+    width: 18px; height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 10h.01M15 10h.01M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 4px rgba(255,0,0,0.5));
+    animation: eliteGhostFloat 4.5s infinite ease-in-out;
+}
+
+@keyframes eliteGhostFloat {
+    0% { transform: translateY(0); opacity: 0.85; }
+    50% { transform: translateY(-4px); opacity: 1; filter: drop-shadow(0 0 6px rgba(255,0,0,0.7)); }
+    100% { transform: translateY(0); opacity: 0.85; }
+}
+
+/* Красное неоновое свечение слова GHOST + редкое кибер-мерцание каждые 7 секунд */
 .logo-text {
     font-size: 22px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
-    text-shadow: 0 0 14px rgba(255, 0, 0, 0.5), 0 2px 4px rgba(0,0,0,0.8);
+    color: #ff0000;
+    animation: neonSignFlicker 7s infinite linear;
 }
+
+@keyframes neonSignFlicker {
+    0%, 92%, 94%, 96%, 100% {
+        text-shadow: 0 0 10px var(--neon-glow), 0 0 2px var(--neon-glow-intense), 0 2px 4px rgba(0,0,0,0.8);
+    }
+    93%, 95% {
+        text-shadow: 0 0 4px rgba(255, 0, 0, 0.2), 0 2px 4px rgba(0,0,0,0.8);
+        opacity: 0.85;
+    }
+}
+
 .logo-badge {
     font-size: 9px; font-weight: 600; letter-spacing: 2px; color: var(--text-muted-ghost);
-    border: 1px solid var(--text-dark); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,0,0,0.25); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.5);
 }
 .profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
 .avatar-wrapper { position: relative; width: 48px; height: 48px; }
@@ -116,30 +218,7 @@ body {
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-pure); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
 .user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* SLIDER ENGINE */
-.menu-slider-wrapper {
-    position: relative;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 100%;
-}
-.ghost-menu, .accounts-menu {
-    grid-area: 1 / 1 / 2 / 2;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(15px);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.ghost-menu:not(.active) { transform: translateX(-15px); }
-.ghost-menu.active, .accounts-menu.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
-
-.submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
-.accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-/* VIP CYBERPUNK NEON GLOW BUTTONS */
+/* КНОПКИ КАТЕГОРИЙ (Без изменения геометрии и надписей) */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -170,8 +249,7 @@ body {
 }
 
 .btn-icon {
-    width: 22px;
-    height: 22px;
+    width: 22px; height: 22px;
     color: var(--text-dim);
     flex-shrink: 0;
     filter: drop-shadow(0 0 4px rgba(255, 30, 30, 0.65));
@@ -190,7 +268,7 @@ body {
 .ghost-menu .btn-text {
     flex-grow: 1;
     text-align: center;
-    margin-left: -42px; /* Выравнивание текста строго по центру */
+    margin-left: -42px; 
 }
 
 .grid-btn .btn-text { 

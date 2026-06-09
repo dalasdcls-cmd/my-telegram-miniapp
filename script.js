@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // 2. Настройка профиля и подгрузка РЕАЛЬНОЙ аватарки
+    // 2. Настройка профиля и подгрузка РЕАЛЬНОЙ аватарки пользователя
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. База данных описаний товаров
+    // 3. База данных описаний товаров для карточек
     const productDescriptions = {
         "novoregi": "Свежезарегистрированный аккаунт с minimal-историей активности. Отлично подойдет для новых проектов и личного использования.",
         "1_year": "Аккаунт с выдержкой более одного года. Имеет естественный возраст и выглядит значительно надежнее нового аккаунта.",
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "13_years": "Эксклюзивный аккаунт с максимально возможной выдержкой. Наиболее редкая категория среди возрастных аккаунтов."
     };
 
-    // Навигационные узлы
+    // Навигационные узлы интерфейса
     const mainLobby = document.getElementById('main-lobby');
     const accountsLobby = document.getElementById('accounts-lobby');
     const backToLobbyBtn = document.getElementById('back-to-lobby');
