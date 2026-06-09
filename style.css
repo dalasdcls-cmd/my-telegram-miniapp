@@ -1,18 +1,18 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    --bg-surface: #050101; /* Глубокий чистый черный цвет внутри кнопок */
+    --bg-surface: #030000; /* Глубокий чистый черный цвет внутри кнопок */
     
-    /* Сочные неоновые оттенки */
-    --border-premium: #ff1a1a; 
+    /* Ультра-яркие неоновые оттенки рамок и текста */
+    --border-premium: #ff0000; 
     --border-active: #ff3333; 
-    --text-pure: #ff1a1a; 
-    --text-dim: #ff3333; 
-    --text-muted-ghost: #b32d2d; 
+    --text-pure: #ff0000; 
+    --text-dim: #ff1a1a; 
+    --text-muted-ghost: #cc1111; 
     
-    /* Слои лазерного газа */
-    --neon-glow: rgba(255, 0, 0, 0.55);
-    --neon-glow-intense: rgba(255, 0, 0, 0.9);
+    /* Экстремально плотные слои неонового газа вокруг рамок (Усилено) */
+    --neon-glow: rgba(255, 0, 0, 0.75);
+    --neon-glow-intense: rgba(255, 0, 0, 0.95);
 }
 
 * {
@@ -87,11 +87,11 @@ body {
 }
 
 /* =====================================================================
-   НОВАЯ ЛОГИКА ШАПКИ: ТОЧНОЕ ДЕЛИКАТНОЕ СВЕЧЕНИЕ ИЗ ФОТО
+   НЕОНОВАЯ ШАПКА: ГЛУБОКОЕ ЛАЗЕРНОЕ СВЕЧЕНИЕ (УСИЛЕНО)
    ===================================================================== */
 .brand-section {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 28px; border-bottom: 1px solid rgba(255, 0, 0, 0.15); padding-bottom: 14px;
+    margin-bottom: 28px; border-bottom: 1px solid rgba(255, 0, 0, 0.25); padding-bottom: 14px;
 }
 
 .cyber-logo-wrapper {
@@ -100,22 +100,22 @@ body {
     gap: 12px;
 }
 
-/* Маскот оригинального привидения: деликатное парение + сильное неоновое свечение */
+/* Маскот привидения: выкручена интенсивность свечения растрового фильтра */
 .ghost-mascot-svg {
     width: 26px;
     height: 26px;
     color: #ff0000;
-    filter: drop-shadow(0 0 8px var(--neon-glow-intense)) drop-shadow(0 0 2px #ff0000);
+    filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 12px var(--neon-glow-intense));
     animation: luxuryGhostFloat 4s infinite ease-in-out;
 }
 
 @keyframes luxuryGhostFloat {
-    0% { transform: translateY(0); filter: drop-shadow(0 0 6px var(--neon-glow)); }
-    50% { transform: translateY(-3px); filter: drop-shadow(0 0 12px #ff0000); }
-    100% { transform: translateY(0); filter: drop-shadow(0 0 6px var(--neon-glow)); }
+    0% { transform: translateY(0); filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 10px var(--neon-glow)); }
+    50% { transform: translateY(-3px); filter: drop-shadow(0 0 7px #ff0000) drop-shadow(0 0 18px #ff0000); }
+    100% { transform: translateY(0); filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 10px var(--neon-glow)); }
 }
 
-/* Сочный, объемный лазерный текст GHOST */
+/* Текст GHOST: добавлен дополнительный слой густого свечения */
 .logo-text {
     font-size: 26px; 
     font-weight: 900; 
@@ -123,20 +123,22 @@ body {
     text-transform: uppercase;
     color: #ff0000;
     text-shadow: 
-        0 0 10px var(--neon-glow), 
-        0 0 2px var(--neon-glow-intense), 
-        0 2px 5px rgba(0, 0, 0, 0.9);
+        0 0 4px #ffffff,
+        0 0 10px var(--neon-glow-intense), 
+        0 0 20px var(--neon-glow), 
+        0 2px 6px rgba(0, 0, 0, 0.95);
 }
 
 .logo-badge {
-    font-size: 9px; font-weight: 600; letter-spacing: 2px; color: var(--text-muted-ghost);
-    border: 1px solid rgba(255, 30, 30, 0.3); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.4);
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; color: #ff3333;
+    border: 1px solid rgba(255, 0, 0, 0.5); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.2);
 }
 .profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
 .avatar-wrapper { position: relative; width: 48px; height: 48px; }
-.avatar-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: #ff0000; filter: blur(8px); opacity: 0.2; }
+.avatar-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: #ff0000; filter: blur(8px); opacity: 0.3; }
 .avatar-core {
-    position: relative; width: 100%; height: 100%; border-radius: 50%; background: #000000; border: 1px solid rgba(255, 0, 0, 0.4);
+    position: relative; width: 100%; height: 100%; border-radius: 50%; background: #000000; border: 1px solid rgba(255, 0, 0, 0.5);
     display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 
@@ -145,10 +147,10 @@ body {
 
 .user-meta { display: flex; flex-direction: column; gap: 1px; }
 .user-meta .meta-label { font-size: 10px; font-family: monospace; color: var(--text-muted-ghost); letter-spacing: 1px; }
-.username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-pure); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
+.username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: #ffffff; text-shadow: 0 0 8px rgba(255, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.6); }
 .user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* SLIDER ENGINE (Предотвращает баги наложения слоев подменю) */
+/* SLIDER ENGINE */
 .menu-slider-wrapper {
     position: relative;
     width: 100%;
@@ -172,7 +174,9 @@ body {
 .submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* VIP PREMIUM NEON GLOW КНОПКИ С ИКОНКАМИ */
+/* =====================================================================
+   УСИЛЕННЫЕ КНОПКИ VIP PREMIUM NEON GLOW
+   ===================================================================== */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -187,10 +191,12 @@ body {
     width: 100%; 
     overflow: hidden;
     
+    /* Свечение выкручено на максимум (Добавлены дополнительные радиусы размытия) */
     box-shadow: 
-        inset 0 0 10px rgba(255, 0, 0, 0.25),
-        0 0 10px var(--neon-glow),
-        0 4px 15px rgba(0, 0, 0, 0.6);
+        inset 0 0 12px rgba(255, 0, 0, 0.45),
+        0 0 12px var(--neon-glow),
+        0 0 22px rgba(255, 0, 0, 0.25),
+        0 4px 15px rgba(0, 0, 0, 0.8);
         
     transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.1s ease;
 }
@@ -203,73 +209,84 @@ body {
 .btn-icon {
     width: 22px;
     height: 22px;
-    color: var(--text-dim);
+    color: #ff1a1a;
     flex-shrink: 0;
-    filter: drop-shadow(0 0 4px rgba(255, 30, 30, 0.65));
+    filter: drop-shadow(0 0 6px #ff0000);
     transition: all 0.25s ease;
 }
 
 .btn-text { 
     font-size: 16px; 
     font-weight: 700; 
-    color: var(--text-dim); 
+    color: #ff2222; 
     letter-spacing: 0.5px;
-    text-shadow: 0 0 8px rgba(255, 30, 30, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8); 
+    /* Газоразрядная подсветка текста */
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.9); 
     transition: all 0.25s ease;
 }
 
 .ghost-menu .btn-text {
     flex-grow: 1;
     text-align: center;
-    margin-left: -42px; /* Идеальное выравнивание по центру с учетом иконки */
+    margin-left: -42px; 
 }
 
 .grid-btn .btn-text { 
     font-size: 14px; 
 }
 
+/* СОСТОЯНИЕ ДИНАМИЧЕСКОГО НАВЕДЕНИЯ / ХОВЕРА */
 .ghost-btn:hover, .grid-btn:hover {
-    border-color: var(--border-active);
+    border-color: #ffffff;
+    
     box-shadow: 
-        inset 0 0 14px rgba(255, 0, 0, 0.35),
-        0 0 18px var(--neon-glow-intense),
-        0 0 5px rgba(255, 0, 0, 0.4),
-        0 6px 20px rgba(0, 0, 0, 0.7);
-    transform: translateY(-1px);
+        inset 0 0 16px rgba(255, 0, 0, 0.6),
+        0 0 25px #ff0000,
+        0 0 8px rgba(255, 255, 255, 0.5),
+        0 6px 20px rgba(0, 0, 0, 0.9);
 }
 
 .ghost-btn:hover .btn-icon {
     color: #ffffff;
-    filter: drop-shadow(0 0 8px #ff1a1a);
+    filter: drop-shadow(0 0 10px #ff0000);
 }
 
 .ghost-btn:hover .btn-text, .grid-btn:hover .btn-text { 
     color: #ffffff; 
     text-shadow: 
-        0 0 10px #ff2222,
-        0 0 3px #ffffff,
-        0 2px 4px rgba(0, 0, 0, 0.8);
+        0 0 12px #ff0000,
+        0 0 4px #ffffff,
+        0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
+/* КЛИК / ФИЗИЧЕСКИЙ ТАП СМАРТФОНА */
 .ghost-btn:active, .grid-btn:active {
-    transform: scale(0.98) translateY(0);
-    border-color: #ff0000;
+    transform: scale(0.97);
+    border-color: #ffffff;
     box-shadow: 
-        inset 0 0 18px rgba(255, 0, 0, 0.5),
-        0 0 22px var(--neon-glow-intense);
+        inset 0 0 22px rgba(255, 0, 0, 0.8),
+        0 0 30px var(--neon-glow-intense),
+        0 0 10px #ffffff;
 }
 
 .btn-abort { 
-    background: rgba(15, 3, 3, 0.9); 
-    border-color: rgba(255, 0, 0, 0.3); 
+    background: rgba(10, 0, 0, 0.95); 
+    border-color: rgba(255, 0, 0, 0.5); 
     margin-top: 4px; 
+}
+.btn-abort .btn-text {
+    color: #ff3333;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+.btn-abort:hover {
+    border-color: #ff0000;
 }
 
 /* PRODUCT MODAL COMPONENT */
 .product-modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     z-index: 100;
     display: flex; align-items: center; justify-content: center;
@@ -279,9 +296,9 @@ body {
 }
 .product-modal-overlay.open { opacity: 1; pointer-events: auto; }
 .product-modal-card {
-    background: rgba(20, 8, 8, 0.9);
-    border: 1px solid rgba(255, 40, 40, 0.3);
-    box-shadow: 0 16px 64px rgba(255, 0, 0, 0.15);
+    background: rgba(15, 0, 0, 0.95);
+    border: 1px solid #ff0000;
+    box-shadow: 0 0 30px var(--neon-glow);
     border-radius: 20px;
     width: 100%; max-width: 360px;
     padding: 28px 24px; position: relative;
@@ -293,14 +310,14 @@ body {
 .modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: var(--text-muted-ghost); cursor: pointer; }
 .modal-close:hover { color: #fff; }
 .modal-tag { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1.5px; margin-bottom: 8px; }
-.modal-title { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255, 50, 50, 0.3); }
+.modal-title { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
 .modal-description { font-size: 14px; font-weight: 400; line-height: 1.5; color: #e2e8f0; margin-bottom: 24px; letter-spacing: 0.1px; }
 
 .btn-confirm-buy { 
-    background: rgba(30, 5, 5, 0.9); 
-    border-color: rgba(255, 40, 40, 0.5); 
-    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2), 0 0 14px var(--neon-glow);
+    background: rgba(20, 0, 0, 0.9); 
+    border-color: #ff0000; 
+    box-shadow: inset 0 0 12px rgba(255, 0, 0, 0.4), 0 0 18px var(--neon-glow);
     justify-content: center;
 }
-.btn-confirm-buy .btn-text { margin-left: 0 !important; }
-.btn-confirm-buy:hover { background: #ff2222; border-color: #ffffff; box-shadow: 0 0 25px rgba(255, 50, 50, 0.7); }
+.btn-confirm-buy .btn-text { margin-left: 0 !important; color: #ffffff; text-shadow: 0 0 8px #ff0000; }
+.btn-confirm-buy:hover { background: #ff0000; border-color: #ffffff; box-sound: 0 0 30px #ff0000; }
