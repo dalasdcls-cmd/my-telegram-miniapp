@@ -52,16 +52,23 @@ document.addEventListener('DOMContentLoaded', () => {
         "bybit": "Официальный верифицированный аккаунт криптовалютной биржи Bybit (уровень KYC-1). Готов к работе с P2P, депозитами и торговлей.",
         "cryptobot": "Активированный аккаунт кошелька Crypto Bot с полным доступом к маркету. Без ограничений на торговлю и вывод активов.",
         "fragment": "Проверенный аккаунт для работы с платформой Fragment. Позволяет безопасно покупать анонимные номера и Telegram Usernames.",
-        "wallet": "Верифицированный встроенный кошелек Telegram Wallet (KYC). Свободный доступ к покупке крипты с банковской карты и P2P."
+        "wallet": "Верифицированный встроенный кошелек Telegram Wallet (KYC). Свободный доступ к покупке крипты с банковской карты и P2P.",
+        
+        // ДОБАВЛЕНО: Описания для категории Сервисы
+        "nakrutka": "Премиум накрутка живых подписчиков, просмотров и реакций для Telegram, Instagram и других социальных сетей. Высокая скорость выполнения без отписок.",
+        "virtual_numbers": "Аренда чистых виртуальных номеров для моментального приема SMS-активаций во всех популярных сервисах и мессенджерах.",
+        "proxy_srv": "Индивидуальные приватные IPv4/IPv6 прокси высокой скорости. Идеальная стабильность и полная анонимность для парсинга и мультиаккаунтинга."
     };
 
     // Навигационные узлы
     const mainLobby = document.getElementById('main-lobby');
     const accountsLobby = document.getElementById('accounts-lobby');
     const verificationsLobby = document.getElementById('verifications-lobby');
+    const servicesLobby = document.getElementById('services-lobby');
     
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const backFromVerificationsBtn = document.getElementById('back-from-verifications');
+    const backFromServicesBtn = document.getElementById('back-from-services');
     
     const btnAccounts = document.querySelector('[data-action="accounts"]');
     const btnVerifications = document.querySelector('[data-action="verifications"]');
@@ -76,17 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentSelectedType = "";
     let currentSelectedName = "";
-    let currentSelectedCategory = ""; 
-
-    // Обработчик кнопки Сервисы
-    if (btnServices) {
-        btnServices.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            // Сюда можно добавить открытие нового лобби (например, servicesLobby.classList.add('active'))
-            console.log("[GHOST ENGINE] Нажата кнопка 'Сервисы'");
-        });
-    }
+    let currentSelectedCategory = "";
 
     // Переключение ТГ Аккаунтов
     if (btnAccounts) {
@@ -126,8 +123,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Переключение Сервисов
+    if (btnServices) {
+        btnServices.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            mainLobby.classList.remove('active');
+            servicesLobby.classList.add('active');
+        });
+    }
+
+    if (backFromServicesBtn) {
+        backFromServicesBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            servicesLobby.classList.remove('active');
+            mainLobby.classList.add('active');
+        });
+    }
+
     // Обработка кликов остальных кнопок главного меню
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not(#back-to-lobby):not(#back-from-verifications):not(#modal-confirm-btn)');
+    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not(#back-to-lobby):not(#back-from-verifications):not(#back-from-services):not(#modal-confirm-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.getAttribute('data-action');
@@ -142,11 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Открытие карточки описания товара
-    const gridButtons = document.querySelectorAll('.grid-btn, .list-verif-btn');
+    const gridButtons = document.querySelectorAll('.grid-btn, .list-verif-btn, .list-service-item-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const accType = btn.getAttribute('data-acc');
             const verifType = btn.getAttribute('data-verif');
+            const serviceType = btn.getAttribute('data-service');
             const accName = btn.querySelector('.btn-text')?.textContent || "Unknown Asset";
             
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -157,6 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (verifType) {
                 currentSelectedType = verifType;
                 currentSelectedCategory = "verification";
+            } else if (serviceType) {
+                currentSelectedType = serviceType;
+                currentSelectedCategory = "service";
             }
             
             currentSelectedName = accName;
@@ -182,7 +202,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             productModal.classList.remove('open');
             
-            const actionName = currentSelectedCategory === "verification" ? "buy_verification" : "buy_tg_account";
+            // Динамический выбор экшена в бот в зависимости от нажатого подменю
+            let actionName = "buy_tg_account";
+            if (currentSelectedCategory === "verification") {
+                actionName = "buy_verification";
+            } else if (currentSelectedCategory === "service") {
+                actionName = "buy_service";
+            }
 
             tg?.sendData(JSON.stringify({
                 action: actionName,
