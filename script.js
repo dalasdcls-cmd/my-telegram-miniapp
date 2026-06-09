@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. База данных описаний товаров
+    // 3. Расширенная база данных описаний товаров
     const productDescriptions = {
+        // ТГ Аккаунты
         "novoregi": "Свежезарегистрированный аккаунт с minimal-историей активности. Отлично подойдет для новых проектов и личного использования.",
         "1_year": "Аккаунт с выдержкой более одного года. Имеет естественный возраст и выглядит значительно надежнее нового аккаунта.",
         "2_years": "Аккаунт с хорошей выдержкой и подтвержденным возрастом. Популярный выбор благодаря оптимальному соотношению цены и возраста.",
@@ -45,14 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
         "10_years": "Десятилетний аккаунт с редким возрастом. Подходит тем, кто ищет максимально старую регистрацию.",
         "11_years": "Один из наиболее возрастных аккаунтов Telegram. Отличается редкостью и длительным сроком существования.",
         "12_years": "Редкий аккаунт с история практически с момента появления платформы. Максимальная выдержка и высокий возраст.",
-        "13_years": "Эксклюзивный аккаунт с максимально возможной выдержкой. Наиболее редкая категория среди возрастных аккаунтов."
+        "13_years": "Эксклюзивный аккаунт с максимально возможной выдержкой. Наиболее редкая категория среди возрастных аккаунтов.",
+        
+        // Верификации (Новые сущности)
+        "bybit": "Официальный верифицированный аккаунт криптовалютной биржи Bybit (уровень KYC-1). Готов к работе с P2P, депозитами и торговлей.",
+        "cryptobot": "Активированный аккаунт кошелька Crypto Bot с полным доступом к маркету. Без ограничений на торговлю и вывод активов.",
+        "fragment": "Проверенный аккаунт для работы с платформой Fragment. Позволяет безопасно покупать анонимные номера и Telegram Usernames.",
+        "wallet": "Верифицированный встроенный кошелек Telegram Wallet (KYC). Свободный доступ к покупке крипты с банковской карты и P2P."
     };
 
     // Навигационные узлы
     const mainLobby = document.getElementById('main-lobby');
     const accountsLobby = document.getElementById('accounts-lobby');
+    const verificationsLobby = document.getElementById('verifications-lobby');
+    
     const backToLobbyBtn = document.getElementById('back-to-lobby');
+    const backFromVerificationsBtn = document.getElementById('back-from-verifications');
+    
     const btnAccounts = document.querySelector('[data-action="accounts"]');
+    const btnVerifications = document.querySelector('[data-action="verifications"]');
 
     // Узлы модального окна карточки товара
     const productModal = document.getElementById('product-modal');
@@ -63,23 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentSelectedType = "";
     let currentSelectedName = "";
+    let currentSelectedCategory = ""; // Для разделения 'buy_tg_account' и 'buy_verification'
 
-    function toggleAccountsMenu() {
-        if (!mainLobby || !accountsLobby) return;
-        if (mainLobby.classList.contains('active')) {
-            mainLobby.classList.remove('active');
-            accountsLobby.classList.add('active');
-        } else {
-            accountsLobby.classList.remove('active');
-            mainLobby.classList.add('active');
-        }
-    }
-
+    // Переключение ТГ Аккаунтов
     if (btnAccounts) {
         btnAccounts.addEventListener('click', (e) => {
             e.preventDefault();
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            toggleAccountsMenu();
+            mainLobby.classList.remove('active');
+            accountsLobby.classList.add('active');
         });
     }
 
@@ -92,7 +96,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not(#back-to-lobby):not(#modal-confirm-btn)');
+    // Переключение Верификаций
+    if (btnVerifications) {
+        btnVerifications.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            mainLobby.classList.remove('active');
+            verificationsLobby.classList.add('active');
+        });
+    }
+
+    if (backFromVerificationsBtn) {
+        backFromVerificationsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            verificationsLobby.classList.remove('active');
+            mainLobby.classList.add('active');
+        });
+    }
+
+    // Обработка кликов остальных кнопок главного меню
+    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not(#back-to-lobby):not(#back-from-verifications):not(#modal-confirm-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.getAttribute('data-action');
@@ -106,19 +130,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Открытие карточки описания товара из сеток
     const gridButtons = document.querySelectorAll('.grid-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const accType = btn.getAttribute('data-acc');
+            const verifType = btn.getAttribute('data-verif');
             const accName = btn.querySelector('.btn-text')?.textContent || "Unknown Asset";
+            
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
-            currentSelectedType = accType;
+            if (accType) {
+                currentSelectedType = accType;
+                currentSelectedCategory = "account";
+            } else if (verifType) {
+                currentSelectedType = verifType;
+                currentSelectedCategory = "verification";
+            }
+            
             currentSelectedName = accName;
 
             if (modalTitle && modalDescription && productModal) {
                 modalTitle.textContent = accName;
-                modalDescription.textContent = productDescriptions[accType] || "Описание временно отсутствует.";
+                modalDescription.textContent = productDescriptions[currentSelectedType] || "Описание временно отсутствует.";
                 productModal.classList.add('open');
             }
         });
@@ -136,8 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
         modalConfirmBtn.addEventListener('click', () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             productModal.classList.remove('open');
+            
+            // Динамический экспорт действия в зависимости от нажатой категории
+            const actionName = currentSelectedCategory === "verification" ? "buy_verification" : "buy_tg_account";
+
             tg?.sendData(JSON.stringify({ 
-                action: 'buy_tg_account', 
+                action: actionName, 
                 type: currentSelectedType,
                 name: currentSelectedName 
             }));

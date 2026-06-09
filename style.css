@@ -8,9 +8,9 @@
     --border-active: #ff3333; 
     --text-pure: #ff0000; 
     --text-dim: #ff1a1a; 
-    --text-muted-ghost: #cc1111; 
+    --text-muted-ghost: #b32d2d; 
     
-    /* Экстремально плотные слои неонового газа вокруг рамок (Усилено) */
+    /* Экстремально плотные слои неонового газа вокруг рамок */
     --neon-glow: rgba(255, 0, 0, 0.75);
     --neon-glow-intense: rgba(255, 0, 0, 0.95);
 }
@@ -86,9 +86,7 @@ body {
     padding-bottom: max(28px, env(safe-area-inset-bottom));
 }
 
-/* =====================================================================
-   НЕОНОВАЯ ШАПКА: ГЛУБОКОЕ ЛАЗЕРНОЕ СВЕЧЕНИЕ (УСИЛЕНО)
-   ===================================================================== */
+/* HEADER ELEMENTS */
 .brand-section {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 28px; border-bottom: 1px solid rgba(255, 0, 0, 0.25); padding-bottom: 14px;
@@ -100,7 +98,6 @@ body {
     gap: 12px;
 }
 
-/* Маскот привидения: выкручена интенсивность свечения растрового фильтра */
 .ghost-mascot-svg {
     width: 26px;
     height: 26px;
@@ -115,7 +112,6 @@ body {
     100% { transform: translateY(0); filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 10px var(--neon-glow)); }
 }
 
-/* Текст GHOST: добавлен дополнительный слой густого свечения */
 .logo-text {
     font-size: 26px; 
     font-weight: 900; 
@@ -150,19 +146,19 @@ body {
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: #ffffff; text-shadow: 0 0 8px rgba(255, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.6); }
 .user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* SLIDER ENGINE */
+/* SLIDER ENGINE (Предотвращает баги наложения подменю) */
 .menu-slider-wrapper {
     position: relative;
     width: 100%;
 }
-.ghost-menu, .accounts-menu {
+.ghost-menu, .accounts-menu, .verifications-menu {
     display: none;
     flex-direction: column;
     gap: 14px;
     width: 100%;
     opacity: 0;
 }
-.ghost-menu.active, .accounts-menu.active {
+.ghost-menu.active, .accounts-menu.active, .verifications-menu.active {
     display: flex;
     animation: menuFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -174,9 +170,7 @@ body {
 .submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* =====================================================================
-   УСИЛЕННЫЕ КНОПКИ VIP PREMIUM NEON GLOW
-   ===================================================================== */
+/* КНОПКИ С ЕВРОПЕЙСКИМ НЕОНОВЫМ СВЕЧЕНИЕМ */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -191,7 +185,6 @@ body {
     width: 100%; 
     overflow: hidden;
     
-    /* Свечение выкручено на максимум (Добавлены дополнительные радиусы размытия) */
     box-shadow: 
         inset 0 0 12px rgba(255, 0, 0, 0.45),
         0 0 12px var(--neon-glow),
@@ -220,12 +213,11 @@ body {
     font-weight: 700; 
     color: #ff2222; 
     letter-spacing: 0.5px;
-    /* Газоразрядная подсветка текста */
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.9); 
     transition: all 0.25s ease;
 }
 
-.ghost-menu .btn-text {
+.ghost-menu .btn-text, .verifications-menu .btn-abort .btn-text {
     flex-grow: 1;
     text-align: center;
     margin-left: -42px; 
@@ -235,10 +227,8 @@ body {
     font-size: 14px; 
 }
 
-/* СОСТОЯНИЕ ДИНАМИЧЕСКОГО НАВЕДЕНИЯ / ХОВЕРА */
 .ghost-btn:hover, .grid-btn:hover {
     border-color: #ffffff;
-    
     box-shadow: 
         inset 0 0 16px rgba(255, 0, 0, 0.6),
         0 0 25px #ff0000,
@@ -259,7 +249,6 @@ body {
         0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
-/* КЛИК / ФИЗИЧЕСКИЙ ТАП СМАРТФОНА */
 .ghost-btn:active, .grid-btn:active {
     transform: scale(0.97);
     border-color: #ffffff;
@@ -278,9 +267,7 @@ body {
     color: #ff3333;
     text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
 }
-.btn-abort:hover {
-    border-color: #ff0000;
-}
+.btn-abort:hover { border-color: #ff0000; }
 
 /* PRODUCT MODAL COMPONENT */
 .product-modal-overlay {
@@ -320,4 +307,4 @@ body {
     justify-content: center;
 }
 .btn-confirm-buy .btn-text { margin-left: 0 !important; color: #ffffff; text-shadow: 0 0 8px #ff0000; }
-.btn-confirm-buy:hover { background: #ff0000; border-color: #ffffff; box-sound: 0 0 30px #ff0000; }
+.btn-confirm-buy:hover { background: #ff0000; border-color: #ffffff; }
