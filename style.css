@@ -31,7 +31,7 @@ body {
 }
 
 /* =====================================================================
-   Продвинутый фоновый движок (Дым, Сеть, Передача импульсов данных)
+   ФОНОВЫЙ ДВИЖОК (Дым, Сеть, Передача импульсов данных)
    ===================================================================== */
 .premium-bg-wrapper {
     position: absolute;
@@ -43,7 +43,6 @@ body {
 .ghost-bg-image {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* Если имя картинки на GitHub другое (например bg.png) — измени строку ниже */
     background-image: url('изображение_8.jpg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -52,12 +51,11 @@ body {
     filter: contrast(1.1) brightness(0.9);
 }
 
-/* Красный медленный туман/дым (Прозрачность строго 5-10%) */
 .cyber-smoke-layer, .cyber-smoke-layer-2 {
     position: absolute;
     top: -50%; left: -50%; width: 200%; height: 200%;
     background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(180, 0, 0, 0.06) 0%, transparent 60%);
+                radial-gradient(circle trimester 70% 60%, rgba(180, 0, 0, 0.06) 0%, transparent 60%);
     filter: blur(80px);
     animation: slowSmokeMovement 32s infinite linear;
     pointer-events: none;
@@ -73,7 +71,6 @@ body {
     100% { transform: rotate(360deg) translate(0, 0) scale(1); }
 }
 
-/* Сетевая VPN/Proxy матрица узлов */
 .vpn-network-matrix {
     position: absolute;
     width: 100%; height: 100%;
@@ -82,7 +79,6 @@ body {
     pointer-events: none;
 }
 
-/* Тонкая сетка из светящихся точек и линий */
 .matrix-grid {
     position: absolute;
     width: 100%; height: 100%;
@@ -94,7 +90,6 @@ body {
     background-position: center;
 }
 
-/* Эффект редкой и ненавязчивой передачи данных по линиям */
 .data-pulse {
     position: absolute;
     width: 2px; height: 40px;
@@ -119,7 +114,6 @@ body {
     100% { left: 110%; opacity: 0; }
 }
 
-/* PARTICLES */
 .ghost-ambient {
     position: absolute;
     width: 100%; height: 100%;
@@ -147,25 +141,21 @@ body {
     width: 100%; height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 28px 20px;
+    padding: 24px 20px;
     overflow-y: auto;
-    padding-bottom: max(28px, env(safe-area-inset-bottom));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
 }
 
-/* =====================================================================
-   Анимация Шапки (Мерцание логотипа, Едва заметное парение привидения)
-   ===================================================================== */
+/* HEADER ELEMENTS */
 .brand-section {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 28px; border-bottom: 1px solid rgba(255, 0, 0, 0.15); padding-bottom: 14px;
+    margin-bottom: 24px; border-bottom: 1px solid rgba(255, 0, 0, 0.15); padding-bottom: 12px;
 }
 .cyber-logo-wrapper {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-
-/* Маленькое привидение возле слова GHOST: парение на 3-5px + альфа */
 .ghost-mascot {
     width: 18px; height: 18px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 10h.01M15 10h.01M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z'/%3E%3C/svg%3E");
@@ -181,7 +171,6 @@ body {
     100% { transform: translateY(0); opacity: 0.85; }
 }
 
-/* Красное неоновое свечение слова GHOST + редкое кибер-мерцание каждые 7 секунд */
 .logo-text {
     font-size: 22px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
     color: #ff0000;
@@ -202,7 +191,7 @@ body {
     font-size: 9px; font-weight: 600; letter-spacing: 2px; color: var(--text-muted-ghost);
     border: 1px solid rgba(255,0,0,0.25); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.5);
 }
-.profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+.profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
 .avatar-wrapper { position: relative; width: 48px; height: 48px; }
 .avatar-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: #ff0000; filter: blur(8px); opacity: 0.2; }
 .avatar-core {
@@ -218,7 +207,49 @@ body {
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: var(--text-pure); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
 .user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* КНОПКИ КАТЕГОРИЙ (Без изменения геометрии и надписей) */
+/* =====================================================================
+   ИСПРАВЛЕННЫЙ ДВИЖОК ДИНАМИЧЕСКИХ МЕНЮ (МЕНЮ БОЛЬШЕ НЕ НАКЛАДЫВАЮТСЯ)
+   ===================================================================== */
+.menu-slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.ghost-menu, .accounts-menu {
+    display: none; /* Полностью убираем из потока неактивное меню */
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    opacity: 0;
+}
+
+/* Показываем и анимируем только класс .active */
+.ghost-menu.active, .accounts-menu.active {
+    display: flex;
+    animation: menuFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes menuFadeIn {
+    0% { transform: translateY(8px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.submenu-title { 
+    font-family: monospace; 
+    font-size: 11px; 
+    color: var(--text-muted-ghost); 
+    letter-spacing: 1px; 
+    margin-bottom: 2px; 
+}
+.accounts-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 12px; 
+}
+
+/* =====================================================================
+   VIP NEON GLOW КНОПКИ
+   ===================================================================== */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -238,13 +269,11 @@ body {
         0 0 10px var(--neon-glow),
         0 4px 15px rgba(0, 0, 0, 0.6);
         
-    transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.15s ease;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.1s ease;
 }
 
 .grid-btn { 
-    padding: 14px 12px; 
+    padding: 16px 12px; 
     justify-content: center;
 }
 
@@ -253,7 +282,6 @@ body {
     color: var(--text-dim);
     flex-shrink: 0;
     filter: drop-shadow(0 0 4px rgba(255, 30, 30, 0.65));
-    transition: all 0.25s ease;
 }
 
 .btn-text { 
@@ -262,7 +290,6 @@ body {
     color: var(--text-dim); 
     letter-spacing: 0.5px;
     text-shadow: 0 0 8px rgba(255, 30, 30, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8); 
-    transition: all 0.25s ease;
 }
 
 .ghost-menu .btn-text {
@@ -282,7 +309,6 @@ body {
         0 0 18px var(--neon-glow-intense),
         0 0 5px rgba(255, 0, 0, 0.4),
         0 6px 20px rgba(0, 0, 0, 0.7);
-    transform: translateY(-1px);
 }
 
 .ghost-btn:hover .btn-icon {
@@ -299,29 +325,17 @@ body {
 }
 
 .ghost-btn:active, .grid-btn:active {
-    transform: scale(0.98) translateY(0);
+    transform: scale(0.98);
     border-color: #ff0000;
     box-shadow: 
         inset 0 0 18px rgba(255, 0, 0, 0.5),
-        0 0 22px var(--neon-glow-intense),
-        0 2px 8px rgba(0, 0, 0, 0.8);
-    transition: transform 0.05s ease, box-shadow 0.05s ease;
+        0 0 22px var(--neon-glow-intense);
 }
 
 .btn-abort { 
     background: rgba(15, 3, 3, 0.9); 
     border-color: rgba(255, 0, 0, 0.3); 
-    margin-top: 12px; 
-}
-.btn-abort .btn-icon {
-    filter: drop-shadow(0 0 4px rgba(255, 30, 30, 0.5));
-}
-.btn-abort:hover { 
-    border-color: rgba(255, 0, 0, 0.8);
-    box-shadow: 
-        inset 0 0 12px rgba(255, 0, 0, 0.2),
-        0 0 15px rgba(255, 0, 0, 0.4),
-        0 4px 15px rgba(0, 0, 0, 0.6);
+    margin-top: 4px; 
 }
 
 /* PRODUCT MODAL COMPONENT */
@@ -334,7 +348,7 @@ body {
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
     opacity: 0; pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.3s ease;
 }
 .product-modal-overlay.open { opacity: 1; pointer-events: auto; }
 .product-modal-card {
@@ -345,11 +359,11 @@ body {
     width: 100%; max-width: 360px;
     padding: 28px 24px; position: relative;
     transform: scale(0.92);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s ease;
     text-align: left;
 }
 .product-modal-overlay.open .product-modal-card { transform: scale(1); }
-.modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: var(--text-muted-ghost); cursor: pointer; transition: color 0.2s ease; }
+.modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: var(--text-muted-ghost); cursor: pointer; }
 .modal-close:hover { color: #fff; }
 .modal-tag { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1.5px; margin-bottom: 8px; }
 .modal-title { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255, 50, 50, 0.3); }
@@ -358,16 +372,8 @@ body {
 .btn-confirm-buy { 
     background: rgba(30, 5, 5, 0.9); 
     border-color: rgba(255, 40, 40, 0.5); 
-    box-shadow: 
-        inset 0 0 10px rgba(255, 0, 0, 0.2),
-        0 0 14px var(--neon-glow);
+    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2), 0 0 14px var(--neon-glow);
     justify-content: center;
 }
-.btn-confirm-buy .btn-text {
-    margin-left: 0 !important;
-}
-.btn-confirm-buy:hover { 
-    background: #ff2222; 
-    border-color: #ffffff; 
-    box-shadow: 0 0 25px rgba(255, 50, 50, 0.7); 
-}
+.btn-confirm-buy .btn-text { margin-left: 0 !important; }
+.btn-confirm-buy:hover { background: #ff2222; border-color: #ffffff; box-shadow: 0 0 25px rgba(255, 50, 50, 0.7); }
