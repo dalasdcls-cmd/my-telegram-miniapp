@@ -146,7 +146,7 @@ body {
 .username { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; color: #ffffff; text-shadow: 0 0 8px rgba(255, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.6); }
 .user-id-label { font-size: 11px; font-family: monospace; color: var(--text-muted-ghost); opacity: 0.85; letter-spacing: 0.5px; }
 
-/* SLIDER ENGINE (Предотвращает баги наложения подменю) */
+/* SLIDER ENGINE */
 .menu-slider-wrapper {
     position: relative;
     width: 100%;
@@ -195,8 +195,16 @@ body {
 }
 
 .grid-btn { 
-    padding: 14px 12px; 
+    padding: 16px 12px; 
     justify-content: center;
+}
+
+/* ИСПРАВЛЕНО: Вертикальная вёрстка для кнопок верификаций (иконка сверху, текст снизу) */
+.vertical-grid-btn {
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 20px 10px !important;
 }
 
 .btn-icon {
@@ -205,6 +213,16 @@ body {
     color: #ff1a1a;
     flex-shrink: 0;
     filter: drop-shadow(0 0 6px #ff0000);
+    transition: all 0.25s ease;
+}
+
+/* Иконки внутри сетки */
+.grid-btn-icon {
+    width: 26px;
+    height: 26px;
+    color: #ff1a1a;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px #ff0000);
     transition: all 0.25s ease;
 }
 
@@ -236,7 +254,7 @@ body {
         0 6px 20px rgba(0, 0, 0, 0.9);
 }
 
-.ghost-btn:hover .btn-icon {
+.ghost-btn:hover .btn-icon, .grid-btn:hover .grid-btn-icon {
     color: #ffffff;
     filter: drop-shadow(0 0 10px #ff0000);
 }
