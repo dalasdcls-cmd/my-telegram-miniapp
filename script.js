@@ -173,10 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const actionName = currentSelectedCategory === "verification" ? "buy_verification" : "buy_tg_account";
 
-            tg?.sendData(JSON.stringify({ 
-                action: actionName, 
+            tg?.sendData(JSON.stringify({
+                action: actionName,
                 type: currentSelectedType,
-                name: currentSelectedName 
+                name: currentSelectedName
             }));
         });
     }
