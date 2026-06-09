@@ -1,14 +1,20 @@
 /* GHOST RED GLASSMORPHISM CORE VARIABLES */
 :root {
     --bg-main: #000000;
-    --bg-surface: rgba(15, 6, 6, 0.25); /* Матовое стекло 25% */
-    --border-premium: rgba(255, 40, 40, 0.15); 
-    --border-active: rgba(255, 30, 30, 0.6); 
-    --text-pure: #ff3333; 
+    
+    /* Сохраняем темный премиальный фон кнопок */
+    --bg-surface: rgba(10, 3, 3, 0.85); 
+    
+    /* Делаем основные цвета рамок и текста максимально сочными и яркими */
+    --border-premium: rgba(255, 30, 30, 0.45); 
+    --border-active: #ff1a1a; 
+    --text-pure: #ff2222; 
     --text-dim: #ff3333; 
     --text-muted-ghost: #b32d2d; 
-    --red-glow: rgba(255, 0, 0, 0.1); 
-    --red-glow-intense: rgba(255, 0, 0, 0.3); 
+    
+    /* Переменные неонового свечения */
+    --neon-glow: rgba(255, 0, 0, 0.45);
+    --neon-glow-intense: rgba(255, 0, 0, 0.75);
 }
 
 * {
@@ -95,7 +101,7 @@ body {
     font-size: 9px; font-weight: 600; letter-spacing: 2px; color: var(--text-muted-ghost);
     border: 1px solid var(--text-dark); padding: 2px 6px; border-radius: 4px; margin-left: 10px; background: rgba(0,0,0,0.4);
 }
-.profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.profile-section { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
 .avatar-wrapper { position: relative; width: 48px; height: 48px; }
 .avatar-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: #ff0000; filter: blur(8px); opacity: 0.2; }
 .avatar-core {
@@ -122,7 +128,7 @@ body {
     grid-area: 1 / 1 / 2 / 2;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px; /* Чуть увеличили отступ между кнопками для воздуха */
     opacity: 0;
     pointer-events: none;
     transform: translateX(15px);
@@ -132,31 +138,106 @@ body {
 .ghost-menu.active, .accounts-menu.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
 
 .submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
-.accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* PREMIUM BUTTONS */
+/* =====================================================================
+   ИСПРАВЛЕНО: КНОПКИ В СТИЛЕ PREMIUM NEON CYBERPUNK (TRON / CHEAT-PANEL)
+   ===================================================================== */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
     border: 1px solid var(--border-premium);
     border-radius: 14px;
     padding: 20px;
-    display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-    width: 100%; overflow: hidden;
-    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer;
+    width: 100%; 
+    overflow: hidden;
+    
+    /* Многослойное неоновое свечение наружу и легкая тень внутрь для глубины */
+    box-shadow: 
+        inset 0 0 8px rgba(255, 0, 0, 0.12),
+        0 0 6px rgba(255, 0, 0, 0.15),
+        0 4px 20px rgba(0, 0, 0, 0.5);
+        
+    transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.15s ease;
 }
-.grid-btn { padding: 16px 12px; }
-.btn-text { font-size: 15px; font-weight: 700; color: var(--text-pure); letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); }
-.grid-btn .btn-text { font-size: 13px; }
 
-.ghost-btn:hover, .grid-btn:hover { border-color: var(--border-active); box-shadow: 0 0 25px var(--red-glow), inset 0 0 10px rgba(255,0,0,0.02); }
-.ghost-btn:hover .btn-text, .grid-btn:hover .btn-text { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
-.ghost-btn:active, .grid-btn:active { transform: scale(0.98); }
+.grid-btn { 
+    padding: 16px 12px; 
+}
 
-.btn-abort { background: rgba(255, 0, 0, 0.03); border-color: rgba(255, 0, 0, 0.2); margin-top: 12px; }
-.btn-abort:hover { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); }
+/* ЯРКИЙ КИБЕРПАНК ТЕКСТ */
+.btn-text { 
+    font-size: 16px; 
+    font-weight: 700; 
+    color: var(--text-dim); 
+    letter-spacing: 0.5px;
+    
+    /* Эффект свечения неонового газа на буквах */
+    text-shadow: 0 0 6px rgba(255, 30, 30, 0.55), 0 2px 4px rgba(0, 0, 0, 0.8); 
+    transition: all 0.25s ease;
+}
+
+.grid-btn .btn-text { 
+    font-size: 14px; 
+}
+
+/* ЭФФЕКТ АКТИВНОСТИ ПРИ НАВЕДЕНИИ / ФОКУСЕ */
+.ghost-btn:hover, .grid-btn:hover {
+    border-color: var(--border-active);
+    
+    /* Мощный, но аккуратный VIP-Glow эффект рамок */
+    box-shadow: 
+        inset 0 0 12px rgba(255, 0, 0, 0.25),
+        0 0 14px var(--neon-glow),
+        0 0 4px rgba(255, 0, 0, 0.3),
+        0 6px 24px rgba(0, 0, 0, 0.6);
+    
+    transform: translateY(-1px);
+}
+
+/* Текст загорается белым неоном при наведении */
+.ghost-btn:hover .btn-text, .grid-btn:hover .btn-text { 
+    color: #ffffff; 
+    text-shadow: 
+        0 0 8px #ff2222,
+        0 0 2px #ffffff,
+        0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ТАКТИЛЬНЫЙ НАЖИМ (ГЛУБИНА КЛИКА) */
+.ghost-btn:active, .grid-btn:active {
+    transform: scale(0.97) translateY(0);
+    border-color: #ff0000;
+    
+    /* Импульс максимального свечения при физическом тапе */
+    box-shadow: 
+        inset 0 0 16px rgba(255, 0, 0, 0.4),
+        0 0 20px var(--neon-glow-intense),
+        0 2px 10px rgba(0, 0, 0, 0.7);
+    
+    transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+/* КНОПКА "НАЗАД" */
+.btn-abort { 
+    background: rgba(20, 5, 5, 0.8); 
+    border-color: rgba(255, 0, 0, 0.25); 
+    margin-top: 12px; 
+}
+
+.btn-abort:hover { 
+    border-color: rgba(255, 0, 0, 0.65);
+    box-shadow: 
+        inset 0 0 10px rgba(255, 0, 0, 0.15),
+        0 0 12px rgba(255, 0, 0, 0.25),
+        0 4px 20px rgba(0, 0, 0, 0.5);
+}
 
 /* PRODUCT MODAL COMPONENT */
 .product-modal-overlay {
@@ -172,7 +253,7 @@ body {
 }
 .product-modal-overlay.open { opacity: 1; pointer-events: auto; }
 .product-modal-card {
-    background: rgba(20, 8, 8, 0.85);
+    background: rgba(20, 8, 8, 0.9);
     border: 1px solid rgba(255, 40, 40, 0.3);
     box-shadow: 0 16px 64px rgba(255, 0, 0, 0.15);
     border-radius: 20px;
@@ -188,5 +269,16 @@ body {
 .modal-tag { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1.5px; margin-bottom: 8px; }
 .modal-title { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255, 50, 50, 0.3); }
 .modal-description { font-size: 14px; font-weight: 400; line-height: 1.5; color: #e2e8f0; margin-bottom: 24px; letter-spacing: 0.1px; }
-.btn-confirm-buy { background: rgba(255, 0, 0, 0.12); border-color: rgba(255, 50, 50, 0.5); box-shadow: 0 0 20px rgba(255, 0, 0, 0.15); }
-.btn-confirm-buy:hover { background: #ff3333; border-color: #ffffff; box-shadow: 0 0 30px rgba(255, 50, 50, 0.5); }
+
+.btn-confirm-buy { 
+    background: rgba(30, 5, 5, 0.9); 
+    border-color: rgba(255, 40, 40, 0.5); 
+    box-shadow: 
+        inset 0 0 10px rgba(255, 0, 0, 0.2),
+        0 0 14px var(--neon-glow);
+}
+.btn-confirm-buy:hover { 
+    background: #ff2222; 
+    border-color: #ffffff; 
+    box-shadow: 0 0 25px rgba(255, 50, 50, 0.7); 
+}
