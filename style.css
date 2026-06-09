@@ -11,8 +11,8 @@
     --text-muted-ghost: #b32d2d; 
     
     /* Слои неонового газа */
-    --neon-glow: rgba(255, 0, 0, 0.5);
-    --neon-glow-intense: rgba(255, 0, 0, 0.85);
+    --neon-glow: rgba(255, 0, 0, 0.45);
+    --neon-glow-intense: rgba(255, 0, 0, 0.75);
 }
 
 * {
@@ -41,6 +41,7 @@ body {
 .ghost-bg-image {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
+    /* ВНИМАНИЕ: Измени имя файла ниже, если твоя картинка называется по-другому */
     background-image: url('изображение_8.jpg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -138,9 +139,7 @@ body {
 .submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* =====================================================================
-   VIP CYBERPUNK NEON GLOW BUTTONS
-   ===================================================================== */
+/* VIP CYBERPUNK NEON GLOW BUTTONS */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -149,13 +148,12 @@ body {
     padding: 18px 24px;
     display: flex; 
     align-items: center; 
-    justify-content: flex-start; /* Иконка слева, текст по центру */
+    justify-content: flex-start;
     gap: 20px;
     cursor: pointer;
     width: 100%; 
     overflow: hidden;
     
-    /* Мягкое внешнее и внутреннее свечение рамки */
     box-shadow: 
         inset 0 0 10px rgba(255, 0, 0, 0.25),
         0 0 10px var(--neon-glow),
@@ -171,19 +169,15 @@ body {
     justify-content: center;
 }
 
-/* СТИЛИЗАЦИЯ ИКОНОК */
 .btn-icon {
     width: 22px;
     height: 22px;
     color: var(--text-dim);
     flex-shrink: 0;
-    
-    /* Наложение неоновой ауры на иконки */
     filter: drop-shadow(0 0 4px rgba(255, 30, 30, 0.65));
     transition: all 0.25s ease;
 }
 
-/* СВЕТЯЩИЙСЯ ТЕКСТ */
 .btn-text { 
     font-size: 16px; 
     font-weight: 700; 
@@ -196,23 +190,20 @@ body {
 .ghost-menu .btn-text {
     flex-grow: 1;
     text-align: center;
-    margin-left: -42px; /* Идеальная центровка текста с учетом ширины иконки */
+    margin-left: -42px; /* Выравнивание текста строго по центру */
 }
 
 .grid-btn .btn-text { 
     font-size: 14px; 
 }
 
-/* ЭФФЕКТ СВЕРХАКТИВНОСТИ ПРИ НАВЕДЕНИИ / ФОКУСЕ */
 .ghost-btn:hover, .grid-btn:hover {
     border-color: var(--border-active);
-    
     box-shadow: 
         inset 0 0 14px rgba(255, 0, 0, 0.35),
         0 0 18px var(--neon-glow-intense),
         0 0 5px rgba(255, 0, 0, 0.4),
         0 6px 20px rgba(0, 0, 0, 0.7);
-    
     transform: translateY(-1px);
 }
 
@@ -229,20 +220,16 @@ body {
         0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* ГЛУБИНА КЛИКА (ФИЗИЧЕСКИЙ ТАП) */
 .ghost-btn:active, .grid-btn:active {
     transform: scale(0.98) translateY(0);
     border-color: #ff0000;
-    
     box-shadow: 
         inset 0 0 18px rgba(255, 0, 0, 0.5),
         0 0 22px var(--neon-glow-intense),
         0 2px 8px rgba(0, 0, 0, 0.8);
-    
     transition: transform 0.05s ease, box-shadow 0.05s ease;
 }
 
-/* КНОПКА "НАЗАД" */
 .btn-abort { 
     background: rgba(15, 3, 3, 0.9); 
     border-color: rgba(255, 0, 0, 0.3); 
