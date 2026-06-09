@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const btnAccounts = document.querySelector('[data-action="accounts"]');
     const btnVerifications = document.querySelector('[data-action="verifications"]');
+    const btnServices = document.querySelector('[data-action="services"]');
 
     // Узлы модального окна карточки товара
     const productModal = document.getElementById('product-modal');
@@ -76,6 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSelectedType = "";
     let currentSelectedName = "";
     let currentSelectedCategory = ""; 
+
+    // Обработчик кнопки Сервисы
+    if (btnServices) {
+        btnServices.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            // Сюда можно добавить открытие нового лобби (например, servicesLobby.classList.add('active'))
+            console.log("[GHOST ENGINE] Нажата кнопка 'Сервисы'");
+        });
+    }
 
     // Переключение ТГ Аккаунтов
     if (btnAccounts) {
@@ -116,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Обработка кликов остальных кнопок главного меню
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not(#back-to-lobby):not(#back-from-verifications):not(#modal-confirm-btn)');
+    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not(#back-to-lobby):not(#back-from-verifications):not(#modal-confirm-btn)');
     standardButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.getAttribute('data-action');
@@ -130,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Открытие карточки описания товара из сеток и списков
+    // Открытие карточки описания товара
     const gridButtons = document.querySelectorAll('.grid-btn, .list-verif-btn');
     gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {

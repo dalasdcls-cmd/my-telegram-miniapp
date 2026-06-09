@@ -170,7 +170,7 @@ body {
 .submenu-title { font-family: monospace; font-size: 10px; color: var(--text-muted-ghost); letter-spacing: 1px; margin-bottom: 4px; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* Вертикальный список кнопок в ряд для верификаций */
+/* Vertical list container for verifications */
 .verifications-list {
     display: flex;
     flex-direction: column;
@@ -202,13 +202,12 @@ body {
     transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.1s ease;
 }
 
-/* Обычная двухколоночная сетка (Текст по центру) */
 .grid-btn { 
     padding: 16px 12px; 
     justify-content: center;
 }
 
-/* ИСПРАВЛЕНО: Кнопки верификаций выровнены СТРОГО ПО ЦЕНТРУ рамок, так как значки удалены */
+/* Wide buttons alignment */
 .list-verif-btn {
     justify-content: center !important;
 }
@@ -230,7 +229,7 @@ body {
     transition: all 0.25s ease;
 }
 
-/* Выравнивание текста в кнопках главного меню по центру */
+/* Centering button labels in main layout */
 .ghost-menu .btn-text, .verifications-menu .btn-abort .btn-text {
     flex-grow: 1;
     text-align: center;
@@ -241,7 +240,7 @@ body {
     font-size: 14px; 
 }
 
-/* ЭФФЕКТЫ СВЕЧЕНИЯ ПРИ НАВЕДЕНИИ / ФОКУСЕ */
+/* HOVER / ACTIVE STATES */
 .ghost-btn:hover, .grid-btn:hover {
     border-color: #ffffff;
     box-shadow: 
