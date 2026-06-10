@@ -3,200 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>GHOST // Private Access</title>
-    <link rel="stylesheet" href="style.css?v=33">
+    <title>Ghost VPN</title>
+    <link rel="stylesheet" href="style.css?v=41">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
-    <div class="premium-bg-wrapper">
-        <div class="ghost-bg-image"></div>
-        <div class="dark-overlay"></div>
-    </div>
-
-    <div class="ghost-ambient">
-        <div class="particle p-1"></div>
-        <div class="particle p-2"></div>
-    </div>
-
     <div class="app-container">
-        
-        <header class="ghost-header">
-            <div class="brand-section">
-                <div class="logo-container">
-                    <div class="cyber-logo-wrapper">
-                        <svg class="ghost-mascot-svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8zm-3 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                        </svg>
-                        <span class="logo-text">GHOST</span>
-                    </div>
-                    <span class="logo-badge">ELITE ACCESS</span>
-                </div>
-            </div>
+        <div class="brand-area">
+            <div class="ghost-logo">GHOST</div>
+            <div class="ghost-badge">ELITE ACCESS</div>
+        </div>
 
-            <div class="profile-section">
-                <div class="avatar-wrapper">
-                    <div class="avatar-glow"></div>
-                    <div class="avatar-core" id="user-avatar">
-                        <img src="" id="user-avatar-img" alt="User Avatar">
-                    </div>
-                </div>
-                <div class="user-meta">
-                    <span class="meta-label">USER //</span>
-                    <h1 class="username" id="username">@username</h1>
-                    <span class="user-id-label" id="user-id">ID: 0000000000</span>
-                </div>
+        <div class="profile-section">
+            <div class="avatar-core">
+                <img src="" id="user-avatar-img" alt="Avatar">
             </div>
-        </header>
+            <div class="user-meta">
+                <span class="meta-label">USER //</span>
+                <h1 class="username" id="username">@username</h1>
+                <span class="user-id-label" id="user-id">ID: 0000000000</span>
+            </div>
+        </div>
 
-        <div class="menu-slider-wrapper">
+        <div class="menu-slider">
             
-            <main class="ghost-menu active" id="main-lobby">
-                <button class="ghost-btn" data-action="verifications">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="m9 11 2 2 4-4"/>
-                    </svg>
-                    <span class="btn-text">Верификации</span>
-                </button>
-                
-                <button class="ghost-btn" data-action="manuals">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                        <path d="M6 6h10M6 10h10M6 14h10"/>
-                    </svg>
-                    <span class="btn-text">Мануалы</span>
-                </button>
-
-                <button class="ghost-btn" data-action="services">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M21 16V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/>
-                        <path d="M7 21h10M12 18v3"/>
-                    </svg>
-                    <span class="btn-text">Сервисы</span>
-                </button>
-                
-                <button class="ghost-btn" data-action="accounts">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                    <span class="btn-text">Тг аккаунты</span>
-                </button>
-                
-                <button class="ghost-btn" data-action="proxy_main">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/>
-                    </svg>
-                    <span class="btn-text">Прокси</span>
-                </button>
-
-                <button class="ghost-btn btn-abort" data-action="back">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    <span class="btn-text">Назад</span>
-                </button>
+            <main class="menu-block active" id="main-lobby">
+                <button class="ghost-btn" data-action="verifications">Верификации</button>
+                <button class="ghost-btn" data-action="manuals">Мануалы</button>
+                <button class="ghost-btn" data-action="services">Сервисы</button>
+                <button class="ghost-btn" data-action="accounts">Тг аккаунты</button>
+                <button class="ghost-btn" data-action="proxy">Прокси</button>
+                <button class="ghost-btn btn-abort" data-action="back">Назад</button>
             </main>
 
-            <section class="services-menu" id="services-lobby">
-                <div class="submenu-title">// ВЫБОР КАТЕГОРИИ УСЛУГ</div>
-                <div class="services-list">
-                    <button class="ghost-btn list-service-item-btn" data-service="nakrutka">
-                        <span class="btn-text list-text">Накрутка</span>
-                    </button>
-                    <button class="ghost-btn list-service-item-btn" data-service="virtual_numbers">
-                        <span class="btn-text list-text">Виртуальные номера</span>
-                    </button>
-                    <button class="ghost-btn list-service-item-btn" data-service="proxy_srv">
-                        <span class="btn-text list-text">Прокси</span>
-                    </button>
-                </div>
-                <button class="ghost-btn btn-abort" id="back-from-services">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    <span class="btn-text">Назад</span>
-                </button>
-            </section>
-
-            <section class="verifications-menu" id="verifications-lobby">
+            <section class="menu-block" id="verifications-lobby">
                 <div class="submenu-title">// ВЫБОР КАТЕГОРИИ ТОВАРА</div>
-                
-                <div class="verifications-list">
-                    <button class="ghost-btn list-verif-btn" data-verif="bybit">
-                        <span class="btn-text list-text">Bybit</span>
-                        <span class="verif-price">15$</span>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-verif="bybit">
+                        <span>Bybit</span>
+                        <span class="price">15$</span>
                     </button>
-                    
-                    <button class="ghost-btn list-verif-btn" data-verif="cryptobot">
-                        <span class="btn-text list-text">CryptoBot</span>
-                        <span class="verif-price">13$</span>
+                    <button class="ghost-btn list-btn" data-verif="cryptobot">
+                        <span>CryptoBot</span>
+                        <span class="price">13$</span>
                     </button>
-                    
-                    <button class="ghost-btn list-verif-btn" data-verif="fragment">
-                        <span class="btn-text list-text">Fragment</span>
-                        <span class="verif-price">7$</span>
+                    <button class="ghost-btn list-btn" data-verif="fragment">
+                        <span>Fragment</span>
+                        <span class="price">7$</span>
                     </button>
-                    
-                    <button class="ghost-btn list-verif-btn" data-verif="wallet">
-                        <span class="btn-text list-text">Wallet</span>
-                        <span class="verif-price">13$</span>
+                    <button class="ghost-btn list-btn" data-verif="wallet">
+                        <span>Wallet</span>
+                        <span class="price">13$</span>
                     </button>
                 </div>
-
-                <button class="ghost-btn btn-abort" id="back-from-verifications">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    <span class="btn-text">Назад</span>
-                </button>
+                <button class="ghost-btn btn-abort" id="back-from-verifications">Назад</button>
             </section>
 
-            <section class="accounts-menu" id="accounts-lobby">
+            <section class="menu-block" id="services-lobby">
+                <div class="submenu-title">// ВЫБОР КАТЕГОРИИ УСЛУГ</div>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-service="nakrutka">
+                        <span>Накрутка</span>
+                        <span class="price">5$</span>
+                    </button>
+                    <button class="ghost-btn list-btn" data-service="virtual_numbers">
+                        <span>Виртуальные номера</span>
+                        <span class="price">5$</span>
+                    </button>
+                    <button class="ghost-btn list-btn" data-service="proxy_srv">
+                        <span>Прокси</span>
+                        <span class="price">5$</span>
+                    </button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-from-services">Назад</button>
+            </section>
+
+            <section class="menu-block" id="accounts-lobby">
                 <div class="submenu-title">// ВЫБОР КАТЕГОРИИ ТОВАРА</div>
                 <div class="accounts-grid">
-                    <button class="grid-btn" data-acc="novoregi"><span class="btn-text">Новореги</span></button>
-                    <button class="grid-btn" data-acc="1_year"><span class="btn-text">1 год отлега</span></button>
-                    <button class="grid-btn" data-acc="2_years"><span class="btn-text">2 года отлеги</span></button>
-                    <button class="grid-btn" data-acc="3_years"><span class="btn-text">3 года отлеги</span></button>
-                    <button class="grid-btn" data-acc="4_years"><span class="btn-text">4 года отлеги</span></button>
-                    <button class="grid-btn" data-acc="5_years"><span class="btn-text">5 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="6_years"><span class="btn-text">6 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="7_years"><span class="btn-text">7 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="8_years"><span class="btn-text">8 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="9_years"><span class="btn-text">9 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="10_years"><span class="btn-text">10 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="11_years"><span class="btn-text">11 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="12_years"><span class="btn-text">12 лет отлеги</span></button>
-                    <button class="grid-btn" data-acc="13_years"><span class="btn-text">13 лет отлеги</span></button>
+                    <button class="grid-btn" data-acc="novoregi">Новореги</button>
+                    <button class="grid-btn" data-acc="1_year">1 год отлега</button>
+                    <button class="grid-btn" data-acc="2_years">2 года отлеги</button>
+                    <button class="grid-btn" data-acc="3_years">3 года отлеги</button>
+                    <button class="grid-btn" data-acc="4_years">4 года отлеги</button>
+                    <button class="grid-btn" data-acc="5_years">5 лет отлеги</button>
+                    <button class="grid-btn" data-acc="6_years">6 лет отлеги</button>
+                    <button class="grid-btn" data-acc="7_years">7 лет отлеги</button>
+                    <button class="grid-btn" data-acc="8_years">8 лет отлеги</button>
+                    <button class="grid-btn" data-acc="9_years">9 лет отлеги</button>
+                    <button class="grid-btn" data-acc="10_years">10 лет отлеги</button>
+                    <button class="grid-btn" data-acc="11_years">11 лет отлеги</button>
+                    <button class="grid-btn" data-acc="12_years">12 лет отлеги</button>
+                    <button class="grid-btn" data-acc="13_years">13 лет отлеги</button>
                 </div>
-                <button class="ghost-btn btn-abort" id="back-to-lobby">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    <span class="btn-text">Назад</span>
-                </button>
+                <button class="ghost-btn btn-abort" id="back-to-lobby">Назад</button>
             </section>
         </div>
-
-        <div class="product-modal-overlay" id="product-modal">
-            <div class="product-modal-card">
-                <div class="modal-close" id="modal-close-btn">×</div>
-                <div class="modal-tag">// ОПИСАНИЕ ТОВАРА</div>
-                <h2 class="modal-title" id="modal-title">Название товара</h2>
-                <p class="modal-description" id="modal-description">Описание...</p>
-                
-                <button class="ghost-btn btn-confirm-buy" id="modal-confirm-btn">
-                    <span class="btn-text">ПОДТВЕРДИТЬ ПОКУПКУ</span>
-                </button>
-            </div>
-        </div>
-
     </div>
 
-    <script src="script.js?v=33"></script>
+    <div class="product-modal-overlay" id="product-modal">
+        <div class="product-modal-card">
+            <div class="modal-close" id="modal-close-btn">×</div>
+            <div class="modal-tag">// ОПИСАНИЕ ТОВАРА</div>
+            <h2 class="modal-title" id="modal-title">Название товара</h2>
+            <p class="modal-description" id="modal-description">Описание...</p>
+            <button class="ghost-btn btn-confirm-buy" id="modal-confirm-btn">ПОДТВЕРДИТЬ ПОКУПКУ</button>
+        </div>
+    </div>
+
+    <script src="script.js?v=41"></script>
 </body>
 </html>

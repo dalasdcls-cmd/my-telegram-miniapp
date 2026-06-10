@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "fragment": "Проверенный аккаунт для работы с платформой Fragment. Позволяет безопасно покупать анонимные номера и Telegram Usernames.",
         "wallet": "Верифицированный встроенный кошелек Telegram Wallet (KYC). Свободный доступ к покупке крипты с банковской карты и P2P.",
         
-        // ДОБАВЛЕНО: Описания для категории Сервисы
+        // Сервисы
         "nakrutka": "Премиум накрутка живых подписчиков, просмотров и реакций для Telegram, Instagram и других социальных сетей. Высокая скорость выполнения без отписок.",
         "virtual_numbers": "Аренда чистых виртуальных номеров для моментального приема SMS-активаций во всех популярных сервисах и мессенджерах.",
         "proxy_srv": "Индивидуальные приватные IPv4/IPv6 прокси высокой скорости. Идеальная стабильность и полная анонимность для парсинга и мультиаккаунтинга."
@@ -83,69 +83,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentSelectedType = "";
     let currentSelectedName = "";
-    let currentSelectedCategory = "";
+    let currentSelectedCategory = ""; 
 
-    // Переключение ТГ Аккаунтов
-    if (btnAccounts) {
-        btnAccounts.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            mainLobby.classList.remove('active');
-            accountsLobby.classList.add('active');
+    const showScreen = (targetScreen) => {
+        [mainLobby, accountsLobby, verificationsLobby, servicesLobby].forEach(screen => {
+            if(screen) screen.classList.remove('active');
         });
-    }
+        targetScreen.classList.add('active');
+    };
 
-    if (backToLobbyBtn) {
-        backToLobbyBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            accountsLobby.classList.remove('active');
-            mainLobby.classList.add('active');
-        });
-    }
+    // Входы в подразделы
+    if (btnAccounts) btnAccounts.onclick = () => { if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); showScreen(accountsLobby); };
+    if (btnVerifications) btnVerifications.onclick = () => { if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); showScreen(verificationsLobby); };
+    if (btnServices) btnServices.onclick = () => { if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); showScreen(servicesLobby); };
 
-    // Переключение Верификаций
-    if (btnVerifications) {
-        btnVerifications.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            mainLobby.classList.remove('active');
-            verificationsLobby.classList.add('active');
-        });
-    }
+    // Кнопки возврата «Назад»
+    if (backToLobbyBtn) backToLobbyBtn.onclick = () => { if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); showScreen(mainLobby); };
+    if (backFromVerificationsBtn) backFromVerificationsBtn.onclick = () => { if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); showScreen(mainLobby); };
+    if (backFromServicesBtn) backFromServicesBtn.onclick = () => { if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); showScreen(mainLobby); };
 
-    if (backFromVerificationsBtn) {
-        backFromVerificationsBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            verificationsLobby.classList.remove('active');
-            mainLobby.classList.add('active');
-        });
-    }
-
-    // Переключение Сервисов
-    if (btnServices) {
-        btnServices.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            mainLobby.classList.remove('active');
-            servicesLobby.classList.add('active');
-        });
-    }
-
-    if (backFromServicesBtn) {
-        backFromServicesBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            servicesLobby.classList.remove('active');
-            mainLobby.classList.add('active');
-        });
-    }
-
-    // Обработка кликов остальных кнопок главного меню
-    const standardButtons = document.querySelectorAll('.ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not(#back-to-lobby):not(#back-from-verifications):not(#back-from-services):not(#modal-confirm-btn)');
+    // Кнопки главного меню (Мануалы, Прокси, Назад)
+    const standardButtons = document.querySelectorAll('.ghost-menu .ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"])');
     standardButtons.forEach(button => {
-        button.addEventListener('click', () => {
+        button.onclick = () => {
             const action = button.getAttribute('data-action');
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
@@ -154,17 +114,19 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (action) {
                 tg?.sendData(JSON.stringify({ action: `open_${action}` }));
             }
-        });
+        };
     });
 
-    // Открытие карточки описания товара
-    const gridButtons = document.querySelectorAll('.grid-btn, .list-verif-btn, .list-service-item-btn');
-    gridButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
+    // Клики по товарам (Открытие карточки описания)
+    const allProductButtons = document.querySelectorAll('.grid-btn, .list-btn');
+    allProductButtons.forEach(btn => {
+        btn.onclick = () => {
             const accType = btn.getAttribute('data-acc');
             const verifType = btn.getAttribute('data-verif');
             const serviceType = btn.getAttribute('data-service');
-            const accName = btn.querySelector('.btn-text')?.textContent || "Unknown Asset";
+            
+            // Считываем только текст названия, отрезая цену для красоты
+            const assetName = btn.querySelector('span:first-child')?.textContent || btn.textContent.split('$')[0].trim();
             
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
@@ -179,42 +141,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSelectedCategory = "service";
             }
             
-            currentSelectedName = accName;
+            currentSelectedName = assetName;
 
             if (modalTitle && modalDescription && productModal) {
-                modalTitle.textContent = accName;
+                modalTitle.textContent = assetName;
                 modalDescription.textContent = productDescriptions[currentSelectedType] || "Описание временно отсутствует.";
                 productModal.classList.add('open');
             }
-        });
+        };
     });
 
-    window.addEventListener('click', (e) => {
-        if (e.target === productModal) productModal.classList.remove('open');
-    });
+    window.onclick = (e) => { if (e.target === productModal) productModal.classList.remove('open'); };
+    if (modalCloseBtn) modalCloseBtn.onclick = () => productModal.classList.remove('open');
 
-    if (modalCloseBtn) {
-        modalCloseBtn.addEventListener('click', () => productModal.classList.remove('open'));
-    }
-
+    // Подтверждение покупки в модальном окне
     if (modalConfirmBtn) {
-        modalConfirmBtn.addEventListener('click', () => {
+        modalConfirmBtn.onclick = () => {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             productModal.classList.remove('open');
             
-            // Динамический выбор экшена в бот в зависимости от нажатого подменю
             let actionName = "buy_tg_account";
-            if (currentSelectedCategory === "verification") {
-                actionName = "buy_verification";
-            } else if (currentSelectedCategory === "service") {
-                actionName = "buy_service";
-            }
+            if (currentSelectedCategory === "verification") actionName = "buy_verification";
+            if (currentSelectedCategory === "service") actionName = "buy_service";
 
-            tg?.sendData(JSON.stringify({
-                action: actionName,
+            tg?.sendData(JSON.stringify({ 
+                action: actionName, 
                 type: currentSelectedType,
-                name: currentSelectedName
+                name: currentSelectedName 
             }));
-        });
+        };
     }
 });
