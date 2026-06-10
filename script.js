@@ -65,6 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
         "cheap_tg_accs": "Мануал по поиску и закупке аккаунтов Telegram по самым низким ценам на рынке. Обзор закрытых оптовых бирж, методы проверки сессий на валидность и защита от восстановления."
     };
 
+    // ДОБАВЛЕНО: База данных ссылок на статьи Телеграф
+    const articleLinks = {
+        "progrev_tg": "https://telegra.ph/Manual-po-progrevu-akkaunta-telegramm-06-10-2",
+        "p2p_no_cards": "https://telegra.ph/p2p-bez-kart-v-CryptoBot-06-10",
+        "cheap_tg_accs": "https://telegra.ph/Manual-po-pokupke-deshevyh-akkauntov-s-otlegoj-06-10"
+    };
+
     // Навигационные узлы
     const mainLobby = document.getElementById('main-lobby');
     const accountsLobby = document.getElementById('accounts-lobby');
@@ -90,6 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDescription = document.getElementById('modal-description');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    
+    // Элементы статьи внутри модального окна
+    const modalArticleContainer = document.getElementById('modal-article-container');
+    const modalArticleLink = document.getElementById('modal-article-link');
 
     let currentSelectedType = "";
     let currentSelectedName = "";
@@ -115,16 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (backFromServicesBtn) backFromServicesBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromManualsBtn) backFromManualsBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
 
-    // Обработка кликов кнопок главного меню
-    const standardButtons = document.querySelectorAll('#main-lobby .ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not([data-action="manuals"])');
-    standardButtons.forEach(button => {
-        button.onclick = () => {
-            const action = button.getAttribute('data-action');
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            if (action) tg?.sendData(JSON.stringify({ action: `open_${action}` }));
-        };
-    });
-
     // Клики по товарам (Открытие карточки описания)
     const allProductButtons = document.querySelectorAll('.grid-btn, .list-btn');
     allProductButtons.forEach(btn => {
@@ -147,6 +148,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modalTitle && modalDescription && productModal) {
                 modalTitle.textContent = assetName;
                 modalDescription.textContent = productDescriptions[currentSelectedType] || "Описание временно отсутствует.";
+                
+                // Проверяем, есть ли ссылка на Телеграф для этого элемента
+                if (articleLinks[currentSelectedType]) {
+                    modalArticleLink.href = articleLinks[currentSelectedType];
+                    modalArticleContainer.style.display = "block"; // Показываем кнопку статьи
+                } else {
+                    modalArticleContainer.style.display = "none";  // Скрываем, если это обычный товар
+                }
+
                 productModal.classList.add('open');
             }
         };
