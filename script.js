@@ -59,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         "virtual_numbers": "Аренда чистых виртуальных номеров для моментального приема SMS-активаций во всех популярных сервисах и мессенджерах.",
         "proxy_srv": "Индивидуальные приватные IPv4/IPv6 прокси высокой скорости. Идеальная стабильность и полная анонимность для парсинга и мультиаккаунтинга.",
 
-        // ДОБАВЛЕНО: Мануалы
-        "progrev_tg": "Пошаговое приватное руководство по профессиональному прогреву Telegram-аккаунтов. Защита от спамблока, прогрев сессий, лимиты инвайтинга и подготовка под рассылки."
+        // Мануалы
+        "progrev_tg": "Пошаговое приватное руководство по профессиональному прогреву Telegram-аккаунтов. Защита от спамблока, прогрев сессий, лимиты инвайтинга и подготовка под рассылки.",
+        "p2p_no_cards": "Актуальная авторская методика проведения P2P-сделок без использования личных или дроп-карт. Обход классических банковских ограничений, работа с альтернативными шлюзами платежей и личная безопасность.",
+        "cheap_tg_accs": "Мануал по поиску и закупке аккаунтов Telegram по самым низким ценам на рынке. Обзор закрытых оптовых бирж, методы проверки сессий на валидность и защита от восстановления."
     };
 
     // Навигационные узлы
@@ -91,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentSelectedType = "";
     let currentSelectedName = "";
-    let currentSelectedCategory = "";
+    let currentSelectedCategory = ""; 
 
     // Функция переключения экранов
     const showScreen = (targetScreen) => {
@@ -113,14 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (backFromServicesBtn) backFromServicesBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromManualsBtn) backFromManualsBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
 
-    // Кнопка «Назад» в Главном Меню (если бы она была, но мы её убрали по твоей просьбе)
-    const btnMainMenuBack = document.querySelector('#main-lobby .btn-abort');
-    if (btnMainMenuBack) {
-        btnMainMenuBack.onclick = () => {
-            tg?.HapticFeedback?.impactOccurred('medium');
-            tg?.close();
+    // Обработка кликов кнопок главного меню
+    const standardButtons = document.querySelectorAll('#main-lobby .ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not([data-action="manuals"])');
+    standardButtons.forEach(button => {
+        button.onclick = () => {
+            const action = button.getAttribute('data-action');
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            if (action) tg?.sendData(JSON.stringify({ action: `open_${action}` }));
         };
-    }
+    });
 
     // Клики по товарам (Открытие карточки описания)
     const allProductButtons = document.querySelectorAll('.grid-btn, .list-btn');
@@ -163,10 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentSelectedCategory === "service") actionName = "buy_service";
             if (currentSelectedCategory === "manual") actionName = "buy_manual";
 
-            tg?.sendData(JSON.stringify({
-                action: actionName,
+            tg?.sendData(JSON.stringify({ 
+                action: actionName, 
                 type: currentSelectedType,
-                name: currentSelectedName
+                name: currentSelectedName 
             }));
         };
     }
