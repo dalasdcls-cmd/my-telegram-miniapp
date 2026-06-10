@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ghost VPN</title>
-    <link rel="stylesheet" href="style.css?v=46">
+    <link rel="stylesheet" href="style.css?v=47">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -42,8 +42,19 @@
                 <button class="ghost-btn" data-action="verifications">Верификации</button>
                 <button class="ghost-btn" data-action="manuals">Мануалы</button>
                 <button class="ghost-btn" data-action="services">Сервисы</button>
+                <button class="ghost-btn" data-action="tools">Инструменты</button>
                 <button class="ghost-btn" data-action="accounts">Тг аккаунты</button>
             </main>
+
+            <section class="menu-block" id="tools-lobby">
+                <div class="submenu-title">// ВЫБОР ИНСТРУМЕНТА</div>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-tool="arbitrazh">
+                        <span>Для арбитража трафика</span>
+                    </button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-from-tools">Назад</button>
+            </section>
 
             <section class="menu-block" id="manuals-lobby">
                 <div class="submenu-title">// ВЫБОР МАНУАЛА</div>
@@ -123,6 +134,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=46"></script>
+    <script src="script.js?v=47"></script>
 </body>
 </html>

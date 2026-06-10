@@ -57,15 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Сервисы
         "nakrutka": "Премиум накрутка живых подписчиков, просмотров и реакций для Telegram, Instagram и других социальных сетей. Высокая скорость выполнения без отписок.",
         "virtual_numbers": "Аренда чистых виртуальных номеров для моментального приема SMS-активаций во всех популярных сервисах и мессенджерах.",
-        "proxy_srv": "Индивидуальные приватные IPv4/IPv6 прокси высокой скорости. Идеальная стабильность и полная анонимность для парсинга и мультиаккаунтинга.",
+        "proxy_srv": "ИНдивидуальные приватные IPv4/IPv6 прокси высокой скорости. Идеальная стабильность и полная анонимность для парсинга и мультиаккаунтинга.",
 
         // Мануалы
         "progrev_tg": "Пошаговое приватное руководство по профессиональному прогреву Telegram-аккаунтов. Защита от спамблока, прогрев сессий, лимиты инвайтинга и подготовка под рассылки.",
         "p2p_no_cards": "Актуальная авторская методика проведения P2P-сделок без использования личных или дроп-карт. Обход классических банковских ограничений, работа с альтернативными шлюзами платежей и личная безопасность.",
-        "cheap_tg_accs": "Мануал по поиску и закупке аккаунтов Telegram по самым низким ценам на рынке. Обзор закрытых оптовых бирж, методы проверки сессий на валидность и защита от восстановления."
+        "cheap_tg_accs": "Мануал по поиску и закупке аккаунтов Telegram по самым нищим ценам на рынке. Обзор закрытых оптовых бирж, методы проверки сессий на валидность и защита от восстановления.",
+
+        // ДОБАВЛЕНО: Инструменты
+        "arbitrazh": "Комплексный приватный софт-пакет для арбитража трафика. Включает уникальные инструменты автоматизации, клонеры креативов, шаблоны под залив FB/Google/TG и инструкции по обходу антифрод-систем."
     };
 
-    // ДОБАВЛЕНО: База данных ссылок на статьи Телеграф
     const articleLinks = {
         "progrev_tg": "https://telegra.ph/Manual-po-progrevu-akkaunta-telegramm-06-10-2",
         "p2p_no_cards": "https://telegra.ph/p2p-bez-kart-v-CryptoBot-06-10",
@@ -78,18 +80,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const verificationsLobby = document.getElementById('verifications-lobby');
     const servicesLobby = document.getElementById('services-lobby');
     const manualsLobby = document.getElementById('manuals-lobby');
+    const toolsLobby = document.getElementById('tools-lobby');
     
     // Кнопки Назад
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const backFromVerificationsBtn = document.getElementById('back-from-verifications');
     const backFromServicesBtn = document.getElementById('back-from-services');
     const backFromManualsBtn = document.getElementById('back-from-manuals');
+    const backFromToolsBtn = document.getElementById('back-from-tools');
     
     // Триггеры открытия меню
     const btnAccounts = document.querySelector('[data-action="accounts"]');
     const btnVerifications = document.querySelector('[data-action="verifications"]');
     const btnServices = document.querySelector('[data-action="services"]');
     const btnManuals = document.querySelector('[data-action="manuals"]');
+    const btnTools = document.querySelector('[data-action="tools"]');
 
     // Карточка товара
     const productModal = document.getElementById('product-modal');
@@ -97,8 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDescription = document.getElementById('modal-description');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
-    
-    // Элементы статьи внутри модального окна
     const modalArticleContainer = document.getElementById('modal-article-container');
     const modalArticleLink = document.getElementById('modal-article-link');
 
@@ -108,23 +111,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Функция переключения экранов
     const showScreen = (targetScreen) => {
-        [mainLobby, accountsLobby, verificationsLobby, servicesLobby, manualsLobby].forEach(screen => {
+        [mainLobby, accountsLobby, verificationsLobby, servicesLobby, manualsLobby, toolsLobby].forEach(screen => {
             if (screen) screen.classList.remove('active');
         });
         if (targetScreen) targetScreen.classList.add('active');
     };
 
-    // ОБРАБОТЧИКИ НАВИГАЦИИ (ПЕРЕХОДЫ ВПЕРЕД)
+    // ПЕРЕХОДЫ ВПЕРЕД
     if (btnAccounts) btnAccounts.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(accountsLobby); };
     if (btnVerifications) btnVerifications.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(verificationsLobby); };
     if (btnServices) btnServices.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(servicesLobby); };
     if (btnManuals) btnManuals.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(manualsLobby); };
+    if (btnTools) btnTools.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(toolsLobby); };
 
     // КНОПКИ «НАЗАД»
     if (backToLobbyBtn) backToLobbyBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromVerificationsBtn) backFromVerificationsBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromServicesBtn) backFromServicesBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromManualsBtn) backFromManualsBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
+    if (backFromToolsBtn) backFromToolsBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
 
     // Клики по товарам (Открытие карточки описания)
     const allProductButtons = document.querySelectorAll('.grid-btn, .list-btn');
@@ -134,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const verifType = btn.getAttribute('data-verif');
             const serviceType = btn.getAttribute('data-service');
             const manualType = btn.getAttribute('data-manual');
+            const toolType = btn.getAttribute('data-tool');
             
             const assetName = btn.querySelector('span:first-child')?.textContent || btn.textContent.split('$')[0].trim();
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -142,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (verifType) { currentSelectedType = verifType; currentSelectedCategory = "verification"; } 
             else if (serviceType) { currentSelectedType = serviceType; currentSelectedCategory = "service"; }
             else if (manualType) { currentSelectedType = manualType; currentSelectedCategory = "manual"; }
+            else if (toolType) { currentSelectedType = toolType; currentSelectedCategory = "tool"; }
             
             currentSelectedName = assetName;
 
@@ -149,12 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalTitle.textContent = assetName;
                 modalDescription.textContent = productDescriptions[currentSelectedType] || "Описание временно отсутствует.";
                 
-                // Проверяем, есть ли ссылка на Телеграф для этого элемента
                 if (articleLinks[currentSelectedType]) {
                     modalArticleLink.href = articleLinks[currentSelectedType];
-                    modalArticleContainer.style.display = "block"; // Показываем кнопку статьи
+                    modalArticleContainer.style.display = "block";
                 } else {
-                    modalArticleContainer.style.display = "none";  // Скрываем, если это обычный товар
+                    modalArticleContainer.style.display = "none";
                 }
 
                 productModal.classList.add('open');
@@ -175,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentSelectedCategory === "verification") actionName = "buy_verification";
             if (currentSelectedCategory === "service") actionName = "buy_service";
             if (currentSelectedCategory === "manual") actionName = "buy_manual";
+            if (currentSelectedCategory === "tool") actionName = "buy_tool";
 
             tg?.sendData(JSON.stringify({ 
                 action: actionName, 

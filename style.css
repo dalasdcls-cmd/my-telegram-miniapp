@@ -180,7 +180,6 @@ body {
 .btn-abort { border-color: #440000; color: #991111; margin-top: 6px; }
 .btn-abort:hover { border-color: var(--red); color: #fff; }
 
-/* Кнопка статьи внутри модального окна */
 .btn-article {
     display: block;
     text-decoration: none;
