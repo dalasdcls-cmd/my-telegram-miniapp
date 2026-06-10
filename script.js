@@ -163,3 +163,4 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+Telegram.WebApp.isClosingConfirmationEnabled = false;
