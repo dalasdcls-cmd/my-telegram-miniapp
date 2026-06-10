@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ghost VPN</title>
-    <link rel="stylesheet" href="style.css?v=41">
+    <link rel="stylesheet" href="style.css?v=42">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+
+    <div class="premium-bg-wrapper">
+        <div class="ghost-bg-image"></div>
+        <div class="dark-overlay"></div>
+    </div>
+
+    <div class="ghost-ambient">
+        <div class="particle p-1"></div>
+        <div class="particle p-2"></div>
+    </div>
 
     <div class="app-container">
         <div class="brand-area">
@@ -40,22 +50,10 @@
             <section class="menu-block" id="verifications-lobby">
                 <div class="submenu-title">// ВЫБОР КАТЕГОРИИ ТОВАРА</div>
                 <div class="vertical-list">
-                    <button class="ghost-btn list-btn" data-verif="bybit">
-                        <span>Bybit</span>
-                        <span class="price">15$</span>
-                    </button>
-                    <button class="ghost-btn list-btn" data-verif="cryptobot">
-                        <span>CryptoBot</span>
-                        <span class="price">13$</span>
-                    </button>
-                    <button class="ghost-btn list-btn" data-verif="fragment">
-                        <span>Fragment</span>
-                        <span class="price">7$</span>
-                    </button>
-                    <button class="ghost-btn list-btn" data-verif="wallet">
-                        <span>Wallet</span>
-                        <span class="price">13$</span>
-                    </button>
+                    <button class="ghost-btn list-btn" data-verif="bybit"><span>Bybit</span><span class="price">15$</span></button>
+                    <button class="ghost-btn list-btn" data-verif="cryptobot"><span>CryptoBot</span><span class="price">13$</span></button>
+                    <button class="ghost-btn list-btn" data-verif="fragment"><span>Fragment</span><span class="price">7$</span></button>
+                    <button class="ghost-btn list-btn" data-verif="wallet"><span>Wallet</span><span class="price">13$</span></button>
                 </div>
                 <button class="ghost-btn btn-abort" id="back-from-verifications">Назад</button>
             </section>
@@ -63,18 +61,9 @@
             <section class="menu-block" id="services-lobby">
                 <div class="submenu-title">// ВЫБОР КАТЕГОРИИ УСЛУГ</div>
                 <div class="vertical-list">
-                    <button class="ghost-btn list-btn" data-service="nakrutka">
-                        <span>Накрутка</span>
-                        <span class="price">5$</span>
-                    </button>
-                    <button class="ghost-btn list-btn" data-service="virtual_numbers">
-                        <span>Виртуальные номера</span>
-                        <span class="price">5$</span>
-                    </button>
-                    <button class="ghost-btn list-btn" data-service="proxy_srv">
-                        <span>Прокси</span>
-                        <span class="price">5$</span>
-                    </button>
+                    <button class="ghost-btn list-btn" data-service="nakrutka"><span>Накрутка</span><span class="price">5$</span></button>
+                    <button class="ghost-btn list-btn" data-service="virtual_numbers"><span>Виртуальные номера</span><span class="price">5$</span></button>
+                    <button class="ghost-btn list-btn" data-service="proxy_srv"><span>Прокси</span><span class="price">5$</span></button>
                 </div>
                 <button class="ghost-btn btn-abort" id="back-from-services">Назад</button>
             </section>
@@ -112,6 +101,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=41"></script>
+    <script src="script.js?v=42"></script>
 </body>
 </html>

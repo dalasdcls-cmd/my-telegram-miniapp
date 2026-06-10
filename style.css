@@ -2,7 +2,7 @@
 :root {
     --red: #ff0000;
     --bg-main: #000000;
-    --bg-surface: #030000; /* Глубокий чистый черный цвет внутри кнопок */
+    --bg-surface: #030000;
     --neon-glow: rgba(255, 0, 0, 0.75);
     --neon-glow-intense: rgba(255, 0, 0, 0.95);
 }
@@ -19,17 +19,64 @@ body {
     background-color: var(--bg-main);
     color: #fff;
     overflow-x: hidden;
-    padding: 24px 20px;
+    position: relative;
+    width: 100vw; height: 100vh;
 }
 
+/* BACKGROUND LAYERS */
+.premium-bg-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; overflow: hidden;
+}
+.ghost-bg-image {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('изображение_8.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain; 
+    opacity: 0.35; 
+}
+.dark-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* PARTICLES */
+.ghost-ambient {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0; z-index: 2;
+    pointer-events: none; overflow: hidden;
+}
+.particle {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,0,0.05) 0%, transparent 80%);
+    filter: blur(50px);
+    animation: floatingGhost 14s infinite alternate ease-in-out;
+}
+.p-1 { width: 380px; height: 380px; top: -120px; left: -60px; }
+.p-2 { width: 320px; height: 320px; bottom: -60px; right: -60px; animation-delay: -7s; }
+
+@keyframes floatingGhost {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+    100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
+}
+
+/* INTERFACE STRUCTURE */
 .app-container {
-    max-width: 420px;
-    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+    width: 100%; height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 28px 20px;
+    overflow-y: auto;
 }
 
-/* HEADER & LOGO */
+/* LOGO AREA */
 .brand-area {
     display: flex;
     align-items: center;
@@ -51,10 +98,9 @@ body {
     color: var(--red);
     letter-spacing: 1px;
     background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.2);
 }
 
-/* PROFILE SECTION */
+/* PROFILE */
 .profile-section {
     display: flex;
     align-items: center;
@@ -62,85 +108,34 @@ body {
     margin-bottom: 28px;
 }
 .avatar-core {
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
     background: #111;
     border-radius: 50%;
     border: 1px solid var(--red);
     box-shadow: 0 0 10px var(--neon-glow);
     overflow: hidden;
 }
-.avatar-core img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.user-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-.meta-label {
-    font-size: 10px;
-    font-family: monospace;
-    color: #888;
-    letter-spacing: 1px;
-}
-.username {
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--red);
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
-}
-.user-id-label {
-    font-size: 11px;
-    font-family: monospace;
-    color: #666;
-}
+.avatar-core img { width: 100%; height: 100%; object-fit: cover; }
+.user-meta { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-size: 10px; font-family: monospace; color: #888; }
+.username { font-size: 19px; font-weight: 700; color: var(--red); }
+.user-id-label { font-size: 11px; font-family: monospace; color: #666; }
 
-/* SLIDER & MENUS CONTAINER */
-.menu-slider {
-    position: relative;
-    width: 100%;
-}
-.menu-block {
-    display: none; /* Полное скрытие неактивных лобби предотвращает наложение элементов */
-    flex-direction: column;
-    gap: 14px;
-    width: 100%;
-}
-.menu-block.active {
-    display: flex;
-    animation: menuFadeIn 0.25s ease-out forwards;
-}
+/* ENGINE */
+.menu-slider { position: relative; width: 100%; }
+.menu-block { display: none; flex-direction: column; gap: 14px; width: 100%; }
+.menu-block.active { display: flex; animation: menuFadeIn 0.2s ease-out forwards; }
 
 @keyframes menuFadeIn {
-    0% { transform: translateY(6px); opacity: 0; }
+    0% { transform: translateY(4px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
 }
 
-.submenu-title {
-    color: var(--red);
-    font-size: 11px;
-    font-family: monospace;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-}
+.submenu-title { color: var(--red); font-size: 11px; font-family: monospace; margin-bottom: 4px; }
+.vertical-list { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* СПИСКИ И СЕТКИ ТОВАРОВ */
-.vertical-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    width: 100%;
-}
-.accounts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-/* VIP PREMIUM КНОПКИ */
+/* PREMIUM КНОПКИ */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -150,7 +145,6 @@ body {
     color: var(--red);
     font-size: 16px;
     font-weight: 700;
-    letter-spacing: 0.5px;
     cursor: pointer;
     width: 100%;
     text-align: center;
@@ -158,24 +152,17 @@ body {
         inset 0 0 10px rgba(255, 0, 0, 0.25),
         0 0 10px var(--neon-glow),
         0 4px 15px rgba(0, 0, 0, 0.7);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
 }
+.grid-btn { padding: 16px 12px; font-size: 13px; justify-content: center; }
 
-.grid-btn {
-    padding: 16px 12px;
-    font-size: 13px;
-    justify-content: center;
-}
-
-/* Горизонтальные списки (Верификации и Сервисы): Название влево, цена вправо */
+/* Списки с ценами разнесены по краям */
 .list-btn {
     display: flex;
     justify-content: space-between !important;
     align-items: center;
     text-align: left;
 }
-
-/* Подчёркивание цены из фото */
 .price {
     color: #fff;
     text-decoration: underline;
@@ -183,63 +170,32 @@ body {
     text-shadow: 0 0 8px var(--neon-glow);
 }
 
-/* СОСТОЯНИЯ КНОПОК ПРИ ВЗАИМОДЕЙСТВИИ */
 .ghost-btn:hover, .grid-btn:hover {
     border-color: #ffffff;
-    box-shadow: 
-        inset 0 0 14px rgba(255, 0, 0, 0.4),
-        0 0 22px #ff0000,
-        0 0 6px rgba(255, 255, 255, 0.4),
-        0 6px 20px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 14px rgba(255, 0, 0, 0.4), 0 0 22px #ff0000, 0 4px 15px rgba(0, 0, 0, 0.8);
     color: #ffffff;
 }
-.ghost-btn:hover .price {
-    color: #ffffff;
-    text-shadow: 0 0 10px #ff0000;
-}
-.ghost-btn:active, .grid-btn:active {
-    transform: scale(0.98);
-}
+.ghost-btn:hover .price { color: #ffffff; }
+.ghost-btn:active, .grid-btn:active { transform: scale(0.98); }
 
-.btn-abort {
-    border-color: #440000;
-    color: #991111;
-    margin-top: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-.btn-abort:hover {
-    border-color: var(--red);
-    color: #ffffff;
-}
+.btn-abort { border-color: #440000; color: #991111; margin-top: 6px; }
+.btn-abort:hover { border-color: var(--red); color: #fff; }
 
-/* PRODUCT MODAL COMPONENT */
+/* MODAL */
 .product-modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    z-index: 100;
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.25s ease;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+    z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
 }
 .product-modal-overlay.open { opacity: 1; pointer-events: auto; }
 .product-modal-card {
-    background: #080202;
-    border: 1px solid var(--red);
-    box-shadow: 0 0 30px var(--neon-glow-intense);
-    border-radius: 20px;
-    width: 100%; max-width: 360px;
-    padding: 28px 24px; position: relative;
-    transform: scale(0.93);
-    transition: transform 0.25s ease;
-    text-align: left;
+    background: #050000; border: 1px solid var(--red); border-radius: 20px;
+    width: 100%; max-width: 360px; padding: 28px 24px; position: relative;
+    transform: scale(0.95); transition: transform 0.2s ease;
 }
 .product-modal-overlay.open .product-modal-card { transform: scale(1); }
 .modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: #888; cursor: pointer; }
-.modal-close:hover { color: #fff; }
-.modal-tag { font-family: monospace; font-size: 10px; color: #666; letter-spacing: 1.5px; margin-bottom: 8px; }
-.modal-title { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-.modal-description { font-size: 14px; font-weight: 400; line-height: 1.5; color: #e2e8f0; margin-bottom: 24px; }
+.modal-title { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 14px; }
+.modal-description { font-size: 14px; color: #e2e8f0; margin-bottom: 24px; line-height: 1.4; }
 .btn-confirm-buy { justify-content: center !important; }
