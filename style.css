@@ -135,7 +135,7 @@ body {
 .vertical-list { display: flex; flex-direction: column; gap: 14px; width: 100%; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* PREMIUM КНОПКИ */
+/* КНОПКИ */
 .ghost-btn, .grid-btn {
     position: relative;
     background: var(--bg-surface);
@@ -156,7 +156,6 @@ body {
 }
 .grid-btn { padding: 16px 12px; font-size: 13px; justify-content: center; }
 
-/* Списки с ценами разнесены по краям */
 .list-btn {
     display: flex;
     justify-content: space-between !important;

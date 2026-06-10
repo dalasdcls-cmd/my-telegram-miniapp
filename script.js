@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const servicesLobby = document.getElementById('services-lobby');
     
     // Кнопки Назад
-    const btnMainMenuBack = document.querySelector('.ghost-menu .btn-abort');
     const backToLobbyBtn = document.getElementById('back-to-lobby');
     const backFromVerificationsBtn = document.getElementById('back-from-verifications');
     const backFromServicesBtn = document.getElementById('back-from-services');
@@ -96,21 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnVerifications) btnVerifications.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(verificationsLobby); };
     if (btnServices) btnServices.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(servicesLobby); };
 
-    // ИСПРАВЛЕНО: РАБОТА КНОПОК «НАЗАД»
+    // КНОПКИ «НАЗАД»
     if (backToLobbyBtn) backToLobbyBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromVerificationsBtn) backFromVerificationsBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
     if (backFromServicesBtn) backFromServicesBtn.onclick = () => { tg?.HapticFeedback?.impactOccurred('light'); showScreen(mainLobby); };
 
-    // Кнопка «Назад» в Главном Меню -> Закрывает WebApp
-    if (btnMainMenuBack) {
-        btnMainMenuBack.onclick = () => {
-            tg?.HapticFeedback?.impactOccurred('medium');
-            tg?.close();
-        };
-    }
-
-    // Обработка кликов остальных кнопок главного меню (Мануалы, Прокси)
-    const standardButtons = document.querySelectorAll('.ghost-menu .ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"]):not([data-action="back"])');
+    // Обработка кликов кнопок главного меню (Мануалы)
+    const standardButtons = document.querySelectorAll('#main-lobby .ghost-btn:not([data-action="accounts"]):not([data-action="verifications"]):not([data-action="services"])');
     standardButtons.forEach(button => {
         button.onclick = () => {
             const action = button.getAttribute('data-action');
@@ -145,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (modalCloseBtn) modalCloseBtn.onclick = () => productModal.classList.remove('open');
+    window.onclick = (e) => { if (e.target === productModal) productModal.classList.remove('open'); };
 
     if (modalConfirmBtn) {
         modalConfirmBtn.onclick = () => {
@@ -163,7 +155,3 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
-const tg = window.Telegram.WebApp;
-
-tg.disableClosingConfirmation();
-tg.close();
