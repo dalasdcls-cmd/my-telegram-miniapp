@@ -163,4 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
-Telegram.WebApp.isClosingConfirmationEnabled = false;
+const tg = window.Telegram.WebApp;
+
+tg.disableClosingConfirmation();
+tg.close();
