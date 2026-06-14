@@ -62,11 +62,6 @@ body {
 .p-1 { width: 380px; height: 380px; top: -120px; left: -60px; }
 .p-2 { width: 320px; height: 320px; bottom: -60px; right: -60px; animation-delay: -7s; }
 
-@keyframes floatingGhost {
-    0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
-    100% { transform: scale(1.15) translate(20px, -30px); opacity: 0.8; }
-}
-
 /* INTERFACE STRUCTURE */
 .app-container {
     position: relative;
@@ -124,14 +119,12 @@ body {
 
 /* КРАСИВЫЙ КИБЕР-ВИДЖЕТ БАЛАНСА */
 .balance-card {
-    background: linear-gradient(135deg, rgba(5, 0, 0, 0.95) 0%, rgba(15, 0, 0, 0.9) 100%);
-    border: 1px solid var(--red);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 24px;
-    box-shadow: 
-        0 0 15px rgba(255, 0, 0, 0.15),
-        inset 0 0 15px rgba(255, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(5, 0, 0, 0.95) 0%, rgba(15, 0, 0, 0.9) 100%) !important;
+    border: 1px solid var(--red) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.15), inset 0 0 15px rgba(255, 0, 0, 0.1) !important;
     position: relative;
     overflow: hidden;
 }
@@ -152,7 +145,7 @@ body {
 .balance-value {
     font-size: 32px;
     font-weight: 900;
-    color: #fff;
+    color: #fff !important;
     text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: baseline;
@@ -162,7 +155,7 @@ body {
     font-size: 14px;
     font-weight: bold;
     color: var(--red);
-    text-shadow: 0 0 8px var(--neon-glow);
+    margin-left: 5px;
 }
 .balance-status-line {
     font-size: 10px;
@@ -178,58 +171,44 @@ body {
     background-color: #00ff66;
     border-radius: 50%;
     box-shadow: 0 0 8px #00ff66;
-    display: inline-block;
-    animation: statusPulse 2s infinite alternate;
-}
-@keyframes statusPulse {
-    0% { opacity: 0.4; }
-    100% { opacity: 1; }
 }
 
-/* КРИТИЧЕСКИЙ ФИКС ДЛЯ СКРЫТИЯ ЭКРАНОВ */
+/* СКРЫТИЕ И ПОКАЗ ЭКРАНОВ */
 .menu-slider { position: relative; width: 100%; }
 .menu-block { 
-    display: none; /* ВСЕ МЕНЮ ПО УМОЛЧАНИЮ СКРЫТЫ */
+    display: none !important; /* Жестко скрываем всё */
     flex-direction: column; 
     gap: 14px; 
     width: 100%; 
 }
 .menu-block.active { 
-    display: flex !important; /* ПОКАЗЫВАЕМ ТОЛЬКО АКТИВНОЕ МЕНЮ */
-    animation: menuFadeIn 0.2s ease-out forwards; 
-}
-
-@keyframes menuFadeIn {
-    0% { transform: translateY(4px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    display: flex !important; /* Показываем только активное лобби */
 }
 
 .submenu-title { color: var(--red); font-size: 11px; font-family: monospace; margin-bottom: 4px; }
 .vertical-list { display: flex; flex-direction: column; gap: 14px; width: 100%; }
 .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* КИБЕРПАНК СТИЛЬ КНОПОК */
-.ghost-btn, .grid-btn {
+/* ОБЩИЙ СТИЛЬ ДЛЯ ВСЕХ КНОПОК */
+.ghost-btn, .grid-btn, .list-btn {
     position: relative;
-    background: var(--bg-surface);
-    border: 1px solid var(--red);
-    border-radius: 14px;
-    padding: 18px 24px;
-    color: var(--red);
-    font-size: 16px;
-    font-weight: 700;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--red) !important;
+    border-radius: 14px !important;
+    padding: 18px 24px !important;
+    color: var(--red) !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
     cursor: pointer;
-    width: 100%;
-    text-align: center;
-    box-shadow: 
-        inset 0 0 10px rgba(255, 0, 0, 0.25),
-        0 0 10px var(--neon-glow),
-        0 4px 15px rgba(0, 0, 0, 0.7);
+    width: 100% !important;
+    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.25), 0 0 10px var(--neon-glow), 0 4px 15px rgba(0, 0, 0, 0.7) !important;
     transition: all 0.2s ease;
     outline: none;
+    text-decoration: none;
 }
-.grid-btn { padding: 16px 12px; font-size: 13px; justify-content: center; }
+.grid-btn { padding: 16px 12px !important; font-size: 13px !important; }
 
+/* Фикс разноса названия и цены по краям */
 .list-btn {
     display: flex !important;
     justify-content: space-between !important;
@@ -237,49 +216,32 @@ body {
     text-align: left !important;
 }
 .price {
-    color: #fff;
-    text-decoration: underline;
+    color: #fff !important;
+    text-decoration: underline !important;
     text-underline-offset: 4px;
-    text-shadow: 0 0 8px var(--neon-glow);
 }
 
-.ghost-btn:hover, .grid-btn:hover {
-    border-color: #ffffff;
-    box-shadow: inset 0 0 14px rgba(255, 0, 0, 0.4), 0 0 22px #ff0000, 0 4px 15px rgba(0, 0, 0, 0.8);
-    color: #ffffff;
+.ghost-btn:hover, .grid-btn:hover, .list-btn:hover {
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 0 14px rgba(255, 0, 0, 0.4), 0 0 22px #ff0000, 0 4px 15px rgba(0, 0, 0, 0.8) !important;
 }
-.ghost-btn:hover .price { color: #ffffff; }
-.ghost-btn:active, .grid-btn:active { transform: scale(0.98); }
-
-.btn-abort { border-color: #440000; color: #991111; margin-top: 6px; }
-.btn-abort:hover { border-color: var(--red); color: #fff; }
-
-.btn-article {
-    display: block;
-    text-decoration: none;
-    border-color: #ffffff;
-    color: #ffffff;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1), 0 0 10px rgba(255, 255, 255, 0.3);
-    padding: 14px 20px;
-    font-size: 14px;
-    margin-top: 5px;
-}
+.ghost-btn:active, .grid-btn:active, .list-btn:active { transform: scale(0.98); }
+.btn-abort { border-color: #440000 !important; color: #991111 !important; margin-top: 6px; }
+.btn-abort:hover { border-color: var(--red) !important; color: #fff !important; }
 
 /* MODAL */
 .product-modal-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
-    z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px;
+    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); z-index: 100; 
+    display: flex; align-items: center; justify-content: center; padding: 20px;
     opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
 }
 .product-modal-overlay.open { opacity: 1; pointer-events: auto; }
 .product-modal-card {
     background: #050000; border: 1px solid var(--red); border-radius: 20px;
     width: 100%; max-width: 360px; padding: 28px 24px; position: relative;
-    transform: scale(0.95); transition: transform 0.2s ease;
 }
-.product-modal-overlay.open .product-modal-card { transform: scale(1); }
 .modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: #888; cursor: pointer; }
 .modal-title { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 14px; }
 .modal-description { font-size: 14px; color: #e2e8f0; margin-bottom: 24px; line-height: 1.4; }
-.btn-confirm-buy { justify-content: center !important; }
