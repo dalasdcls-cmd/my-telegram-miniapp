@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ghost VPN</title>
+    <!-- Версия ?v=52 обновит кэш в Telegram -->
+    <link rel="stylesheet" href="style.css?v=52">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <div class="premium-bg-wrapper">
+        <div class="ghost-bg-image"></div>
+        <div class="dark-overlay"></div>
+    </div>
+
+    <div class="ghost-ambient">
+        <div class="particle p-1"></div>
+        <div class="particle p-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Логотип -->
+        <div class="brand-area">
+            <div class="ghost-logo">GHOST</div>
+            <div class="ghost-badge">ELITE ACCESS</div>
+        </div>
+
+        <!-- Профиль пользователя -->
+        <div class="profile-section">
+            <div class="avatar-core">
+                <img src="" id="user-avatar-img" alt="Avatar">
+            </div>
+            <div class="user-meta">
+                <span class="meta-label">USER //</span>
+                <h1 class="username" id="username">@username</h1>
+            </div>
+        </div>
+
+        <!-- НОВЫЙ КРАСИВЫЙ ВИДЖЕТ БАЛАНСА -->
+        <div class="balance-card">
+            <div class="balance-tag">// NET_BALANCE_USDT</div>
+            <div class="balance-value">
+                <span id="user-balance">0.00</span> <span class="currency">USDT</span>
+            </div>
+            <div class="balance-status-line">
+                <span class="status-dot"></span> СИНХРОНИЗАЦИЯ С СЕРВЕРОМ: OK
+            </div>
+        </div>
+
+        <!-- МЕНЮ СЛАЙДЕР -->
+        <div class="menu-slider">
+            
+            <!-- ГЛАВНОЕ МЕНЮ -->
+            <main class="menu-block active" id="main-lobby">
+                <button class="ghost-btn" data-action="verifications">Верификации</button>
+                <button class="ghost-btn" data-action="manuals">Мануалы</button>
+                <button class="ghost-btn" data-action="services">Сервисы</button>
+                <button class="ghost-btn" data-action="tools">Инструменты</button>
+                <button class="ghost-btn" data-action="accounts">Тг аккаунты</button>
+            </main>
+
+            <!-- ИНСТРУМЕНТЫ -->
+            <section class="menu-block" id="tools-lobby">
+                <div class="submenu-title">// ВЫБОР ИНСТРУМЕНТА</div>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-tool="arbitrazh">
+                        <span>Для арбитража трафика</span>
+                        <span class="price">10$</span>
+                    </button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-from-tools">Назад</button>
+            </section>
+
+            <!-- МАНУАЛЫ -->
+            <section class="menu-block" id="manuals-lobby">
+                <div class="submenu-title">// ВЫБОР МАНУАЛА</div>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-manual="progrev_tg">
+                        <span>Прогрев аккаунта тг</span>
+                        <span class="price">3$</span>
+                    </button>
+                    <button class="ghost-btn list-btn" data-manual="p2p_no_cards">
+                        <span>P2P без карт</span>
+                        <span class="price">5$</span>
+                    </button>
+                    <button class="ghost-btn list-btn" data-manual="cheap_tg_accs">
+                        <span>Дешевые аки тг</span>
+                        <span class="price">3$</span>
+                    </button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-from-manuals">Назад</button>
+            </section>
+
+            <!-- ВЕРИФИКАЦИИ -->
+            <section class="menu-block" id="verifications-lobby">
+                <div class="submenu-title">// ВЫБОР КАТЕГОРИИ ТОВАРА</div>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-verif="bybit"><span>Bybit</span><span class="price">15$</span></button>
+                    <button class="ghost-btn list-btn" data-verif="cryptobot"><span>CryptoBot</span><span class="price">13$</span></button>
+                    <button class="ghost-btn list-btn" data-verif="fragment"><span>Fragment</span><span class="price">7$</span></button>
+                    <button class="ghost-btn list-btn" data-verif="wallet"><span>Wallet</span><span class="price">13$</span></button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-from-verifications">Назад</button>
+            </section>
+
+            <!-- СЕРВИСЫ -->
+            <section class="menu-block" id="services-lobby">
+                <div class="submenu-title">// ВЫБОР КАТЕГОРИИ УСЛУГ</div>
+                <div class="vertical-list">
+                    <button class="ghost-btn list-btn" data-service="nakrutka"><span>Накрутка</span><span class="price">5$</span></button>
+                    <button class="ghost-btn list-btn" data-service="virtual_numbers"><span>Виртуальные номера</span><span class="price">5$</span></button>
+                    <button class="ghost-btn list-btn" data-service="proxy_srv"><span>Прокси</span><span class="price">5$</span></button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-from-services">Назад</button>
+            </section>
+
+            <!-- ТГ АККАУНТЫ -->
+            <section class="menu-block" id="accounts-lobby">
+                <div class="submenu-title">// ВЫБОР КАТЕГОРИИ ТОВАРА</div>
+                <div class="accounts-grid">
+                    <button class="grid-btn" data-acc="novoregi">Новореги</button>
+                    <button class="grid-btn" data-acc="1_year">1 год отлега</button>
+                    <button class="grid-btn" data-acc="2_years">2 года отлеги</button>
+                    <button class="grid-btn" data-acc="3_years">3 года отлеги</button>
+                    <button class="grid-btn" data-acc="4_years">4 года отлеги</button>
+                    <button class="grid-btn" data-acc="5_years">5 лет отлеги</button>
+                    <button class="grid-btn" data-acc="6_years">6 лет отлеги</button>
+                    <button class="grid-btn" data-acc="7_years">7 лет отлеги</button>
+                    <button class="grid-btn" data-acc="8_years">8 лет отлеги</button>
+                    <button class="grid-btn" data-acc="9_years">9 лет отлеги</button>
+                    <button class="grid-btn" data-acc="10_years">10 лет отлеги</button>
+                    <button class="grid-btn" data-acc="11_years">11 лет отлеги</button>
+                    <button class="grid-btn" data-acc="12_years">12 лет отлеги</button>
+                    <button class="grid-btn" data-acc="13_years">13 лет отлеги</button>
+                </div>
+                <button class="ghost-btn btn-abort" id="back-to-lobby">Назад</button>
+            </section>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div class="product-modal-overlay" id="product-modal">
+        <div class="product-modal-card">
+            <div class="modal-close" id="modal-close-btn">×</div>
+            <div class="modal-tag">// ОПИСАНИЕ ТОВАРА</div>
+            <h2 class="modal-title" id="modal-title">Название товара</h2>
+            <p class="modal-description" id="modal-description">Описание...</p>
+            
+            <div id="modal-article-container" style="margin-bottom: 14px; display: none;">
+                <a href="#" id="modal-article-link" class="ghost-btn btn-article" target="_blank">ЧИТАТЬ СТАТЬЮ</a>
+            </div>
+
+            <button class="ghost-btn btn-confirm-buy" id="modal-confirm-btn">ПОДТВЕРДИТЬ ПОКУПКУ</button>
+        </div>
+    </div>
+
+    <script src="script.js?v=52"></script>
+</body>
+</html>
