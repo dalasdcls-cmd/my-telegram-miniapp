@@ -11,23 +11,33 @@ document.addEventListener('DOMContentLoaded', () => {
         tg.setBackgroundColor('#000000');
     }
 
-    // 2. Настройка профиля и подгрузка аватарки
+    // 2. Настройка профиля, подгрузка аватарки и БАЛАНСА
     const user = tg?.initDataUnsafe?.user;
     if (user) {
         const usernameElement = document.getElementById('username');
-        const idElement = document.getElementById('user-id');
         const avatarImg = document.getElementById('user-avatar-img');
+        const balanceElement = document.getElementById('user-balance');
 
         if (usernameElement) {
             usernameElement.textContent = user.username ? `@${user.username}` : `${user.first_name} ${user.last_name || ''}`.trim();
-        }
-        if (idElement && user.id) {
-            idElement.textContent = `ID: ${user.id}`;
         }
         if (avatarImg && user.photo_url) {
             avatarImg.src = user.photo_url;
             avatarImg.classList.add('visible');
         }
+
+        // --- СИНХРОНИЗАЦИЯ БАЛАНСА С БОТОМ ---
+        // Если бот запущен на удаленном сервере, укажи его домен (например: https://my-ghost-bot.com)
+        const SERVER_URL = "http://localhost:8000"; 
+        
+        fetch(`${SERVER_URL}/api/get_balance?user_id=${user.id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (balanceElement && data.balance !== undefined) {
+                    balanceElement.textContent = `${data.balance}$`;
+                }
+            })
+            .catch(err => console.error("[GHOST API] Ошибка получения баланса:", err));
     }
 
     // 3. База данных описаний товаров
@@ -64,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "p2p_no_cards": "Актуальная авторская методика проведения P2P-сделок без использования личных или дроп-карт. Обход классических банковских ограничений, работа с альтернативными шлюзами платежей и личная безопасность.",
         "cheap_tg_accs": "Мануал по поиску и закупке аккаунтов Telegram по самым низким ценам на рынке. Обзор закрытых оптовых бирж, методы проверки сессий на валидность и защита от восстановления.",
 
-        // Инструменты (Твое точное описание)
+        // Инструменты
         "arbitrazh": "Платный AI-инструмент для Telegram, который автоматизирует работу с аккаунтами: парсинг аудитории, переписки, комментарии и аналитику. Используется в арбитраже трафика и продвижении в Telegram."
     };
 
@@ -157,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalTitle.textContent = assetName;
                 modalDescription.textContent = productDescriptions[currentSelectedType] || "Описание временно отсутствует.";
                 
-                // Динамическое отображение кнопки статьи Telegraph
                 if (articleLinks[currentSelectedType]) {
                     modalArticleLink.href = articleLinks[currentSelectedType];
                     modalArticleContainer.style.display = "block";

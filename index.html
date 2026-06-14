@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ghost VPN</title>
-    <link rel="stylesheet" href="style.css?v=49">
+    <link rel="stylesheet" href="style.css?v=50">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -32,7 +32,9 @@
             <div class="user-meta">
                 <span class="meta-label">USER //</span>
                 <h1 class="username" id="username">@username</h1>
-                <span class="user-id-label" id="user-id">ID: 0000000000</span>
+                <span class="user-balance-label" style="font-size: 13px; font-family: monospace; color: #888; margin-top: 4px; display: block;">
+                    БАЛАНС: <span id="user-balance" class="price" style="color: #fff; font-weight: bold; text-decoration: underline;">0$</span>
+                </span>
             </div>
         </div>
 
@@ -135,6 +137,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=49"></script>
+    <script src="script.js?v=50"></script>
 </body>
 </html>
