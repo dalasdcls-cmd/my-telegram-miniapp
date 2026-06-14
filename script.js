@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         balanceElement.textContent = parseFloat(data.balance).toFixed(2);
                     }
                 })
-                .catch(err => console.error("[GHOST API] Бот отключен или шлюз не запущен. Ждем коннекта..."));
+                .catch(err => console.error("[GHOST API] Ошибка получения баланса с сервера."));
         }
     }
 
@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
             avatarImg.classList.add('visible');
         }
         
-        // Запрос баланса
         refreshBalance();
     }
 
@@ -78,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleLinks = {
         "progrev_tg": "https://telegra.ph/Manual-po-progrevu-akkaunta-telegramm-06-10-2",
         "p2p_no_cards": "https://telegra.ph/p2p-bez-kart-v-CryptoBot-06-10",
-        "cheap_tg_accs": "https://telegra.ph/Manual-po-pokupke-deshevyh-akkauntov-s-otlegoj-06-10"
+        "cheap_tg_accs": "https://telegra.ph/Manual-po-pokupке-deshevyh-akkauntov-s-otlegoj-06-10"
     };
 
     // Навигационные узлы
@@ -105,13 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalCloseBtn = document.getElementById('modal-close-btn');
-    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    const modalBackBtn = document.getElementById('modal-back-btn');
     const modalArticleContainer = document.getElementById('modal-article-container');
     const modalArticleLink = document.getElementById('modal-article-link');
 
     let currentSelectedType = "";
-    let currentSelectedName = "";
-    let currentSelectedPrice = 0.0;
 
     const showScreen = (targetScreen) => {
         [mainLobby, accountsLobby, verificationsLobby, servicesLobby, manualsLobby, toolsLobby].forEach(screen => {
@@ -142,8 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const toolType = btn.getAttribute('data-tool');
             
             const assetName = btn.querySelector('span:first-child')?.textContent || btn.textContent.split('$')[0].trim();
-            const priceText = btn.querySelector('.price')?.textContent || "0$";
-            const parsedPrice = parseFloat(priceText.replace('$', '')) || 0.0;
 
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
@@ -152,9 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (serviceType) currentSelectedType = serviceType;
             else if (manualType) currentSelectedType = manualType;
             else if (toolType) currentSelectedType = toolType;
-            
-            currentSelectedName = assetName;
-            currentSelectedPrice = parsedPrice;
 
             if (modalTitle && modalDescription && productModal) {
                 modalTitle.textContent = assetName;
@@ -172,47 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
+    // Закрытие модального окна
     if (modalCloseBtn) modalCloseBtn.onclick = () => productModal.classList.remove('open');
-    window.onclick = (e) => { if (e.target === productModal) productModal.classList.remove('open'); };
-
-    if (modalConfirmBtn) {
-        modalConfirmBtn.onclick = () => {
-            if (!user || !user.id) {
-                tg?.showAlert("Ошибка авторизации сессии Telegram.");
-                return;
-            }
-
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+    if (modalBackBtn) {
+        modalBackBtn.onclick = () => {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             productModal.classList.remove('open');
-
-            fetch(`${SERVER_URL}/api/buy_item`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    user_id: user.id,
-                    price: currentSelectedPrice,
-                    item_name: currentSelectedName
-                })
-            })
-            .then(res => res.json())
-            .then(resData => {
-                if (resData.success) {
-                    const balanceElement = document.getElementById('user-balance');
-                    if (balanceElement) balanceElement.textContent = parseFloat(resData.new_balance).toFixed(2);
-                    
-                    tg?.showPopup({
-                        title: "Успешная покупка!",
-                        message: `Вы успешно приобрели "${currentSelectedName}" за ${currentSelectedPrice} USDT. Чек отправлен в чат бота.`,
-                        buttons: [{ type: "ok" }]
-                    });
-                } else {
-                    tg?.showAlert(resData.message || "Ошибка проведения платежа.");
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                tg?.showAlert("Не удалось связаться с сервером для списания средств.");
-            });
         };
     }
+    window.onclick = (e) => { if (e.target === productModal) productModal.classList.remove('open'); };
 });
